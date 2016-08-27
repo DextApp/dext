@@ -17,7 +17,7 @@ const App = ({ theme }) => {
   let styles = base;
   // apply theme styles
   if (theme.window) {
-    styles = compose(base);
+    styles = compose(base, theme.window);
   }
   return (
     <div {...styles}>
