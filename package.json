@@ -57,6 +57,7 @@
     "deep-assign": "^2.0.0",
     "download": "^5.0.2",
     "glamor": "^2.9.0",
+    "is_js": "^0.8.0",
     "npm-name": "^3.0.0",
     "plist": "^2.0.1",
     "react": "^15.3.1",

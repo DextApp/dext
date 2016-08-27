@@ -3,6 +3,7 @@ const fs = require('fs');
 const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
+const is = require('is_js');
 
 /**
  * Loads all plugins in the given path
@@ -74,13 +75,24 @@ exports.loadPlist = plugin => new Promise(resolve => {
  * @param {Object[]} - An array of items
  * @param {Object} - The plugin object data { schema, plugin, action, keyword }
  */
-exports.connectItems = (items, plugin) => items.map(i => deepAssign({}, i, {
-  keyword: plugin.keyword,
-  action: plugin.action,
-  icon: {
-    path: path.resolve(plugin.plugin, i.icon.path || ''),
-  },
-}));
+exports.connectItems = (items, plugin) => items.map(i => {
+  const icon = {
+    path: '',
+  };
+  if (i.icon && i.icon.path) {
+    icon.path = i.icon.path;
+    // resolve non-urls
+    if (!is.url(i.icon.path)) {
+      icon.path = path.resolve(plugin.plugin, i.icon.path);
+    }
+  }
+  return deepAssign({}, i, {
+    keyword: plugin.keyword,
+    action: plugin.action,
+    icon,
+  });
+});
+
 /**
  * Queries for the items in the given plugin
  *
