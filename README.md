@@ -2,9 +2,9 @@
 
 > A smart launcher for Mac. Powered by JavaScript.
 
-![](screenshot.gif)
+![](screenshot.gif?raw=true)
 
-Screenshot is using the [alfred-pokedex](https://github.com/vutran/alfred-pokedex) workflow.
+Screenshot is using the [dext-github-plugin](https://github.com/vutran/dext-github-plugin) workflow.
 
 ## Install
 
@@ -39,6 +39,14 @@ $ dpm theme dext-my-theme
 
 - [Plugins](docs/PLUGINS.md)
 - [Themes](docs/THEMES.md)
+
+## Plugins
+
+- [dext-github-plugin](https://github.com/vutran/dext-github-plugin)
+
+## Themes
+
+- [dext-default-theme](https://github.com/vutran/dext-default-theme)
 
 ## Goals
 
