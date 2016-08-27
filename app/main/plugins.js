@@ -77,6 +77,9 @@ exports.loadPlist = plugin => new Promise(resolve => {
 exports.connectItems = (items, plugin) => items.map(i => deepAssign({}, i, {
   keyword: plugin.keyword,
   action: plugin.action,
+  icon: {
+    path: path.resolve(plugin.plugin, i.icon.path || ''),
+  },
 }));
 /**
  * Queries for the items in the given plugin
@@ -92,6 +95,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       // fork a child process to receive all stdout
       // and concat it to the results array
       const options = {
+        cwd: plugin.plugin,
         silent: true,
       };
       const child = fork(plugin.plugin, args, options);
