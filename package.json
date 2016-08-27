@@ -2,6 +2,14 @@
   "name": "dext",
   "version": "0.1.0",
   "description": "A smart launcher for Mac. Powered by JavaScript.",
+  "keywords": [
+    "dext",
+    "launcher",
+    "alfred",
+    "alfy",
+    "spotlight",
+    "search"
+  ],
   "main": "app/main/index.js",
   "bin": {
     "dpm": "./cli.js"
@@ -13,6 +21,10 @@
     "start": "npm run build && npm run dev"
   },
   "author": "Vu Tran <vu@vu-tran.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vutran/dext"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.13.2",
