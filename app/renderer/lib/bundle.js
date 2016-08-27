@@ -44689,9 +44689,11 @@
 	  border: 0,
 	  boxSizing: 'border-box',
 	  fontSize: 40,
-	  height: 50,
+	  paddingTop: 0,
+	  paddingBottom: 0,
 	  marginBottom: 10,
 	  outline: 0,
+	  overflow: 'visible',
 	  width: '100%'
 	});
 
