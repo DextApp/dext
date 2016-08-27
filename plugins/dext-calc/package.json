@@ -1,0 +1,16 @@
+{
+  "name": "dext-calc",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vu Tran <vu@vu-tran.com>",
+  "license": "MIT",
+  "dependencies": {
+    "alfy": "^0.3.0",
+    "lodash": "^4.15.0",
+    "mathjs": "^3.4.1"
+  }
+}

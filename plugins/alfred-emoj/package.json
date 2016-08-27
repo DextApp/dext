@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "dependencies": {
+    "alfy": "^0.2.1"
+  },
+  "devDependencies": {
+    "alfy-test": "^0.2.0",
+    "ava": "*",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true
+  }
+}
