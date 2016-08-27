@@ -5,7 +5,7 @@ module.exports = class extends Conf {
   constructor(opts) {
     const defaultOpts = {
       defaults: {
-        theme: 'dext-default-theme',
+        theme: '',
       },
       plugins: [],
     };

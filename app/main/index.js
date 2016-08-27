@@ -99,7 +99,7 @@ const handleWindowCollapse = () => {
  * Loads the theme when the finish has finished loading
  */
 const handleDidFinishLoad = () => {
-  const t = config.get('theme') || 'dext-default';
+  const t = config.get('theme') || '';
   loadTheme(t).then(theme => {
     if (theme) {
       win.webContents.send(IPC_LOAD_THEME, theme);

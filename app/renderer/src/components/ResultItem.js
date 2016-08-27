@@ -2,6 +2,13 @@ import React, { PropTypes } from 'react';
 import { style, compose, hover } from 'glamor';
 import ResultItemSchema from '../schema/ResultItemSchema';
 
+const activeStyle = {
+  backgroundColor: '#3f93fe',
+  color: '#ffffff',
+};
+
+const baseHover = hover(activeStyle);
+
 const base = compose(
   style({
     display: 'flex',
@@ -11,9 +18,7 @@ const base = compose(
     padding: 10,
     width: '100%',
   }),
-  hover({
-    backgroundColor: '#ededed',
-  })
+  baseHover
 );
 
 const icon = style({
@@ -52,25 +57,24 @@ const subtitle = style({
 });
 
 const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
-  const baseHover = hover(theme.resultActive);
-  let baseSelected = {};
+  const themeBase = style(theme.result || {});
+  const themeHover = hover(theme.resultActive || {});
+  let themeSelected = {};
   if (selected) {
-    baseSelected = compose(
-      style({
-        backgroundColor: '#ededed',
-      }),
-      style(theme.resultActive)
+    themeSelected = compose(
+      style(activeStyle),
+      style(theme.resultActive || {})
     );
   }
 
   return (
-    <li {...compose(base, theme.result, baseHover, baseSelected)} onDoubleClick={onDoubleClick}>
+    <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
       <div {...icon}>
         <img {...iconImg} src={item.icon.path} role="presentation" />
       </div>
       <div {...details}>
-        <h2 {...compose(title, theme.resultTitle)}>{item.title}</h2>
-        <h3 {...compose(subtitle, theme.resultSubtitle)}>{item.subtitle}</h3>
+        <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
+        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{item.subtitle}</h3>
       </div>
     </li>
   );
