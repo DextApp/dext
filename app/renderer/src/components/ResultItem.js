@@ -36,26 +36,35 @@ const title = style({
   boxSizing: 'border-box',
   fontSize: 20,
   fontWeight: 'normal',
+  textOverflow: 'ellipsis',
   margin: 0,
 });
 
 const subtitle = style({
+  display: '-webkit-box',
   boxSizing: 'border-box',
+  overflow: 'hidden',
   fontSize: 16,
   fontWeight: 'normal',
   margin: 0,
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
 });
 
 const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
+  const baseHover = hover(theme.resultActive);
   let baseSelected = {};
   if (selected) {
-    baseSelected = style({
-      backgroundColor: '#ededed',
-    });
+    baseSelected = compose(
+      style({
+        backgroundColor: '#ededed',
+      }),
+      style(theme.resultActive)
+    );
   }
 
   return (
-    <li {...compose(base, theme.result, baseSelected)} onDoubleClick={onDoubleClick}>
+    <li {...compose(base, theme.result, baseHover, baseSelected)} onDoubleClick={onDoubleClick}>
       <div {...icon}>
         <img {...iconImg} src={item.icon.path} role="presentation" />
       </div>

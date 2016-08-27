@@ -14,8 +14,11 @@ const base = style({
 });
 
 const App = ({ theme }) => {
+  let styles = base;
   // apply theme styles
-  const styles = compose(base, theme.window);
+  if (theme.window) {
+    styles = compose(base);
+  }
   return (
     <div {...styles}>
       <QueryFieldContainer theme={theme} />
