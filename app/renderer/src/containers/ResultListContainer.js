@@ -10,6 +10,8 @@ import {
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
+  IPC_EXECUTE_CURRENT_ITEM,
+  IPC_EXECUTE_ITEM,
 } from '../../../ipc';
 
 const ResultListContainer = class extends Component {
@@ -40,6 +42,16 @@ const ResultListContainer = class extends Component {
         selectNextItem();
       }
     });
+    ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
+      self.execute();
+    });
+  }
+
+  execute() {
+    const { results, selectedIndex } = this.props;
+    const item = results[selectedIndex];
+    const { action } = item;
+    ipcRenderer.send(IPC_EXECUTE_ITEM, { action, item });
   }
 
   render() {

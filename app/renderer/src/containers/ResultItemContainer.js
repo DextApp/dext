@@ -16,6 +16,10 @@ const ResultItemContainer = class extends Component {
   }
 
   handleDoubleClick() {
+    this.execute();
+  }
+
+  execute() {
     const { item } = this.props;
     const { action } = item;
     ipcRenderer.send(IPC_EXECUTE_ITEM, { action, item });

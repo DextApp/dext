@@ -11,6 +11,7 @@ const {
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
+  IPC_EXECUTE_CURRENT_ITEM,
   IPC_EXECUTE_ITEM,
   IPC_LOAD_THEME,
 } = require('../ipc');
@@ -40,12 +41,27 @@ const toggleMainWindow = () => {
   }
 };
 
+const execute = message => {
+  switch (message.action) {
+    case 'openurl':
+      shell.openExternal(message.item.arg);
+      break;
+    default:
+      // do nothing
+      break;
+  }
+};
+
 const selectPreviousItem = () => {
   win.webContents.send(IPC_SELECT_PREVIOUS_ITEM);
 };
 
 const selectNextItem = () => {
   win.webContents.send(IPC_SELECT_NEXT_ITEM);
+};
+
+const executeCurrentItem = () => {
+  win.webContents.send(IPC_EXECUTE_CURRENT_ITEM);
 };
 
 const repositionWindow = () => {
@@ -69,12 +85,14 @@ const handleWindowClose = () => {
 const handleWindowShow = () => {
   globalShortcut.register('up', selectPreviousItem);
   globalShortcut.register('down', selectNextItem);
+  globalShortcut.register('enter', executeCurrentItem);
   win.webContents.send(IPC_WINDOW_SHOW);
 };
 
 const handleWindowHide = () => {
   globalShortcut.unregister('up');
   globalShortcut.unregister('down');
+  globalShortcut.unregister('enter');
   win.webContents.send(IPC_WINDOW_HIDE);
 };
 
@@ -194,14 +212,7 @@ const createWindow = () => {
 
     // listen for execution commands
     ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
-      switch (message.action) {
-        case 'openurl':
-          shell.openExternal(message.item.arg);
-          break;
-        default:
-          // do nothing
-          break;
-      }
+      execute(message);
     });
   };
 

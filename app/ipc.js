@@ -7,6 +7,7 @@ const IPC_QUERY_COMMAND = 'query';
 const IPC_QUERY_RESULTS = 'query-results';
 const IPC_SELECT_PREVIOUS_ITEM = 'select-previous-item';
 const IPC_SELECT_NEXT_ITEM = 'select-next-item';
+const IPC_EXECUTE_CURRENT_ITEM = 'execute-current-item';
 const IPC_EXECUTE_ITEM = 'execute-item';
 const IPC_LOAD_THEME = 'load-theme';
 
@@ -20,6 +21,7 @@ module.exports = {
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
+  IPC_EXECUTE_CURRENT_ITEM,
   IPC_EXECUTE_ITEM,
   IPC_LOAD_THEME,
 };
