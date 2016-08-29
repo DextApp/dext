@@ -6,8 +6,8 @@ module.exports = class extends Conf {
     const defaultOpts = {
       defaults: {
         theme: '',
+        plugins: [],
       },
-      plugins: [],
     };
     const o = Object.assign({}, opts, defaultOpts);
     o.cwd = DEXT_PATH;
