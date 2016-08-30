@@ -6,12 +6,6 @@
 
 Screenshot is using the [dext-github-plugin](https://github.com/vutran/dext-github-plugin) workflow.
 
-## Install
-
-```bash
-$ npm install dext
-```
-
 ## Overview
 
 **Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of Alfred.
@@ -20,9 +14,15 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 
 ***Note: Currently available only for Mac OS X platform. Please help contribute for Windows and Linux users.***
 
+## Install
+
+```bash
+$ npm install dext
+```
+
 ## Installing Plugins and Themes
 
-Dext Package Manager is included out of the box to allow for manging configurations easily. (This package may be extracted in the future to keep the app file size low)
+Dext Package Manager is included out of the box to allow for managing configurations easily. (This package may be extracted in the future to keep the app file size low)
 
 ### Activating the CLI
 
@@ -32,6 +32,8 @@ $ npm link
 ```
 
 ### CLI Usage
+
+Once the `dpm` has been linked, you can start accessing it's functions. See examples below:
 
 ```bash
 # installs a new plugin/theme
