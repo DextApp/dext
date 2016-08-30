@@ -43,6 +43,7 @@ $ dpm theme dext-my-theme
 ## Plugins
 
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin)
+- [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin)
 
 ## Themes
 
