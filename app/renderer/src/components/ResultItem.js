@@ -38,11 +38,14 @@ const details = style({
 });
 
 const title = style({
+  display: '-webkit-box',
   boxSizing: 'border-box',
+  overflow: 'hidden',
   fontSize: 20,
   fontWeight: 'normal',
-  textOverflow: 'ellipsis',
   margin: 0,
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 1,
 });
 
 const subtitle = style({
