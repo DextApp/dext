@@ -22,7 +22,16 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 
 ## Installing Plugins and Themes
 
-Dext Package Manager is included out of the box to allow for manging configurations easily.
+Dext Package Manager is included out of the box to allow for manging configurations easily. (This package may be extracted in the future to keep the app file size low)
+
+### Activating the CLI
+
+```bash
+# link the module globally to create a symlink to the bin file
+$ npm link
+```
+
+### CLI Usage
 
 ```bash
 # installs a new plugin/theme
