@@ -17,6 +17,7 @@ const {
 } = require('../ipc');
 const Config = require('../../utils/conf');
 const { PLUGIN_PATH } = require('../../utils/paths');
+const { debounce } = require('../../utils/helpers');
 
 const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
 
@@ -125,6 +126,51 @@ const handleDidFinishLoad = () => {
   });
 };
 
+const handleQueryCommand = (evt, message, keywordMap) => {
+  const args = message.q.split(' ');
+  const keyword = args.shift();
+  const filteredPlugins = Object.keys(keywordMap)
+    // filter through the keyword map for those matching keywords
+    .filter(k => k.toLowerCase() === keyword.toLowerCase())
+    // lists of plugins for each keyword
+    .map(k => keywordMap[k])
+    // flatten lists
+    .reduce((prev, next) => prev.concat(next), []);
+  if (args && args.length && args[0].length) {
+    // search through all those filtered plugins with the specified keyword
+    // then query it for results
+    const resultsPromises = filteredPlugins
+      .map(p => queryResults(p, args));
+    // resolve all promises then merge the results
+    Promise.all(resultsPromises)
+      .then(resultSet => {
+        if (resultSet && resultSet.length) {
+          const results = resultSet
+            // flatten and merge items
+            .reduce((prev, next) => prev.concat(next))
+            // filter max results
+            .slice(0, MAX_RESULTS);
+          // send the results back to the renderer
+          evt.sender.send(IPC_QUERY_RESULTS, results);
+        } else {
+          // send the results back to the renderer
+          evt.sender.send(IPC_QUERY_RESULTS, []);
+        }
+      })
+      .catch(err => {
+        console.error(err); // eslint-disable-line no-console
+      });
+  } else {
+    // send the results back to the renderer
+    evt.sender.send(IPC_QUERY_RESULTS, []);
+  }
+};
+
+/**
+ * Create a debounced function for handling the query command
+ */
+const debounceHandleQueryCommand = debounce(handleQueryCommand, 500);
+
 /**
  * Creates a new Browser window and loads the renderer index
  */
@@ -170,45 +216,7 @@ const createWindow = () => {
   const registerIpcListeners = keywordMap => {
     // listen to query commands and queries for results
     // and sends it to the renderer
-    ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => {
-      const args = message.q.split(' ');
-      const keyword = args.shift();
-      const filteredPlugins = Object.keys(keywordMap)
-        // filter through the keyword map for those matching keywords
-        .filter(k => k.toLowerCase() === keyword.toLowerCase())
-        // lists of plugins for each keyword
-        .map(k => keywordMap[k])
-        // flatten lists
-        .reduce((prev, next) => prev.concat(next), []);
-      if (args && args.length && args[0].length) {
-        // search through all those filtered plugins with the specified keyword
-        // then query it for results
-        const resultsPromises = filteredPlugins
-          .map(p => queryResults(p, args));
-        // resolve all promises then merge the results
-        Promise.all(resultsPromises)
-          .then(resultSet => {
-            if (resultSet && resultSet.length) {
-              const results = resultSet
-                // flatten and merge items
-                .reduce((prev, next) => prev.concat(next))
-                // filter max results
-                .slice(0, MAX_RESULTS);
-              // send the results back to the renderer
-              evt.sender.send(IPC_QUERY_RESULTS, results);
-            } else {
-              // send the results back to the renderer
-              evt.sender.send(IPC_QUERY_RESULTS, []);
-            }
-          })
-          .catch(err => {
-            console.error(err); // eslint-disable-line no-console
-          });
-      } else {
-        // send the results back to the renderer
-        evt.sender.send(IPC_QUERY_RESULTS, []);
-      }
-    });
+    ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => debounceHandleQueryCommand(evt, message, keywordMap));
 
     // listen for execution commands
     ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
