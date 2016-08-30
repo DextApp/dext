@@ -243,11 +243,6 @@ const createWindow = () => {
       registerIpcListeners(keywordMap);
     });
   });
-
-  // DEBUG
-  if (process.env.NODE_ENV === 'development') {
-    win.openDevTools();
-  }
 };
 
 app.on('ready', createWindow);
