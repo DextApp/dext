@@ -19,8 +19,7 @@
     "build": "webpack",
     "package": "node scripts/package.js",
     "dev": "cross-env NODE_ENV=development electron . --debug",
-    "start": "npm run build && npm run dev",
-    "postinstall": "npm run build && npm run package"
+    "start": "npm run build && npm run dev"
   },
   "author": "Vu Tran <vu@vu-tran.com>",
   "repository": {
