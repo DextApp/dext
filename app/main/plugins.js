@@ -4,6 +4,7 @@ const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
+const CacheConf = require('../../utils/CacheConf');
 
 /**
  * Loads all plugins in the given path
@@ -101,6 +102,14 @@ exports.connectItems = (items, plugin) => items.map(i => {
  * @return {Promise} - An array of results
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
+  // load from cache
+  const cacheConf = new CacheConf({ configName: path.basename(plugin.plugin) });
+  const cacheKey = args.join(' ');
+  if (cacheConf.has(cacheKey)) {
+    const cachedResults = cacheConf.get(cacheKey);
+    resolve(cachedResults);
+    return;
+  }
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
@@ -125,6 +134,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
             items = exports.connectItems(output.items, plugin);
           }
         }
+        cacheConf.set(cacheKey, items);
         resolve(items);
       });
       break;
@@ -143,6 +153,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       if (output) {
         Promise.resolve(output).then(a => {
           items = exports.connectItems(a.items, plugin);
+          cacheConf.set(cacheKey, items);
           resolve(items);
         });
       }
