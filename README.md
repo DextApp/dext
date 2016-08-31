@@ -20,30 +20,26 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 $ npm install dext
 ```
 
-## Installing Plugins and Themes
+## Dext Package Manager
 
-Dext Package Manager is included out of the box to allow for managing configurations easily. (This package may be extracted in the future to keep the app file size low)
-
-### Activating the CLI
+[Dext Package Manager (`dpm`)](https://github.com/vutran/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your Dext instance. Please refer to the docs over at the [`dpm`](https://github.com/vutran/dext-cli) repository for more information.
 
 ```bash
-# link the module globally to create a symlink to the bin file
-$ npm link
+$ npm install -g dext-cli
 ```
 
-### CLI Usage
+## Configuring
 
-Once the `dpm` has been linked, you can start accessing it's functions. See examples below:
+The Dext configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
 
-```bash
-# installs a new plugin/theme
-$ dpm install dext-my-plugin
+*Hint: Use [`dpm`](https://github.com/vutran/dext-cli) to easily manage plugins.*
 
-# uninstalls an existing plugin/theme
-$ dpm uninstall dext-my-plugin
-
-# sets a new theme
-$ dpm theme dext-my-theme
+```
+.dext/
+| --- config.json
+| --- plugins/
+| --- | --- dext-github-plugin/
+| --- | --- dext-hackernews-plugin/
 ```
 
 ## Documentation
