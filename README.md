@@ -20,9 +20,15 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 $ npm install dext
 ```
 
+## Usage
+
+<kbd>cmd</kbd> + <kbd>space</kbd> to toggle the ***Dext*** command bar and start typing something.
+
+Double-click or press <kbd>enter</kbd> on a selected item to execute the action for the given item.
+
 ## Dext Package Manager
 
-[Dext Package Manager (`dpm`)](https://github.com/vutran/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your Dext instance. Please refer to the docs over at the [`dpm`](https://github.com/vutran/dext-cli) repository for more information.
+[Dext Package Manager (`dpm`)](https://github.com/vutran/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your ***Dext*** instance. Please refer to the docs over at the [`dpm`](https://github.com/vutran/dext-cli) repository for more information.
 
 ```bash
 $ npm install -g dext-cli
@@ -30,7 +36,7 @@ $ npm install -g dext-cli
 
 ## Configuring
 
-The Dext configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
+The ***Dext*** configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
 
 *Hint: Use [`dpm`](https://github.com/vutran/dext-cli) to easily manage plugins.*
 
