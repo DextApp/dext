@@ -14,7 +14,7 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  output: {
+  execute: {
     items: [], // array of items (refer to the item schema below)
   },
 };
@@ -26,7 +26,7 @@ module.exports = {
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  output: function(q) {
+  execute: function(q) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
     return new Promise(function(resolve) {
