@@ -18,8 +18,10 @@ exports.loadPluginsInPath = directory => new Promise(resolve => {
   fs.readdir(directory, (err, plugins) => {
     if (plugins && plugins.length) {
       plugins.forEach(plugin => {
-        const pluginPath = path.resolve(directory, plugin);
-        loaded.push(pluginPath);
+        if (plugin !== '.DS_Store') {
+          const pluginPath = path.resolve(directory, plugin);
+          loaded.push(pluginPath);
+        }
       });
     }
     resolve(loaded);
