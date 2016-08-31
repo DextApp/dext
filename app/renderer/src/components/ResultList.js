@@ -8,7 +8,10 @@ const base = style({
   display: 'none',
   height: '100%',
   listStyleType: 'none',
-  margin: 0,
+  marginTop: 15,
+  marginBottom: 0,
+  marginLeft: 0,
+  marginRight: 0,
   padding: 0,
   width: '100%',
 });

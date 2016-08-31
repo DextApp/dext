@@ -4,13 +4,15 @@ import QueryFieldContainer from '../containers/QueryFieldContainer';
 import ResultListContainer from '../containers/ResultListContainer';
 
 const base = style({
-  backgroundColor: '#ffffff',
+  backgroundColor: '#f2f2f2',
+  color: '#333',
   borderRadius: 0,
-  borderWidth: 1,
+  borderWidth: 0,
   boxSizing: 'border-box',
-  fontFamily: 'Helvetica, Arial, sans-serif',
+  fontFamily: 'Lucida Grande, Arial, sans-serif',
+  fontWeight: 'lighter',
   padding: 15,
-  width: 650,
+  width: '100%',
 });
 
 const App = ({ theme }) => {

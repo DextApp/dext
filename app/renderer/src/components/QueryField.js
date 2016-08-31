@@ -5,13 +5,14 @@ const base = style({
   backgroundColor: 'transparent',
   border: 0,
   boxSizing: 'border-box',
-  fontSize: 40,
+  fontSize: 50,
   paddingTop: 0,
-  paddingBottom: 0,
-  marginBottom: 10,
+  paddingBottom: 15,
+  marginBottom: 0,
   outline: 0,
   overflow: 'visible',
   width: '100%',
+  height: 50,
 });
 
 const QueryField = class extends Component {

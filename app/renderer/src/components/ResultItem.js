@@ -12,6 +12,7 @@ const baseHover = hover(activeStyle);
 const base = compose(
   style({
     display: 'flex',
+    color: '#333333',
     boxSizing: 'border-box',
     height: 60,
     margin: 0,
