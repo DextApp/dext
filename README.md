@@ -61,10 +61,6 @@ $ dpm theme dext-my-theme
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin)
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin)
 
-## Themes
-
-- [dext-default-theme](https://github.com/vutran/dext-default-theme)
-
 ## Goals
 
 - To provide a free/open-source alternative to Spotlight, and Alfred.
