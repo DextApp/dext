@@ -196,10 +196,10 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
     default: { // eslint-disable-line no-fallthrough
       const m = require(plugin.path); // eslint-disable-line global-require
       let output = '';
-      if (typeof m.output === 'function') {
-        output = m.output(q);
+      if (typeof m.execute === 'function') {
+        output = m.execute(q);
       } else {
-        output = m.output;
+        output = m.execute;
       }
       let items = [];
       if (output) {
