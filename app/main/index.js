@@ -1,6 +1,12 @@
 const path = require('path');
 const electron = require('electron');
-const { loadPlist, loadPlugins, queryResults } = require('./plugins');
+const {
+  applyModuleProperties,
+  loadPluginsInPath,
+  queryResults,
+  isCorePlugin,
+  isPluginATheme,
+} = require('./plugins');
 const { loadTheme } = require('./themes');
 const {
   IPC_WINDOW_SHOW,
@@ -16,7 +22,7 @@ const {
   IPC_LOAD_THEME,
 } = require('../ipc');
 const Config = require('../../utils/conf');
-const { PLUGIN_PATH } = require('../../utils/paths');
+const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 const { debounce } = require('../../utils/helpers');
 
 const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
@@ -126,44 +132,41 @@ const handleDidFinishLoad = () => {
   });
 };
 
-const handleQueryCommand = (evt, message, keywordMap) => {
-  const args = message.q.split(' ');
-  const keyword = args.shift();
-  const filteredPlugins = Object.keys(keywordMap)
-    // filter through the keyword map for those matching keywords
-    .filter(k => k.toLowerCase() === keyword.toLowerCase())
-    // lists of plugins for each keyword
-    .map(k => keywordMap[k])
-    // flatten lists
-    .reduce((prev, next) => prev.concat(next), []);
-  if (args && args.length && args[0].length) {
-    // search through all those filtered plugins with the specified keyword
-    // then query it for results
-    const resultsPromises = filteredPlugins
-      .map(p => queryResults(p, args));
-    // resolve all promises then merge the results
-    Promise.all(resultsPromises)
-      .then(resultSet => {
-        if (resultSet && resultSet.length) {
-          const results = resultSet
-            // flatten and merge items
-            .reduce((prev, next) => prev.concat(next))
-            // filter max results
-            .slice(0, MAX_RESULTS);
-          // send the results back to the renderer
-          evt.sender.send(IPC_QUERY_RESULTS, results);
-        } else {
-          // send the results back to the renderer
-          evt.sender.send(IPC_QUERY_RESULTS, []);
-        }
-      })
-      .catch(err => {
-        console.error(err); // eslint-disable-line no-console
-      });
-  } else {
+/**
+ * Makes a query to all plugins.
+ *
+ * plugins { path, name, isCore, schema, action, keyword }
+ *
+ * @param {Event} evt
+ * @param {Object} message - The IPC message { q, type }
+ * @param {Object[]} plugins - An array of plugin objects
+ */
+const handleQueryCommand = (evt, message, plugins) => {
+  // collect results
+  const results = [];
+  plugins.forEach(plugin => {
+    const args = message.q.split(' ');
+    // if core, then just apply the output method
+    if (plugin.isCore) {
+      results.push(queryResults(plugin, args));
+    } else {
+      // extract the keyword
+      const keyword = args.shift();
+      // if the keyword exists and query matches the plugin's keyword
+      if (keyword && plugin.keyword.toLowerCase() === keyword.toLowerCase()) {
+        results.push(queryResults(plugin, args));
+      }
+    }
+  });
+  Promise.all(results).then(resultSet => {
+    const retval = resultSet
+      // flatten and merge items
+      .reduce((prev, next) => prev.concat(next))
+      // filter max results
+      .slice(0, MAX_RESULTS);
     // send the results back to the renderer
-    evt.sender.send(IPC_QUERY_RESULTS, []);
-  }
+    evt.sender.send(IPC_QUERY_RESULTS, retval || []);
+  });
 };
 
 /**
@@ -209,40 +212,54 @@ const createWindow = () => {
   globalShortcut.register('cmd+space', toggleMainWindow);
 
   /**
-   * Registers plugin query listeners
+   * Registers the query command listeners for all plugins
    *
-   * @param {Object} keywordMap - An object representing the keyword and action configurations
+   * { path, name, isCore, schema, action, keyword }
+   *
+   * @param {Object[]} plugins - An array of plugin objects
    */
-  const registerIpcListeners = keywordMap => {
-    // listen to query commands and queries for results
-    // and sends it to the renderer
-    ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => debounceHandleQueryCommand(evt, message, keywordMap));
-
+  const registerIpcListeners = plugins => {
+    // listen to query commands and queries
+    // for results and sends it to the renderer
+    ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => debounceHandleQueryCommand(evt, message, plugins));
     // listen for execution commands
     ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
       execute(message);
     });
   };
 
-  // loads the plugins
-  loadPlugins(PLUGIN_PATH).then(plugins => {
-    // load the plist for each plugins
-    const plists = plugins.map(p => loadPlist(p));
-    // wait for all to be loaded
-    Promise.all(plists).then(resultSets => {
-      const keywordMap = {};
-      // store all return results into the keywordMap object
-      resultSets.forEach(result => {
-        if (result) {
-          if (typeof keywordMap[result.keyword] === 'undefined') {
-            keywordMap[result.keyword] = [];
-          }
-          keywordMap[result.keyword].push(result);
+  // load core/user plugins
+  const corePlugins = loadPluginsInPath(CORE_PLUGIN_PATH);
+  const userPlugins = loadPluginsInPath(PLUGIN_PATH);
+  Promise.all([corePlugins, userPlugins])
+    .then(pluginSets => {
+      const allPlugins = pluginSets
+        // merge promise results
+        .reduce((a, b) => a.concat(b))
+        // turn into array of objects
+        .map(plugin => ({
+          path: plugin,
+          name: path.basename(plugin),
+          isCore: isCorePlugin(plugin),
+          schema: 'dext',
+          action: 'openurl',
+          keyword: '',
+        }))
+        .filter(plugin => !isPluginATheme(plugin.path));
+        // check for Alfred plugins in the user
+        // if it is an Alfred plugin, set the schema
+      const ready = [];
+      allPlugins.forEach(plugin => {
+        if (plugin.isCore) {
+          ready.push(plugin);
+        } else {
+          ready.push(applyModuleProperties(plugin));
         }
       });
-      registerIpcListeners(keywordMap);
+      Promise.all(ready).then(pluginsReady => {
+        registerIpcListeners(pluginsReady);
+      });
     });
-  });
 };
 
 app.on('ready', createWindow);
