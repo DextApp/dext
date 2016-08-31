@@ -51,11 +51,15 @@ $ dpm theme dext-my-theme
 - [Plugins](docs/PLUGINS.md)
 - [Themes](docs/THEMES.md)
 
-## Plugins
+## Core Plugins
+
+- [dext-core-plugin-bookmarks](https://github.com/vutran/dext-core-plugin-bookmarks) - Search your Chrome bookmarks.
+- [dext-core-plugin-calculator](https://github.com/vutran/dext-core-plugin-calculator) - Quickly calculate something.
+
+## Other Plugins
 
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin)
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin)
-- [dext-chrome-bookmarks-plugin](https://github.com/vutran/dext-chrome-bookmarks-plugin)
 
 ## Themes
 

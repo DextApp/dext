@@ -1,21 +1,6 @@
-const math = require('mathjs');
+const calculator = require('dext-core-plugin-calculator');
 
 module.exports = {
-  output: q => {
-    try {
-      const ans = math.eval(q);
-      const items = [];
-      items.push({
-        title: ans.toString(),
-        subtitle: q,
-        icon: {
-          path: './icon.png',
-        },
-      });
-      return { items };
-    } catch (err) {
-      // do nothing...
-      return { items: [] };
-    }
-  },
+  action: 'openurl',
+  output: calculator.output,
 };
