@@ -31,8 +31,8 @@ const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
 const WINDOW_DEFAULT_WIDTH = 650;
 const WINDOW_DEFAULT_HEIGHT = 80;
 const WINDOW_MIN_HEIGHT = 80;
-const WINDOW_MAX_HEIGHT = 650;
-const MAX_RESULTS = 10;
+const WINDOW_MAX_HEIGHT = 680; // results + query
+const MAX_RESULTS = 20;
 
 let win = null;
 
@@ -181,6 +181,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: WINDOW_DEFAULT_WIDTH,
     height: WINDOW_DEFAULT_HEIGHT,
+    maxHeight: WINDOW_MAX_HEIGHT,
     center: false,
     frame: false,
     show: false,

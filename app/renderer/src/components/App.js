@@ -11,8 +11,9 @@ const base = style({
   boxSizing: 'border-box',
   fontFamily: 'Lucida Grande, Arial, sans-serif',
   fontWeight: 'lighter',
-  padding: 15,
+  padding: 0,
   width: '100%',
+  overflow: 'hidden',
 });
 
 const App = ({ theme }) => {

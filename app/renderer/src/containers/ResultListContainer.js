@@ -22,8 +22,8 @@ const ResultListContainer = class extends Component {
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
       if (newResults.length) {
-        // TODO: compute the height + added margin
-        const height = (newResults.length * 60) + 10;
+        // TODO: compute the height + added padding
+        const height = (newResults.length * 60) + 30;
         ipcRenderer.send(IPC_WINDOW_RESIZE, { height });
       }
       if (newResults.length) {

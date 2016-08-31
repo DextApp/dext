@@ -1,20 +1,29 @@
 import React, { PropTypes } from 'react';
-import { style, compose } from 'glamor';
+import { pseudo, style, compose } from 'glamor';
 import ResultItemContainer from '../containers/ResultItemContainer';
 import ResultItemSchema from '../schema/ResultItemSchema';
 
-const base = style({
-  boxSizing: 'border-box',
-  display: 'none',
-  height: '100%',
-  listStyleType: 'none',
-  marginTop: 15,
-  marginBottom: 0,
-  marginLeft: 0,
-  marginRight: 0,
-  padding: 0,
-  width: '100%',
-});
+const base = compose(
+  style({
+    boxSizing: 'border-box',
+    display: 'none',
+    height: '100%',
+    maxHeight: 600,
+    listStyleType: 'none',
+    margin: 0,
+    padding: 15,
+    width: '100%',
+    overflowX: 'hidden',
+    overflowY: 'overlay',
+  }),
+  pseudo('::-webkit-scrollbar', {
+    width: 3,
+    marginRight: 3,
+  }),
+  pseudo('::-webkit-scrollbar-thumb', {
+    backgroundColor: '#bbb',
+  }),
+);
 
 const shown = style({
   display: 'block',
