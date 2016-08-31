@@ -29,7 +29,8 @@ module.exports = class extends Conf {
    * @param {Object} opts
    */
   set(key, val, opts) {
-    const o = opts || { maxAge: 900000 }; // 15 minute default cache
+    // const o = opts || { maxAge: 900000 }; // 15 minute default cache
+    const o = opts || { maxAge: 0 }; // disable
     super.set(key, {
       timestamp: o.maxAge && Date.now() + o.maxAge,
       data: val,
