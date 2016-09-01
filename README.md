@@ -16,7 +16,7 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 
 ## Install
 
-Download the latest zip file [here](releases/Dext.zip?raw=true) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
+Download the latest zip file [here](https://github.com/vutran/dext/releases/) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
 
 **NOTE: Release version may not be stable as Dext is still in it's early stage of development. Please help [contribute](#contribute) towards a stable build.**
 
