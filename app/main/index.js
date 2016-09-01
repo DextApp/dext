@@ -125,6 +125,8 @@ const handleDidFinishLoad = () => {
     if (theme) {
       win.webContents.send(IPC_LOAD_THEME, theme);
     }
+    // initial window display
+    win.show();
   });
 };
 
