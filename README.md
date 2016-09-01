@@ -8,9 +8,9 @@ Screenshot is using the [dext-github-plugin](https://github.com/vutran/dext-gith
 
 ## Overview
 
-**Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of Alfred.
+**Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of *Alfred*.
 
-Made compatible with Alfred workflows that is powered by node (see: [alfy](https://github.com/sindresorhus/alfy)).
+Made compatible with *Alfred* workflows that is powered by node (see: [alfy](https://github.com/sindresorhus/alfy)).
 
 ***Note: Currently available only for Mac OS X platform. Please help contribute for Windows and Linux users.***
 
@@ -65,45 +65,19 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 
 ## Goals
 
-- To provide a free/open-source alternative to Spotlight, and Alfred.
-- Preserve compatibility with existing Alfred workflows.
+- To provide a free/open-source alternative to *Spotlight*, and *Alfred*.
+- Preserve compatibility with existing *Alfred* workflows.
 - Allow customization and extending via plugins and themes.
 
-## Contribute
+## Contributing
 
-I'm looking for contributors to help grow the application. **Dext** is still in its very early stage of development and lots of new features and improvements will be added over time.
+♥ ***Dext*** and want to contribute? I am seeking contributors of any levels to help grow the application. You can help contribute to the growth of this application in many ways.
 
-1. [Fork](https://help.github.com/articles/fork-a-repo/) and [clone](https://help.github.com/articles/cloning-a-repository/) this repository.
+- [Bug Reports](CONTRIBUTING.md#bug-reports)
+- [Feature Requests](CONTRIBUTING.md#feature-requests)
+- [Pull Requests](CONTRIBUTING.md#pull-requests)
+- [Feedback and Suggestions](CONTRIBUTING.md#feedback-and-suggestions)
 
-  ```bash
-  $ git clone git@github.com:vutran/dext.git
-  ```
-2. Switch to the new `dext` directory that was created in step 1.
-
-  ```bash
-  $ cd dext
-  ```
-3. Install `npm` dependencies.
-
-  ```bash
-  $ npm install
-  ```
-4. Boot up the application.
-
-  ```bash
-  $ npm start
-  ```
-5. Submit a [Pull Request](https://github.com/vutran/dext/pulls) if you have something great to contribute.
-
-## Packaging
-
-You can package a release by running the command below in the project's directory.
-
-***Note: This is still under development. Please feel free to contribute to this feature and submit a Pull Request.***
-
-```bash
-$ npm run package
-```
 
 ## LICENSE
 
