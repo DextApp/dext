@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const DEFAULT_OPTIONS = {
   name: 'Dext',
   dir: path.resolve(__dirname, '..'),
-  out: './dist',
+  out: './dist/package',
   asar: true,
   overwrite: true,
   ignore: [
@@ -31,8 +31,6 @@ const pkg = (platform, arch) => new Promise(resolve => {
 
 /**
  * Print the status of the package
- *
- * @param {String} err
  */
 const printStatus = ({ err, options }) => {
   if (err) {
