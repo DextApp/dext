@@ -10,6 +10,10 @@ const DEFAULT_OPTIONS = {
   overwrite: true,
   ignore: [
     '.DS_Store',
+    'dist',
+    'docs',
+    'scripts',
+    'screenshot.gif',
   ],
 };
 

@@ -3,8 +3,8 @@ const { exec } = require('child_process');
 const chalk = require('chalk');
 
 const archive = filename => new Promise(resolve => {
-  const basename = path.basename(filename);
-  exec(`cd dist && mkdir -p releases && cd package && zip -r ../releases/${filename} ${basename}`, err => {
+  const { name } = path.parse(filename);
+  exec(`cd dist && mkdir -p releases && cd package && zip -9 -r --symlinks ../releases/${filename} ${name}`, err => {
     resolve({ err, options: { filename } });
   });
 });
@@ -23,4 +23,4 @@ const printStatus = ({ err, options }) => {
 };
 
 // start archiving
-archive('Dext-darwin-x64').then(printStatus);
+archive('Dext-darwin-x64.zip').then(printStatus);

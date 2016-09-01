@@ -14,8 +14,9 @@
   "scripts": {
     "lint": "eslint app",
     "build": "webpack",
-    "package": "node scripts/package.js",
+    "package": "cross-env NODE_ENV=production node scripts/package.js",
     "archive": "node scripts/archive.js",
+    "release": "npm run package && npm run archive",
     "dev": "cross-env NODE_ENV=development electron . --debug",
     "start": "npm run build && npm run dev"
   },
