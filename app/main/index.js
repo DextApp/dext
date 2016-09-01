@@ -1,11 +1,8 @@
 const path = require('path');
 const electron = require('electron');
 const {
-  applyModuleProperties,
-  loadPluginsInPath,
+  loadPlugins,
   queryResults,
-  isCorePlugin,
-  isPluginATheme,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
 const {
@@ -22,7 +19,6 @@ const {
   IPC_LOAD_THEME,
 } = require('../ipc');
 const Config = require('../../utils/conf');
-const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 const { debounce } = require('../../utils/helpers');
 
 const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
@@ -229,38 +225,11 @@ const createWindow = () => {
     });
   };
 
-  // load core/user plugins
-  const corePlugins = loadPluginsInPath(CORE_PLUGIN_PATH);
-  const userPlugins = loadPluginsInPath(PLUGIN_PATH);
-  Promise.all([corePlugins, userPlugins])
-    .then(pluginSets => {
-      const allPlugins = pluginSets
-        // merge promise results
-        .reduce((a, b) => a.concat(b))
-        // turn into array of objects
-        .map(plugin => ({
-          path: plugin,
-          name: path.basename(plugin),
-          isCore: isCorePlugin(plugin),
-          schema: 'dext',
-          action: 'openurl',
-          keyword: '',
-        }))
-        .filter(plugin => !isPluginATheme(plugin.path));
-        // check for Alfred plugins in the user
-        // if it is an Alfred plugin, set the schema
-      const ready = [];
-      allPlugins.forEach(plugin => {
-        if (plugin.isCore) {
-          ready.push(plugin);
-        } else {
-          ready.push(applyModuleProperties(plugin));
-        }
-      });
-      Promise.all(ready).then(pluginsReady => {
-        registerIpcListeners(pluginsReady);
-      });
-    });
+  // load all plugins and then
+  // registers the ipc listeners
+  loadPlugins().then(plugins => {
+    registerIpcListeners(plugins);
+  });
 };
 
 app.on('ready', createWindow);

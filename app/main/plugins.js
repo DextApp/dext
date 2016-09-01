@@ -4,7 +4,7 @@ const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
-const { PLUGIN_PATH } = require('../../utils/paths');
+const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 const CacheConf = require('../../utils/CacheConf');
 
 /**
@@ -108,6 +108,34 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
       });
     }
   });
+});
+
+/**
+ * Loads core and user plugins
+ */
+exports.loadPlugins = () => new Promise(resolve => {
+  const corePlugins = exports.loadPluginsInPath(CORE_PLUGIN_PATH);
+  const userPlugins = exports.loadPluginsInPath(PLUGIN_PATH);
+  Promise.all([corePlugins, userPlugins])
+    .then(pluginSets => {
+      const allPlugins = pluginSets
+        // merge promise results
+        .reduce((a, b) => a.concat(b))
+        // turn into array of objects
+        .map(plugin => ({
+          path: plugin,
+          name: path.basename(plugin),
+          isCore: exports.isCorePlugin(plugin),
+          schema: 'dext',
+          action: 'openurl',
+          keyword: '',
+        }))
+        .filter(plugin => !exports.isPluginATheme(plugin.path));
+      // check for Alfred plugins in the user
+      // if it is an Alfred plugin, set the schema
+      const ready = allPlugins.map(exports.applyModuleProperties);
+      Promise.all(ready).then(resolve);
+    });
 });
 
 /**
