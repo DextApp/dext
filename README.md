@@ -74,18 +74,22 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 I'm looking for contributors to help grow the application. **Dext** is still in its very early stage of development and lots of new features and improvements will be added over time.
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) and [clone](https://help.github.com/articles/cloning-a-repository/) this repository.
+
   ```bash
   $ git clone git@github.com:vutran/dext.git
   ```
 2. Switch to the new `dext` directory that was created in step 1.
+
   ```bash
   $ cd dext
   ```
 3. Install `npm` dependencies.
+
   ```bash
   $ npm install
   ```
 4. Boot up the application.
+
   ```bash
   $ npm start
   ```
