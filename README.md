@@ -16,9 +16,9 @@ Made compatible with Alfred workflows that is powered by node (see: [alfy](https
 
 ## Install
 
-```bash
-$ npm install dext
-```
+Download the latest zip file [here](releases/Dext.zip) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
+
+**NOTE: Release version may not be stable as Dext is still in it's early stage of development. Please help [contribute](#contribute) towards a stable build.**
 
 ## Usage
 
