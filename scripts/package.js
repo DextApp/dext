@@ -8,12 +8,9 @@ const DEFAULT_OPTIONS = {
   out: './dist/package',
   asar: true,
   overwrite: true,
+  prune: true,
   ignore: [
     '.DS_Store',
-    'dist',
-    'docs',
-    'scripts',
-    'screenshot.gif',
   ],
 };
 
