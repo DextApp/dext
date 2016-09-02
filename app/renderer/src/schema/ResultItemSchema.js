@@ -13,7 +13,11 @@ export default PropTypes.shape({
   arg: PropTypes.string,
 
   icon: PropTypes.shape({
+    // The icon type
+    type: PropTypes.oneOf(['file', 'text', '']),
     // The URL path to the icon.
     path: PropTypes.string,
+    // If the type is "text", it will display this letter
+    letter: PropTypes.string,
   }),
 });

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { style, compose, hover } from 'glamor';
+import Icon from './Icon';
 import ResultItemSchema from '../schema/ResultItemSchema';
 
 const activeStyle = {
@@ -26,11 +27,6 @@ const icon = style({
   flex: 'content',
   boxSizing: 'border-box',
   marginRight: 10,
-});
-
-const iconImg = style({
-  maxWidth: 40,
-  maxHeight: 40,
 });
 
 const details = style({
@@ -74,7 +70,7 @@ const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
   return (
     <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
       <div {...icon}>
-        <img {...iconImg} src={item.icon.path} role="presentation" />
+        <Icon icon={item.icon} />
       </div>
       <div {...details}>
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
