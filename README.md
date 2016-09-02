@@ -22,9 +22,21 @@ Download the latest zip file [here](https://github.com/vutran/dext/releases/) an
 
 ## Usage
 
-<kbd>cmd</kbd> + <kbd>space</kbd> to toggle the ***Dext*** command bar and start typing something.
+### Toggle Dext Bar
 
-Double-click or press <kbd>enter</kbd> on a selected item to execute the action for the given item.
+Simply toggle and start typing with:
+
+<kbd>cmd</kbd> + <kbd>space</kbd>
+
+### Actions
+
+Each item may have it's own action. You can execute an item by double-clicking on the item or selecting it and pressing:
+
+<kbd>enter</kbd>
+
+### Help/About
+
+Type `?`
 
 ## Dext Package Manager
 
@@ -48,20 +60,20 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 | --- | --- dext-hackernews-plugin/
 ```
 
-## Documentation
-
-- [Plugins](docs/PLUGINS.md)
-- [Themes](docs/THEMES.md)
-
-## Core Plugins
+### Core Plugins
 
 - [dext-core-plugin-bookmarks](https://github.com/vutran/dext-core-plugin-bookmarks) - Search your Chrome bookmarks.
 - [dext-core-plugin-calculator](https://github.com/vutran/dext-core-plugin-calculator) - Quickly calculate something.
 
-## Other Plugins
+## Community Plugins
 
-- [dext-github-plugin](https://github.com/vutran/dext-github-plugin)
-- [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin)
+- [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
+- [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
+
+## Developers Documentation
+
+- [Plugins](docs/PLUGINS.md)
+- [Themes](docs/THEMES.md)
 
 ## Goals
 

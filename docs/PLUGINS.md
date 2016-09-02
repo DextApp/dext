@@ -8,7 +8,7 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 
 ## Creating Your Plugin
 
-### Basic modules
+### Basic Module
 
 ```js
 module.exports = {
@@ -16,6 +16,22 @@ module.exports = {
   action: 'openurl',
   execute: {
     items: [], // array of items (refer to the item schema below)
+  },
+};
+```
+
+### Using Funtions
+
+```js
+module.exports = {
+  keyword: 'foo',
+  action: 'openurl',
+  execute: function(q) {
+    // q is the query the user entered (excludes the keyword)
+    // do something here like query a remote database to retrieve results
+    return {
+      items: [], // array of items (refer to the item schema below)
+    };
   },
 };
 ```
