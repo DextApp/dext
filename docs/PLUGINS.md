@@ -103,11 +103,23 @@ Type: `object`
 
 #### Options
 
+##### icon.type
+
+Type: `String`
+
+Options: `file`, `text`
+
 ##### icon.path
 
 Type: 'String'
 
-The URL path to the icon.
+If `icon.type` isn't set or is `file`, the image will be served as the icon. (Can be a URL or file path.)
+
+##### icon.letter
+
+Type: `String`
+
+If `icon.type` is set to `text`, a round circle will be displayed with the specified letter.
 
 ## Sample Item
 
@@ -115,9 +127,24 @@ The URL path to the icon.
 {
   "title": "GitHub",
   "subtitle": "Build software better, together",
-  "arg": "http://github.com",
+  "arg": "https://github.com",
   "icon": {
     "path": "https://github.com/fluidicon.png"
+  }
+}
+```
+
+## Sample Item with Letter icon
+
+
+```json
+{
+  "title": "GitHub",
+  "subtitle": "Build software better, together",
+  "arg": "https://github.com",
+  "icon": {
+    "type": "text",
+    "letter": "G"
   }
 }
 ```
