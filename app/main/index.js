@@ -140,22 +140,36 @@ const handleDidFinishLoad = () => {
  * @param {Object[]} plugins - An array of plugin objects
  */
 const handleQueryCommand = (evt, message, plugins) => {
+  let args = message.q.split(' ');
+  const kw = args.shift().toLowerCase();
   // collect results
   const results = [];
-  plugins.forEach(plugin => {
-    const args = message.q.split(' ');
-    // if core, then just apply the output method
-    if (plugin.isCore) {
+  // find if it matches the current keyword
+  const matchedPlugins = plugins.filter(p => kw.length && kw === p.keyword.toLowerCase());
+  // if plugins are found with the current keyword
+  // only make queries to those plugins
+  if (matchedPlugins && matchedPlugins.length) {
+    matchedPlugins.forEach(plugin => {
       results.push(queryResults(plugin, args));
-    } else {
-      // extract the keyword
-      const keyword = args.shift();
-      // if the keyword exists and query matches the plugin's keyword
-      if (keyword && plugin.keyword.toLowerCase() === keyword.toLowerCase()) {
+    });
+  } else {
+    // otherwise, do a regular query
+    plugins.forEach(plugin => {
+      // make sure to reset the args array for each plugin
+      args = message.q.split(' ');
+      // if core, then just apply the output method
+      if (plugin.isCore) {
         results.push(queryResults(plugin, args));
+      } else {
+        // extract the keyword
+        const keyword = args.shift();
+        // if the keyword exists and query matches the plugin's keyword
+        if (keyword && plugin.keyword.toLowerCase() === keyword.toLowerCase()) {
+          results.push(queryResults(plugin, args));
+        }
       }
-    }
-  });
+    });
+  }
   Promise.all(results).then(resultSet => {
     const retval = resultSet
       // flatten and merge items
