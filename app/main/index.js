@@ -3,6 +3,7 @@ const electron = require('electron');
 const {
   loadPlugins,
   queryResults,
+  connectItems,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
 const {
@@ -47,7 +48,9 @@ const toggleMainWindow = () => {
 const execute = message => {
   switch (message.action) {
     case 'openurl':
-      shell.openExternal(message.item.arg);
+      if (message.item.arg) {
+        shell.openExternal(message.item.arg);
+      }
       break;
     default:
       // do nothing
@@ -149,9 +152,25 @@ const handleQueryCommand = (evt, message, plugins) => {
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins && matchedPlugins.length) {
-    matchedPlugins.forEach(plugin => {
-      results.push(queryResults(plugin, args));
-    });
+    // if no args are set, display the keyword helper
+    if (!args.length || !args[0].trim().length) {
+      // retrieve the helper item
+      // call if it's a function
+      // and resolve as necessary
+      const helper = matchedPlugins[0].helper;
+      let helperItem = helper;
+      if (typeof helper === 'function') {
+        helperItem = helper(kw);
+      }
+      Promise.resolve(helperItem).then(item => {
+        // send a result for the current filtered keyword
+        evt.sender.send(IPC_QUERY_RESULTS, connectItems([item], matchedPlugins[0]));
+      });
+    } else {
+      matchedPlugins.forEach(plugin => {
+        results.push(queryResults(plugin, args));
+      });
+    }
   } else {
     // otherwise, do a regular query
     plugins.forEach(plugin => {

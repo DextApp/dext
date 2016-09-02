@@ -61,7 +61,7 @@ exports.isPluginATheme = directory => {
  * Loads the plugin's Alfred plist file if available.
  * Modifies the schema property if the plugin is an Alfred plugin.
  *
- * { path, name, isCore, schema, action, keyword }
+ * plugin { path, name, isCore, schema, keyword, action, helper }
  *
  * @param {String} plugin - The plugin object
  * @return {Promise} - A modified clone of the plugin object
@@ -72,12 +72,13 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
     if (err1) {
       // retrieve the keyword and action from the plugin
       // eslint-disable-next-line global-require
-      const { keyword, action } = require(plugin.path);
+      const { keyword, action, helper } = require(plugin.path);
       // set the plugin object overrides
       const newOpts = {
         schema: 'dext',
         action,
         keyword,
+        helper,
       };
       resolve(deepAssign({}, plugin, newOpts));
     } else {
@@ -141,7 +142,7 @@ exports.loadPlugins = () => new Promise(resolve => {
 /**
  * Connects the item sets with the given plugin
  *
- * plugin { path, name, isCore, schema, action, keyword }
+ * plugin { path, name, isCore, schema, keyword, action, helper }
  *
  * @param {Object[]} items - An array of items
  * @param {Object} plugin - The plugin object data
@@ -174,7 +175,7 @@ exports.connectItems = (items, plugin) => items.map(i => {
 /**
  * Queries for the items in the given plugin
  *
- * plugins { path, name, isCore, schema, action, keyword }
+ * plugin { path, name, isCore, schema, keyword, action, helper }
  *
  * @param {Object} - The plugin object
  * @param {String[]} - An array of arguments

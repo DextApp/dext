@@ -14,6 +14,11 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
+  // a helper item object to display to the user (see Item schema below)
+  helper: {
+    title: 'This is the title',
+    subtitle: 'This is the subtitle',
+  },
   execute: {
     items: [], // array of items (refer to the item schema below)
   },
@@ -26,6 +31,14 @@ module.exports = {
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
+  helper: function(q) {
+    // q is exposed when used as a function
+    // return a single item (see Item schema below)
+    return {
+      title: 'Search for ' + q,
+      subtitle: 'This is the subtitle',
+    };
+  },
   execute: function(q) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
@@ -42,6 +55,16 @@ module.exports = {
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
+  helper: function(q) {
+    // Promise works for helpers as well
+    return new Promise(function(resolve) {
+      // resolve a single item (see Item schema below)
+      resolve({
+        title: 'Search for ' + q,
+        subtitle: 'This is the subtitle',
+      });
+    });
+  },
   execute: function(q) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
@@ -86,7 +109,7 @@ Type: 'String'
 
 The URL path to the icon.
 
-## Sample
+## Sample Item
 
 ```json
 {
