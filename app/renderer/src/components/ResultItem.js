@@ -59,13 +59,13 @@ const subtitle = style({
 const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
-  let themeSelected = {};
-  if (selected) {
-    themeSelected = compose(
+
+  const themeSelected = selected
+    ? compose(
       style(activeStyle),
       style(theme.resultActive || {})
-    );
-  }
+    )
+    : {};
 
   return (
     <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
