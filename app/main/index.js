@@ -37,9 +37,7 @@ let win = null;
 const config = new Config();
 
 const closeWindow = () => {
-  if (win.hide) {
-    win.hide();
-  }
+  win && win.hide();
   return undefined;
 };
 
