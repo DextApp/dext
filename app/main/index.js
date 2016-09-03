@@ -108,9 +108,7 @@ const handleWindowHide = () => {
   win.webContents.send(IPC_WINDOW_HIDE);
 };
 
-const handleWindowBlur = () => {
-  win.hide();
-};
+const handleWindowBlur = hideWindow;
 
 const handleWindowResize = (evt, { width, height }) => {
   // re-size
