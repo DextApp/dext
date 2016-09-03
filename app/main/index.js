@@ -36,7 +36,7 @@ let win = null;
 // create a user config
 const config = new Config();
 
-const closeWindow = () => {
+const hideWindow = () => {
   win && win.hide();
   return undefined;
 };
@@ -44,7 +44,7 @@ const closeWindow = () => {
 // toggles the main window visibility
 const toggleMainWindow = () => {
   if (win.isVisible()) {
-    closeWindow();
+    hideWindow();
   } else {
     win.show();
   }
@@ -248,7 +248,7 @@ const createWindow = () => {
 
   // register global shortcuts
   globalShortcut.register('cmd+space', toggleMainWindow);
-  globalShortcut.register('escape', closeWindow);
+  globalShortcut.register('escape', hideWindow);
 
   /**
    * Registers the query command listeners for all plugins
