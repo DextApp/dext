@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { style, compose, hover } from 'glamor';
 import Icon from './Icon';
-import ResultItemSchema from '../schema/ResultItemSchema';
+import { ResultItemSchema, ThemeSchema } from '../schema';
 
 const activeStyle = {
   backgroundColor: '#3f93fe',
@@ -81,7 +81,7 @@ const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
 };
 
 ResultItem.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   // item prop should follow the Alfred workflow script filter JSON format
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
   item: ResultItemSchema,
