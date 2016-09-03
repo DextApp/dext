@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import QueryField from '../components/QueryField';
 import * as actionCreators from '../actions/creators';
+import { ThemeSchema } from '../schema';
 import {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_HIDE,
@@ -65,7 +66,7 @@ QueryFieldContainer.defaultProps = {
 };
 
 QueryFieldContainer.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   q: PropTypes.string,
   updateQuery: PropTypes.func,
   resetQuery: PropTypes.func,

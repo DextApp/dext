@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
 import ResultList from '../components/ResultList';
-import ResultItemSchema from '../schema/ResultItemSchema';
+import { ResultItemSchema, ThemeSchema } from '../schema';
 import {
   IPC_WINDOW_RESIZE,
   IPC_QUERY_RESULTS,
@@ -77,7 +77,7 @@ ResultListContainer.defaultProps = {
 };
 
 ResultListContainer.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
   selectItem: PropTypes.func,
