@@ -36,14 +36,19 @@ let win = null;
 // create a user config
 const config = new Config();
 
+const hideWindow = () => (
+  win && win.hide()
+);
+
 // toggles the main window visibility
 const toggleMainWindow = () => {
   if (win.isVisible()) {
-    win.hide();
+    hideWindow();
   } else {
     win.show();
   }
 };
+
 
 const execute = message => {
   switch (message.action) {
@@ -102,9 +107,7 @@ const handleWindowHide = () => {
   win.webContents.send(IPC_WINDOW_HIDE);
 };
 
-const handleWindowBlur = () => {
-  win.hide();
-};
+const handleWindowBlur = hideWindow;
 
 const handleWindowResize = (evt, { width, height }) => {
   // re-size
@@ -242,6 +245,7 @@ const createWindow = () => {
 
   // register global shortcuts
   globalShortcut.register('cmd+space', toggleMainWindow);
+  globalShortcut.register('escape', hideWindow);
 
   /**
    * Registers the query command listeners for all plugins
