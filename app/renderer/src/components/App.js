@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { compose, style } from 'glamor';
 import QueryFieldContainer from '../containers/QueryFieldContainer';
 import ResultListContainer from '../containers/ResultListContainer';
+import { ThemeSchema } from '../schema';
 
 const base = style({
   backgroundColor: '#f2f2f2',
@@ -34,7 +35,7 @@ App.defaultProps = {
 };
 
 App.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
 };
 
 export default App;

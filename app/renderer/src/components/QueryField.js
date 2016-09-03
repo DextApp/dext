@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { compose, style } from 'glamor';
+import { ThemeSchema } from '../schema';
 
 const base = style({
   padding: 15,
@@ -40,7 +41,7 @@ const QueryField = class extends Component {
 
 QueryField.propTypes = {
   onChange: PropTypes.func,
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   value: PropTypes.string,
 };
 

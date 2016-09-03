@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import App from '../components/App';
 import * as actionCreators from '../actions/creators';
+import { ThemeSchema } from '../schema';
 import {
   IPC_WINDOW_RESIZE,
   IPC_LOAD_THEME,
@@ -44,7 +45,7 @@ AppContainer.defaultProps = {
 };
 
 AppContainer.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   setTheme: PropTypes.func,
 };
 

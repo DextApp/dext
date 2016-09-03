@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { pseudo, style, compose } from 'glamor';
 import ResultItemContainer from '../containers/ResultItemContainer';
-import ResultItemSchema from '../schema/ResultItemSchema';
+import { ResultItemSchema, ThemeSchema } from '../schema';
 
 const base = compose(
   style({
@@ -41,7 +41,7 @@ const ResultList = props => {
 };
 
 ResultList.propTypes = {
-  theme: PropTypes.object,
+  theme: ThemeSchema,
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
 };
