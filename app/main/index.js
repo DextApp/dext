@@ -36,10 +36,9 @@ let win = null;
 // create a user config
 const config = new Config();
 
-const hideWindow = () => {
-  win && win.hide();
-  return undefined;
-};
+const hideWindow = () => (
+  win && win.hide()
+);
 
 // toggles the main window visibility
 const toggleMainWindow = () => {
