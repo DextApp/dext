@@ -73,7 +73,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-giphy-plugin](https://github.com/adnasa/dext-giphy-plugin) - Search for giphy images.
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
-- [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) -  Search for npm packages on npms.io.
+- [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) - Search for npm packages on npms.io.
 
 ## Developers Documentation
 
