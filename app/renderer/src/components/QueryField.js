@@ -22,7 +22,7 @@ const search = style({
 const QueryField = class extends Component {
   render() {
     const { theme, onChange, value } = this.props;
-    const styles = theme.search
+    const styles = theme && theme.search
       ? compose(search, theme.search)
       : search;
 
