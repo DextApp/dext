@@ -1,0 +1,75 @@
+exports[`renders a result item component renders a result item component in a selected state 1`] = `
+<li
+  data-css-1vhn8oi=""
+  onDoubleClick={undefined}>
+  <div
+    data-css-vdo2z2="">
+    <img
+      data-css-1pj9gkn=""
+      role="presentation"
+      src="./icon.png" />
+  </div>
+  <div
+    data-css-1omrcpl="">
+    <h2
+      data-css-h5hr1l="">
+      File Title
+    </h2>
+    <h3
+      data-css-hyr375="">
+      File Subtitle
+    </h3>
+  </div>
+</li>
+`;
+
+exports[`renders a result item component renders a result item component with a file icon 1`] = `
+<li
+  data-css-1re2wzr=""
+  onDoubleClick={undefined}>
+  <div
+    data-css-vdo2z2="">
+    <img
+      data-css-1pj9gkn=""
+      role="presentation"
+      src="./icon.png" />
+  </div>
+  <div
+    data-css-1omrcpl="">
+    <h2
+      data-css-h5hr1l="">
+      File Title
+    </h2>
+    <h3
+      data-css-hyr375="">
+      File Subtitle
+    </h3>
+  </div>
+</li>
+`;
+
+exports[`renders a result item component renders a result item component with a text icon 1`] = `
+<li
+  data-css-1re2wzr=""
+  onDoubleClick={undefined}>
+  <div
+    data-css-vdo2z2="">
+    <span
+      data-css-1n4qoom=""
+      role="presentation">
+      T
+    </span>
+  </div>
+  <div
+    data-css-1omrcpl="">
+    <h2
+      data-css-h5hr1l="">
+      Text Item
+    </h2>
+    <h3
+      data-css-hyr375="">
+      Text Subtitle
+    </h3>
+  </div>
+</li>
+`;
