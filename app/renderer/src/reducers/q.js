@@ -7,7 +7,7 @@ export default function (state = initialState, action) {
     case UPDATE_QUERY:
       return action.q;
     case RESET_QUERY:
-      return state;
+      return '';
     default:
       return state;
   }
