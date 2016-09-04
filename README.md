@@ -67,7 +67,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-core-plugin-bookmarks](https://github.com/vutran/dext-core-plugin-bookmarks) - Search your Chrome bookmarks.
 - [dext-core-plugin-calculator](https://github.com/vutran/dext-core-plugin-calculator) - Quickly calculate something.
 
-## Community Plugins
+### Community Plugins
 
 - [dext-docker-registry-plugin](https://github.com/vutran/dext-docker-registry-plugin) - Search the Docker Registry for images.
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
