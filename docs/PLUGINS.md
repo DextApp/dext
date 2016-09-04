@@ -77,6 +77,22 @@ module.exports = {
 };
 ```
 
+### Plugin options
+
+#### `keyword`
+
+the starting phrase in the input to target your specific plugin to execute the commands.
+
+#### `action`
+
+value     | description
+---       | ---
+`openurl` | Opens an external URL
+`copy`    | Copies the value of `arg` of the selected item
+
+
+---
+
 ## Item Schema
 
 ### title
