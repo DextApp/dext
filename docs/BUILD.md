@@ -5,20 +5,28 @@
 Compiles a build with `webpack` for the browser.
 
 ```bash
-$ npm run build
+$ npm run build:prod
 ```
 
 ## Package
 
-Creates a release `zip` archive file based on the build.
+Creates a package based on the build.
 
 ```bash
 $ npm run package
 ```
 
+## Archive
+
+Compress and zips the package into an archive.
+
+```bash
+$ npm run archive
+```
+
 ## Release
 
-Runs build and package together.
+Runs build, package, and archive together.
 
 ```bash
 $ npm run release
