@@ -1,0 +1,19 @@
+exports[`renders a query field component renders a query field component with no value 1`] = `
+<div
+  data-css-rfgd3y="">
+  <input
+    data-css-1np20br=""
+    onChange={undefined}
+    value={undefined} />
+</div>
+`;
+
+exports[`renders a query field component renders a query field component with some value 1`] = `
+<div
+  data-css-rfgd3y="">
+  <input
+    data-css-1np20br=""
+    onChange={undefined}
+    value="TEST" />
+</div>
+`;
