@@ -69,6 +69,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 
 ## Community Plugins
 
+- [dext-docker-registry-plugin](https://github.com/vutran/dext-docker-registry-plugin) - Search the Docker Registry for images.
 - [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
 
