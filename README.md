@@ -1,6 +1,6 @@
 # Dext
 
-[![Join the chat at https://gitter.im/dext-app/Lobby](https://badges.gitter.im/dext-app/Lobby.svg)](https://gitter.im/dext-app/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/vutran/dext.svg?branch=master)](https://travis-ci.org/vutran/dext) [![Join the chat at https://gitter.im/dext-app/Lobby](https://badges.gitter.im/dext-app/Lobby.svg)](https://gitter.im/dext-app/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > A smart launcher for Mac. Powered by JavaScript.
 
