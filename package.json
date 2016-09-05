@@ -57,7 +57,7 @@
   "dependencies": {
     "conf": "^0.11.2",
     "deep-assign": "^2.0.0",
-    "dext-core-plugin-bookmarks": "^0.2.0",
+    "dext-core-plugin-bookmarks": "^0.3.0",
     "dext-core-plugin-calculator": "^0.3.0",
     "glamor": "^2.14.1",
     "is_js": "^0.8.0",
