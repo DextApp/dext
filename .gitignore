@@ -4,3 +4,4 @@ npm-debug.log
 pigments-report.json
 app/renderer/lib/
 dist/
+coverage/

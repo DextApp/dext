@@ -20,7 +20,7 @@
     "release": "npm run build:prod && npm run package && npm run archive",
     "dev": "cross-env NODE_ENV=development electron . --debug",
     "start": "npm run build && npm run dev",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "Vu Tran <vu@vu-tran.com>",
   "repository": {
@@ -38,6 +38,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "chalk": "^1.1.3",
+    "coveralls": "^2.11.12",
     "cross-env": "^2.0.0",
     "electron": "^1.3.5",
     "electron-packager": "^8.0.0",
