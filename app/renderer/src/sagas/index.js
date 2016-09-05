@@ -1,11 +1,15 @@
 import { ipcRenderer } from 'electron';
 import { takeEvery } from 'redux-saga';
-import { call } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import {
   UPDATE_QUERY,
+  RESET_QUERY,
   UPDATE_RESULTS,
   RESET_RESULTS,
 } from '../actions/types';
+import {
+  resetResults,
+} from '../actions/creators';
 import {
   IPC_QUERY_COMMAND,
   IPC_WINDOW_EXPAND,
@@ -17,6 +21,13 @@ import {
  */
 export function* queryCommand(q) {
   yield call(ipcRenderer.send, IPC_QUERY_COMMAND, q);
+}
+
+/**
+ * Resets the results
+ */
+export function* resetQuery() {
+  yield put(resetResults());
 }
 
 /**
@@ -39,6 +50,7 @@ export function* collapseWindow() {
 export default function* () {
   yield [
     takeEvery(UPDATE_QUERY, queryCommand),
+    takeEvery(RESET_QUERY, resetQuery),
     takeEvery(UPDATE_RESULTS, expandWindow),
     takeEvery(RESET_RESULTS, collapseWindow),
   ];

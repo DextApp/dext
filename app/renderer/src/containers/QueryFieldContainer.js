@@ -22,8 +22,10 @@ const QueryFieldContainer = class extends Component {
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
       self.focus();
     });
-    // blurs the query input field when the window is hidden
+    // resets the querty and blurs the input field when the window is hidden
     ipcRenderer.on(IPC_WINDOW_HIDE, () => {
+      const { resetQuery } = this.props;
+      resetQuery();
       self.blur();
     });
   }
