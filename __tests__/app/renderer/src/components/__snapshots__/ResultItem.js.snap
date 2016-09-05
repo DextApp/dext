@@ -1,4 +1,4 @@
-exports[`renders a result item component renders a result item component in a selected state 1`] = `
+exports[`<ResultItem /> component should render a result item component in a selected state 1`] = `
 <li
   data-css-1vhn8oi=""
   onDoubleClick={undefined}>
@@ -23,7 +23,7 @@ exports[`renders a result item component renders a result item component in a se
 </li>
 `;
 
-exports[`renders a result item component renders a result item component with a file icon 1`] = `
+exports[`<ResultItem /> component should render a result item component with a file icon 1`] = `
 <li
   data-css-1re2wzr=""
   onDoubleClick={undefined}>
@@ -48,7 +48,7 @@ exports[`renders a result item component renders a result item component with a 
 </li>
 `;
 
-exports[`renders a result item component renders a result item component with a text icon 1`] = `
+exports[`<ResultItem /> component should render a result item component with a text icon 1`] = `
 <li
   data-css-1re2wzr=""
   onDoubleClick={undefined}>

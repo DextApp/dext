@@ -2,14 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ResultItem from '../../../../../app/renderer/src/components/ResultItem';
 
-describe('renders a result item component', () => {
+describe('<ResultItem /> component', () => {
   let theme = {};
 
   beforeEach(() => {
     theme = {};
   });
 
-  test('renders a result item component with a text icon', () => {
+  it('should render a result item component with a text icon', () => {
     const item = {
       title: 'Text Item',
       subtitle: 'Text Subtitle',
@@ -25,7 +25,7 @@ describe('renders a result item component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('renders a result item component with a file icon', () => {
+  it('should render a result item component with a file icon', () => {
     const item = {
       title: 'File Title',
       subtitle: 'File Subtitle',
@@ -41,7 +41,7 @@ describe('renders a result item component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('renders a result item component in a selected state', () => {
+  it('should render a result item component in a selected state', () => {
     const item = {
       title: 'File Title',
       subtitle: 'File Subtitle',

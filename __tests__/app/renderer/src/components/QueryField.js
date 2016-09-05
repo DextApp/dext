@@ -2,14 +2,14 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import QueryField from '../../../../../app/renderer/src/components/QueryField';
 
-describe('renders a query field component', () => {
+describe('<QueryField /> component', () => {
   let theme = {};
 
   beforeEach(() => {
     theme = {};
   });
 
-  test('renders a query field component with no value', () => {
+  it('should render a query field component with no value', () => {
     const component = renderer.create(
       <QueryField theme={theme} />
     );
@@ -17,7 +17,7 @@ describe('renders a query field component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('renders a query field component with some value', () => {
+  it('should render a query field component with some value', () => {
     const component = renderer.create(
       <QueryField theme={theme} value={"TEST"} />
     );

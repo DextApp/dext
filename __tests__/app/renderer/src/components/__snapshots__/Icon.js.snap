@@ -1,11 +1,11 @@
-exports[`test renders a file icon component 1`] = `
+exports[`<Icon /> component should render a file icon component 1`] = `
 <img
   data-css-1pj9gkn=""
   role="presentation"
   src={undefined} />
 `;
 
-exports[`test renders a text icon component 1`] = `
+exports[`<Icon /> component should render a text icon component 1`] = `
 <span
   data-css-1n4qoom=""
   role="presentation">

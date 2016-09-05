@@ -1,4 +1,4 @@
-exports[`renders a query field component renders a query field component with no value 1`] = `
+exports[`<QueryField /> component should render a query field component with no value 1`] = `
 <div
   data-css-rfgd3y="">
   <input
@@ -8,7 +8,7 @@ exports[`renders a query field component renders a query field component with no
 </div>
 `;
 
-exports[`renders a query field component renders a query field component with some value 1`] = `
+exports[`<QueryField /> component should render a query field component with some value 1`] = `
 <div
   data-css-rfgd3y="">
   <input
