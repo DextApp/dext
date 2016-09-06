@@ -28,7 +28,7 @@ Download the latest zip file [here](https://github.com/vutran/dext/releases/) an
 
 Simply toggle and start typing with:
 
-<kbd>cmd</kbd> + <kbd>space</kbd>
+<kbd>alt</kbd> + <kbd>space</kbd>
 
 ### Actions
 

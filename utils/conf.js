@@ -6,6 +6,9 @@ module.exports = class extends Conf {
     const defaultOpts = {
       defaults: {
         theme: '',
+        // specify the accelerators for toggling the Dext Bar.
+        // @link http://electron.atom.io/docs/api/accelerator/
+        hotKey: 'alt+space',
         plugins: [],
       },
     };

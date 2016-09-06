@@ -244,7 +244,7 @@ const createWindow = () => {
   ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
 
   // register global shortcuts
-  globalShortcut.register('cmd+space', toggleMainWindow);
+  globalShortcut.register(config.get('hotKey'), toggleMainWindow);
   globalShortcut.register('escape', hideWindow);
 
   /**
