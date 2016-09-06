@@ -62,12 +62,10 @@ const ResultListContainer = class extends Component {
    * @param {Number} index
    */
   scrollToItem(index) {
-    let scrollY = 0;
-    if (index < 10) {
-      scrollY = 0;
-    } else {
-      scrollY = ((index - 10) * 60) + 60;
-    }
+    const scrollY = (index >= 10)
+      ? ((index - 10) * 60) + 60
+      : 0;
+
     this.c.c.scrollTop = scrollY;
   }
 
