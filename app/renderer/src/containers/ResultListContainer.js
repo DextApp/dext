@@ -35,11 +35,13 @@ const ResultListContainer = class extends Component {
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (self.props.selectedIndex > 0) {
         selectPreviousItem();
+        self.scrollToItem(self.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (self.props.selectedIndex < self.props.results.length - 1) {
         selectNextItem();
+        self.scrollToItem(self.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
@@ -54,10 +56,26 @@ const ResultListContainer = class extends Component {
     ipcRenderer.send(IPC_EXECUTE_ITEM, { action, item });
   }
 
+  /**
+   * Scrolls the list to the given item
+   *
+   * @param {Number} index
+   */
+  scrollToItem(index) {
+    let scrollY = 0;
+    if (index < 10) {
+      scrollY = 0;
+    } else {
+      scrollY = ((index - 10) * 60) + 60;
+    }
+    this.c.c.scrollTop = scrollY;
+  }
+
   render() {
     const { theme, results, selectedIndex } = this.props;
     return (
       <ResultList
+        ref={c => { this.c = c; }}
         theme={theme}
         results={results}
         selectedIndex={selectedIndex}
@@ -69,6 +87,7 @@ const ResultListContainer = class extends Component {
 ResultListContainer.defaultProps = {
   theme: {},
   results: [],
+  selectedIndex: 0,
   selectItem: () => { },
   selectNextItem: () => { },
   selectPreviousItem: () => { },

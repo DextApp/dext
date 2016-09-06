@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { pseudo, style, compose } from 'glamor';
 import ResultItemContainer from '../containers/ResultItemContainer';
 import { ResultItemSchema, ThemeSchema } from '../schema';
@@ -11,7 +11,9 @@ const base = compose(
     maxHeight: 600,
     listStyleType: 'none',
     margin: 0,
-    padding: 15,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 15,
     width: '100%',
     overflowX: 'hidden',
     overflowY: 'overlay',
@@ -29,15 +31,18 @@ const shown = style({
   display: 'block',
 });
 
-const ResultList = props => {
-  // Retrieve an array of <ResultItemContainer /> containers
-  const getResultItems = (results, selectedIndex, theme) => results.map((item, key) => <ResultItemContainer key={key} theme={theme} item={item} selected={selectedIndex === key} />);
+const ResultList = class extends Component {
+  render() {
+    const props = this.props;
+    // Retrieve an array of <ResultItemContainer /> containers
+    const getResultItems = (results, selectedIndex, theme) => results.map((item, key) => <ResultItemContainer key={key} theme={theme} item={item} selected={selectedIndex === key} />);
 
-  return (
-    <ol {...compose(base, props.results.length && shown)}>
-      {getResultItems(props.results, props.selectedIndex, props.theme)}
-    </ol>
-  );
+    return (
+      <ol {...compose(base, props.results.length && shown)} ref={c => { this.c = c; }}>
+        {getResultItems(props.results, props.selectedIndex, props.theme)}
+      </ol>
+    );
+  }
 };
 
 ResultList.propTypes = {
