@@ -75,6 +75,9 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
 - [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) - Search for npm packages on npms.io.
 
+### Community Themes
+- [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - A predawn theme for dext
+
 ## Developers Documentation
 
 - [Plugins](docs/PLUGINS.md)
