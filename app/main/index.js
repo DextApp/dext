@@ -1,5 +1,7 @@
 const path = require('path');
 const electron = require('electron');
+
+const { clipboard } = electron;
 const {
   loadPlugins,
   queryResults,
@@ -56,6 +58,9 @@ const execute = message => {
       if (message.item.arg) {
         shell.openExternal(message.item.arg);
       }
+      break;
+    case 'copy':
+      clipboard.writeText(message.item.arg);
       break;
     default:
       // do nothing
