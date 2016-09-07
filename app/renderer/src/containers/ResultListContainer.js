@@ -11,6 +11,7 @@ import {
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
   IPC_EXECUTE_CURRENT_ITEM,
+  IPC_ITEM_DETAILS_REQUEST,
   IPC_EXECUTE_ITEM,
 } from '../../../ipc';
 
@@ -36,17 +37,29 @@ const ResultListContainer = class extends Component {
       if (self.props.selectedIndex > 0) {
         selectPreviousItem();
         self.scrollToItem(self.props.selectedIndex);
+        self.retrieveDetails(self.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (self.props.selectedIndex < self.props.results.length - 1) {
         selectNextItem();
         self.scrollToItem(self.props.selectedIndex);
+        self.retrieveDetails(self.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
       self.execute();
     });
+  }
+
+  /**
+   * Retrieves the extended details for the given item
+   *
+   * @param {Number} index - The index of the results
+   */
+  retrieveDetails(index) {
+    const item = this.props.results[index];
+    ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, item);
   }
 
   execute() {
@@ -71,14 +84,17 @@ const ResultListContainer = class extends Component {
 
   render() {
     const { theme, results, selectedIndex } = this.props;
-    return (
-      <ResultList
-        ref={c => { this.c = c; }}
-        theme={theme}
-        results={results}
-        selectedIndex={selectedIndex}
-      />
-    );
+    if (results.length) {
+      return (
+        <ResultList
+          ref={c => { this.c = c; }}
+          theme={theme}
+          results={results}
+          selectedIndex={selectedIndex}
+        />
+      );
+    }
+    return null;
   }
 };
 

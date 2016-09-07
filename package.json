@@ -62,6 +62,7 @@
     "dext-core-plugin-calculator": "^0.3.0",
     "glamor": "^2.14.1",
     "is_js": "^0.8.0",
+    "markdown-it": "^7.0.1",
     "mathjs": "^3.4.1",
     "plist": "^2.0.1",
     "react": "^15.3.1",

@@ -4,6 +4,7 @@ const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
+const MarkdownIt = require('markdown-it');
 const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 const CacheConf = require('../../utils/CacheConf');
 
@@ -160,6 +161,11 @@ exports.connectItems = (items, plugin) => items.map(i => {
     }
   }
   const newObject = deepAssign({}, i);
+  // transfer some plugin metadata
+  newObject.plugin = {
+    path: plugin.path,
+    name: plugin.name,
+  };
   if (plugin.keyword) {
     newObject.keyword = plugin.keyword;
   }
@@ -243,4 +249,50 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       break;
     }
   }
+});
+
+/**
+ * Retrieve the item's details
+ *
+ * @cached
+ * @param {Object} item
+ * @return {Promise} - Resolves to the rendered html string
+ */
+exports.retrieveItemDetails = item => new Promise(resolve => {
+  // load from cache
+  const configName = `${path.basename(item.plugin.path)}-itemDetails`;
+  const cacheConf = new CacheConf({ configName });
+  const cacheKey = JSON.stringify(item);
+  if (cacheConf.has(cacheKey)) {
+    const content = cacheConf.get(cacheKey);
+    resolve(content);
+    return;
+  }
+  // retrieve the rendered content
+  let type = 'html';
+  let content = '';
+  // retrieve the plugin's module
+  const m = require(item.plugin.path); // eslint-disable-line global-require
+  if (m && m.details) {
+    if (m.details.type) {
+      type = m.details.type;
+    }
+    if (m.details.render) {
+      if (typeof m.details.render === 'function') {
+        content = m.details.render(item);
+      } else {
+        content = m.details.render;
+      }
+    }
+  }
+  // resolve and update the state
+  Promise.resolve(content).then(res => {
+    let html = res;
+    if (type === 'md') {
+      const md = new MarkdownIt();
+      html = md.render(res);
+    }
+    cacheConf.set(cacheKey, html);
+    resolve(html);
+  });
 });
