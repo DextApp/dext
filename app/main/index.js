@@ -4,6 +4,7 @@ const {
   loadPlugins,
   queryResults,
   connectItems,
+  retrieveItemDetails,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
 const {
@@ -17,6 +18,8 @@ const {
   IPC_SELECT_NEXT_ITEM,
   IPC_EXECUTE_CURRENT_ITEM,
   IPC_EXECUTE_ITEM,
+  IPC_ITEM_DETAILS_REQUEST,
+  IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
 } = require('../ipc');
 const Config = require('../../utils/conf');
@@ -25,10 +28,10 @@ const { debounce } = require('../../utils/helpers');
 const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
 
 // set default window values
-const WINDOW_DEFAULT_WIDTH = 650;
+const WINDOW_DEFAULT_WIDTH = 700;
 const WINDOW_DEFAULT_HEIGHT = 80;
 const WINDOW_MIN_HEIGHT = 80;
-const WINDOW_MAX_HEIGHT = 680; // results + query
+const WINDOW_MAX_HEIGHT = 710; // results + query + padding
 const MAX_RESULTS = 20;
 
 let win = null;
@@ -204,9 +207,25 @@ const handleQueryCommand = (evt, message, plugins) => {
 };
 
 /**
+ * Retrieve item details and sends back the response
+ *
+ * @param {Event} evt
+ * @param {Object} item
+ */
+const handleItemDetailsRequest = (evt, item) => {
+  const content = retrieveItemDetails(item);
+  // resolve and update the state
+  content.then(html => {
+    evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
+  });
+};
+
+/**
  * Create a debounced function for handling the query command
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, 500);
+
+const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 500);
 
 /**
  * Creates a new Browser window and loads the renderer index
@@ -262,6 +281,8 @@ const createWindow = () => {
     ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
       execute(message);
     });
+    // listen for item details requests
+    ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) => debounceHandleItemDetailsRequest(evt, item));
   };
 
   // load all plugins and then

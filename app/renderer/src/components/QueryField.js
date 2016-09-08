@@ -3,7 +3,14 @@ import { compose, style } from 'glamor';
 import { ThemeSchema } from '../schema';
 
 const base = style({
-  padding: 15,
+  paddingTop: 15,
+  paddingRight: 15,
+  paddingBottom: 14,
+  paddingLeft: 15,
+  boxSizing: 'border-box',
+  borderBottomColor: '#bbb',
+  borderBottomStyle: 'solid',
+  borderBottomWidth: 1,
 });
 
 const search = style({

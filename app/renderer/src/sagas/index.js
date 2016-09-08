@@ -9,6 +9,7 @@ import {
 } from '../actions/types';
 import {
   resetResults,
+  resetDetails,
 } from '../actions/creators';
 import {
   IPC_QUERY_COMMAND,
@@ -31,10 +32,11 @@ export function* resetQuery() {
 }
 
 /**
- * Expands the window
+ * Handles the update results action
  */
-export function* expandWindow() {
+export function* updateResults() {
   yield call(ipcRenderer.send, IPC_WINDOW_EXPAND);
+  yield put(resetDetails());
 }
 
 /**
@@ -51,7 +53,8 @@ export default function* () {
   yield [
     takeEvery(UPDATE_QUERY, queryCommand),
     takeEvery(RESET_QUERY, resetQuery),
-    takeEvery(UPDATE_RESULTS, expandWindow),
+    takeEvery(UPDATE_RESULTS, updateResults),
+    takeEvery(UPDATE_RESULTS, resetDetails),
     takeEvery(RESET_RESULTS, collapseWindow),
   ];
 }

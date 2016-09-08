@@ -13,7 +13,7 @@ const baseHover = hover(activeStyle);
 const base = compose(
   style({
     display: 'flex',
-    color: '#333333',
+    color: '#333',
     boxSizing: 'border-box',
     height: 60,
     margin: 0,
@@ -38,7 +38,7 @@ const title = style({
   display: '-webkit-box',
   boxSizing: 'border-box',
   overflow: 'hidden',
-  fontSize: 20,
+  fontSize: 16,
   fontWeight: 'normal',
   margin: 0,
   WebkitBoxOrient: 'vertical',
@@ -49,7 +49,7 @@ const subtitle = style({
   display: '-webkit-box',
   boxSizing: 'border-box',
   overflow: 'hidden',
-  fontSize: 16,
+  fontSize: 12,
   fontWeight: 'normal',
   margin: 0,
   WebkitBoxOrient: 'vertical',

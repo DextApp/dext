@@ -7,6 +7,8 @@ import {
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
   SET_THEME,
+  SET_DETAILS,
+  RESET_DETAILS,
 } from './types';
 
 /**
@@ -69,4 +71,20 @@ export function selectNextItem() {
  */
 export function setTheme(theme) {
   return { type: SET_THEME, theme };
+}
+
+/**
+ * Sets the details pane content
+ *
+ * @param {String} value
+ */
+export function setDetails(value) {
+  return { type: SET_DETAILS, value };
+}
+
+/**
+ * Resets the details pane content
+ */
+export function resetDetails() {
+  return { type: RESET_DETAILS };
 }
