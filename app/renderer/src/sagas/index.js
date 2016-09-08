@@ -18,31 +18,31 @@ import {
 } from '../../../ipc';
 
 /**
- * Makes a query
+ * Handles the making a query
  */
-export function* queryCommand(q) {
+export function* handleQueryCommand(q) {
   yield call(ipcRenderer.send, IPC_QUERY_COMMAND, q);
 }
 
 /**
- * Resets the results
+ * Handles the reset results action
  */
-export function* resetQuery() {
+export function* handleResetQuery() {
   yield put(resetResults());
 }
 
 /**
  * Handles the update results action
  */
-export function* updateResults() {
+export function* handleUpdateResults() {
   yield call(ipcRenderer.send, IPC_WINDOW_EXPAND);
   yield put(resetDetails());
 }
 
 /**
- * Collapases the window
+ * Handles the window collapse action
  */
-export function* collapseWindow() {
+export function* handleCollapseWindow() {
   yield call(ipcRenderer.send, IPC_WINDOW_COLLAPSE);
 }
 
@@ -51,10 +51,9 @@ export function* collapseWindow() {
  */
 export default function* () {
   yield [
-    takeEvery(UPDATE_QUERY, queryCommand),
-    takeEvery(RESET_QUERY, resetQuery),
-    takeEvery(UPDATE_RESULTS, updateResults),
-    takeEvery(UPDATE_RESULTS, resetDetails),
-    takeEvery(RESET_RESULTS, collapseWindow),
+    takeEvery(UPDATE_QUERY, handleQueryCommand),
+    takeEvery(RESET_QUERY, handleResetQuery),
+    takeEvery(UPDATE_RESULTS, handleUpdateResults),
+    takeEvery(RESET_RESULTS, handleCollapseWindow),
   ];
 }
