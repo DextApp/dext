@@ -12,11 +12,11 @@ exports[`<ResultItem /> component should render a result item component in a sel
   <div
     data-css-1omrcpl="">
     <h2
-      data-css-h5hr1l="">
+      data-css-hyr375="">
       File Title
     </h2>
     <h3
-      data-css-hyr375="">
+      data-css-z7g9id="">
       File Subtitle
     </h3>
   </div>
@@ -25,7 +25,7 @@ exports[`<ResultItem /> component should render a result item component in a sel
 
 exports[`<ResultItem /> component should render a result item component with a file icon 1`] = `
 <li
-  data-css-1re2wzr=""
+  data-css-1gclqsw=""
   onDoubleClick={undefined}>
   <div
     data-css-vdo2z2="">
@@ -37,11 +37,11 @@ exports[`<ResultItem /> component should render a result item component with a f
   <div
     data-css-1omrcpl="">
     <h2
-      data-css-h5hr1l="">
+      data-css-hyr375="">
       File Title
     </h2>
     <h3
-      data-css-hyr375="">
+      data-css-z7g9id="">
       File Subtitle
     </h3>
   </div>
@@ -50,7 +50,7 @@ exports[`<ResultItem /> component should render a result item component with a f
 
 exports[`<ResultItem /> component should render a result item component with a text icon 1`] = `
 <li
-  data-css-1re2wzr=""
+  data-css-1gclqsw=""
   onDoubleClick={undefined}>
   <div
     data-css-vdo2z2="">
@@ -63,11 +63,11 @@ exports[`<ResultItem /> component should render a result item component with a t
   <div
     data-css-1omrcpl="">
     <h2
-      data-css-h5hr1l="">
+      data-css-hyr375="">
       Text Item
     </h2>
     <h3
-      data-css-hyr375="">
+      data-css-z7g9id="">
       Text Subtitle
     </h3>
   </div>
