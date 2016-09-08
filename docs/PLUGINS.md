@@ -8,37 +8,26 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 
 ## Creating Your Plugin
 
-### Basic Module
+### Examples
+
+A very basic module.
 
 ```js
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  // a helper item object to display to the user (see Item schema below)
-  helper: {
-    title: 'This is the title',
-    subtitle: 'This is the subtitle',
-  },
   execute: {
     items: [], // array of items (refer to the item schema below)
   },
 };
 ```
 
-### Using Funtions
+You can use functions for your search query.
 
 ```js
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  helper: function(q) {
-    // q is exposed when used as a function
-    // return a single item (see Item schema below)
-    return {
-      title: 'Search for ' + q,
-      subtitle: 'This is the subtitle',
-    };
-  },
   execute: function(q) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
@@ -49,22 +38,12 @@ module.exports = {
 };
 ```
 
-### Using Promises
+Your function can also return Promises that resolves the result object.
 
 ```js
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  helper: function(q) {
-    // Promise works for helpers as well
-    return new Promise(function(resolve) {
-      // resolve a single item (see Item schema below)
-      resolve({
-        title: 'Search for ' + q,
-        subtitle: 'This is the subtitle',
-      });
-    });
-  },
   execute: function(q) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
@@ -77,51 +56,217 @@ module.exports = {
 };
 ```
 
+## Helper Item
+
+Plugin helper items can provide quick information to the user as they drill deeper into your plugin commands.
+
+### Examples
+
+Simple helper item.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  action: 'openurl',
+  // The helper property follows the Item schema and will be
+  // shown to the user when the keyword is active
+  helper: {
+    title: 'This is the title',
+    subtitle: 'This is the subtitle',
+    icon: {
+      path: './icon.png',
+    },
+  },
+  execute: {
+    items: [],
+  },
+};
+```
+
+Like the search query, you can return the item within a `Function`.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  action: 'openurl',
+  // The query keyword is passed as the first argument in the callback function
+  helper: function(q) {
+    title: 'Search for ' + q,
+    subtitle: 'This is the subtitle',
+    icon: {
+      path: './icon.png',
+    },
+  },
+};
+```
+
+Or as a `Promise`.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  action: 'openurl',
+  // The query keyword is passed as the first argument in the callback function
+  helper: function(q) {
+    return new Promise(function(resolve) {
+      resolve({
+        title: 'Search for ' + q,
+        subtitle: 'This is the subtitle',
+        icon: {
+          path: './icon.png',
+        },
+      });
+    });
+  },
+};
+```
+
+## Details Pane
+
+Sometimes you want to display more information to the user because a small icon with 2 lines is just not enough in some instances. A details pane can be created and shown to the user per item by creating a `details` object in your plugin module.
+
+The Details Pane currently supports only 2 types of renderer:
+
+- `html`
+- `md`
+
+### Options
+
+#### type
+
+Specify the type of renderer to use. Details Pane currently supports only `html` and `md`
+
+Type: `String`
+
+#### render
+
+The rendered output.
+
+When using `render` as a `Function`, this should return a `String` or returns a `Promise` that resolves a `String`. The currently selected `item` is passed into the callback function.
+
+Type: `String`, `Function`
+
+
+### Example
+
+Using basic HTML.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  execute: {
+    items: [], // array of items
+  },
+  details: {
+    type: 'html',
+    render: '<p>This is regular HTML.</p>',
+  },
+};
+```
+
+Using Markdown.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  execute: {
+    items: [], // array of items
+  },
+  details: {
+    type: 'md',
+    render: '## This is Markdown',
+  },
+};
+```
+
+You can use a function to access the currently selected item.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  execute: {
+    items: [], // array of items
+  },
+  details: {
+    type: 'md',
+    render: function(item) {
+      return item.bodyContent;
+    },
+  },
+};
+```
+
+Use a Promise if you need to do some work that requires waiting.
+
+```js
+module.exports = {
+  keyword: 'foo',
+  execute: {
+    items: [], // array of items
+  },
+  details: {
+    type: 'md',
+    render: function(item) {
+      return new Promise(function(resolve) {
+        // load data from an external API...
+        fetch('https://my-api.com/demo/endpoint/').then(function(data) {
+          resolve(loadedContent);
+        });
+      });
+    },
+  },
+};
+```
+
 ## Item Schema
 
-### title
+### Properties
+
+#### title
 
 Type: `String`
 
 The title to be displayed.
 
-### subtitle
+#### subtitle
 
 Type: `String`
 
 An optional subtitle to be displayed beneath the title.
 
-### arg
+#### arg
 
 Type: `String`
 
 Additional parameters to be passed to the action.
 
-### icon
+#### icon
 
 Type: `object`
 
-#### Options
+##### Options
 
-##### icon.type
+###### icon.type
 
 Type: `String`
 
 Options: `file`, `text`
 
-##### icon.path
+###### icon.path
 
-Type: 'String'
+Type: `String`
 
 If `icon.type` isn't set or is `file`, the image will be served as the icon. (Can be a URL or file path.)
 
-##### icon.letter
+###### icon.letter
 
 Type: `String`
 
 If `icon.type` is set to `text`, a round circle will be displayed with the specified letter.
 
-## Sample Item
+### Examples
+
+Sample item with a regular URL icon.
 
 ```json
 {
@@ -134,8 +279,7 @@ If `icon.type` is set to `text`, a round circle will be displayed with the speci
 }
 ```
 
-## Sample Item with Letter icon
-
+Sample item with letter icon.
 
 ```json
 {
