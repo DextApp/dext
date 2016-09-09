@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
 import ResultList from '../components/ResultList';
 import { ResultItemSchema, ThemeSchema } from '../schema';
-import { debounce } from '../../../../utils/helpers';
 import {
   IPC_WINDOW_RESIZE,
   IPC_QUERY_RESULTS,

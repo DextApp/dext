@@ -46,7 +46,6 @@ ResultItemContainer.propTypes = {
   theme: ThemeSchema,
   // item prop should follow the Alfred workflow script filter JSON format
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
-  action: PropTypes.string,
   item: ResultItemSchema,
   selected: PropTypes.bool,
 };
