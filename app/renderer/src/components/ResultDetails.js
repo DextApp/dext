@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { compose, pseudo, style } from 'glamor';
 
-const ResultDetails = ({ content }) => {
+const ResultDetails = ({ content, expanded }) => {
   const styles = compose(
     // apply base style
     style({
@@ -28,21 +28,24 @@ const ResultDetails = ({ content }) => {
       backgroundColor: '#bbb',
     }),
     // apply expanded style if necessary
-    content ? style({
+    expanded ? style({
       right: '0%',
     }) : {},
   );
   return (
+    // eslint-disable-next-line react/no-danger
     <div {...styles} dangerouslySetInnerHTML={{ __html: content }} />
   );
 };
 
 ResultDetails.defaultProps = {
   content: '',
+  expanded: false,
 };
 
 ResultDetails.propTypes = {
   content: PropTypes.string,
+  expanded: PropTypes.bool,
 };
 
 export default ResultDetails;

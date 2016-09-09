@@ -10,6 +10,8 @@ import {
   SET_THEME,
   SET_DETAILS,
   RESET_DETAILS,
+  CLOSE_DETAILS,
+  OPEN_DETAILS,
 } from './types';
 
 /**
@@ -98,4 +100,18 @@ export function setDetails(value) {
  */
 export function resetDetails() {
   return { type: RESET_DETAILS };
+}
+
+/**
+ * Closes the details pane
+ */
+export function closeDetails() {
+  return { type: CLOSE_DETAILS };
+}
+
+/**
+ * Opens the details pane
+ */
+export function openDetails() {
+  return { type: OPEN_DETAILS };
 }

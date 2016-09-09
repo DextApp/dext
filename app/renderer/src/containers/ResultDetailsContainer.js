@@ -15,24 +15,27 @@ const ResultDetailsContainer = class extends Component {
   }
 
   render() {
-    const { detailsPane } = this.props;
-    return <ResultDetails content={detailsPane} />;
+    const { detailsPane, detailsPaneExpanded } = this.props;
+    return <ResultDetails content={detailsPane} expanded={detailsPaneExpanded} />;
   }
 };
 
 ResultDetailsContainer.defaultProps = {
   item: {},
   detailsPane: '',
+  detailsPaneExpanded: false,
   setDetails: () => {},
 };
 
 ResultDetailsContainer.propTypes = {
   detailsPane: PropTypes.string,
+  detailsPaneExpanded: PropTypes.bool,
   setDetails: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   detailsPane: state.detailsPane,
+  detailsPaneExpanded: state.detailsPaneExpanded,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);

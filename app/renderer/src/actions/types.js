@@ -9,3 +9,5 @@ export const RESET_SELECTED_ITEM = 'RESET_SELECTED_ITEM';
 export const SET_THEME = 'SET_THEME';
 export const SET_DETAILS = 'SET_DETAILS';
 export const RESET_DETAILS = 'RESET_DETAILS';
+export const CLOSE_DETAILS = 'CLOSE_DETAILS';
+export const OPEN_DETAILS = 'OPEN_DETAILS';

@@ -7,11 +7,16 @@ import {
   UPDATE_RESULTS,
   RESET_RESULTS,
   SELECT_ITEM,
+  SELECT_PREVIOUS_ITEM,
+  SELECT_NEXT_ITEM,
+  SET_DETAILS,
 } from '../actions/types';
 import {
   resetResults,
   selectItem,
   resetDetails,
+  closeDetails,
+  openDetails,
 } from '../actions/creators';
 import {
   IPC_QUERY_COMMAND,
@@ -28,6 +33,20 @@ import {
 export function* handleSelectItem(action) {
   yield put(resetDetails());
   yield call(ipcRenderer.send, IPC_ITEM_DETAILS_REQUEST, action.item);
+}
+
+/**
+ * Handles selecting the previous item
+ */
+export function* handleSelectPreviousItem() {
+  yield put(closeDetails());
+}
+
+/**
+ * Handles selecting the next item
+ */
+export function* handleSelectNextItem() {
+  yield put(closeDetails());
 }
 
 /**
@@ -64,14 +83,24 @@ export function* handleCollapseWindow() {
 }
 
 /**
+ * Handles setting the details
+ */
+export function* handleSetDetails() {
+  yield put(openDetails());
+}
+
+/**
  * Makes a query for each action dispatched
  */
 export default function* () {
   yield [
     takeEvery(SELECT_ITEM, handleSelectItem),
+    takeEvery(SELECT_PREVIOUS_ITEM, handleSelectPreviousItem),
+    takeEvery(SELECT_NEXT_ITEM, handleSelectNextItem),
     takeEvery(UPDATE_QUERY, handleQueryCommand),
     takeEvery(RESET_QUERY, handleResetQuery),
     takeEvery(UPDATE_RESULTS, handleUpdateResults),
     takeEvery(RESET_RESULTS, handleCollapseWindow),
+    takeEvery(SET_DETAILS, handleSetDetails),
   ];
 }
