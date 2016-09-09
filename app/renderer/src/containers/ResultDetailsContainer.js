@@ -10,7 +10,9 @@ const ResultDetailsContainer = class extends Component {
   componentDidMount() {
     const { setDetails } = this.props;
     ipcRenderer.on(IPC_ITEM_DETAILS_RESPONSE, (evt, html) => {
-      setDetails(html);
+      if (html) {
+        setDetails(html);
+      }
     });
   }
 
