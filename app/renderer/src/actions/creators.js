@@ -3,6 +3,7 @@ import {
   RESET_QUERY,
   UPDATE_RESULTS,
   RESET_RESULTS,
+  SELECT_ITEM,
   SELECT_NEXT_ITEM,
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
@@ -48,6 +49,16 @@ export function resetResults() {
  */
 export function resetSelectedItem() {
   return { type: RESET_SELECTED_ITEM };
+}
+
+/**
+ * Selects the first item
+ *
+ * @param {Number} index
+ * @param {Object} item
+ */
+export function selectItem(index, item) {
+  return { type: SELECT_ITEM, index, item };
 }
 
 /**

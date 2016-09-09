@@ -1,4 +1,5 @@
 import {
+  SELECT_ITEM,
   SELECT_NEXT_ITEM,
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
@@ -8,6 +9,8 @@ const initialState = 0;
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SELECT_ITEM:
+      return action.index;
     case SELECT_NEXT_ITEM:
       return state + 1;
     case SELECT_PREVIOUS_ITEM:

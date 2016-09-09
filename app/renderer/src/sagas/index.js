@@ -6,16 +6,29 @@ import {
   RESET_QUERY,
   UPDATE_RESULTS,
   RESET_RESULTS,
+  SELECT_ITEM,
 } from '../actions/types';
 import {
   resetResults,
+  selectItem,
   resetDetails,
 } from '../actions/creators';
 import {
   IPC_QUERY_COMMAND,
   IPC_WINDOW_EXPAND,
   IPC_WINDOW_COLLAPSE,
+  IPC_ITEM_DETAILS_REQUEST,
 } from '../../../ipc';
+
+/**
+ * Handles selecting an item
+ *
+ * @param {Object} action
+ */
+export function* handleSelectItem(action) {
+  yield put(resetDetails());
+  yield call(ipcRenderer.send, IPC_ITEM_DETAILS_REQUEST, action.item);
+}
 
 /**
  * Handles the making a query
@@ -34,9 +47,13 @@ export function* handleResetQuery() {
 /**
  * Handles the update results action
  */
-export function* handleUpdateResults() {
+export function* handleUpdateResults(action) {
   yield call(ipcRenderer.send, IPC_WINDOW_EXPAND);
-  yield put(resetDetails());
+  // selects the first item
+  const firstItem = action.results ? action.results[0] : null;
+  if (firstItem) {
+    yield put(selectItem(0, firstItem));
+  }
 }
 
 /**
@@ -51,6 +68,7 @@ export function* handleCollapseWindow() {
  */
 export default function* () {
   yield [
+    takeEvery(SELECT_ITEM, handleSelectItem),
     takeEvery(UPDATE_QUERY, handleQueryCommand),
     takeEvery(RESET_QUERY, handleResetQuery),
     takeEvery(UPDATE_RESULTS, handleUpdateResults),

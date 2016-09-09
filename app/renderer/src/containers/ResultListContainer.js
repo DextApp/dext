@@ -113,7 +113,6 @@ ResultListContainer.propTypes = {
   theme: ThemeSchema,
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
-  selectItem: PropTypes.func,
   selectNextItem: PropTypes.func,
   selectPreviousItem: PropTypes.func,
   updateResults: PropTypes.func,
