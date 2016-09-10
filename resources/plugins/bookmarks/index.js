@@ -1,5 +1,4 @@
 const browserBookmarks = require('browser-bookmarks');
-require('string_score');
 
 /**
  * Converts the bookmark object to Dext item

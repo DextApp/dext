@@ -1,3 +1,4 @@
+require('string_score');
 const path = require('path');
 const { spawn } = require('child_process');
 const electron = require('electron');
@@ -160,7 +161,7 @@ const handleQueryCommand = (evt, message, plugins) => {
   // collect results
   const results = [];
   // find if it matches the current keyword
-  const matchedPlugins = plugins.filter(p => kw.length && kw === p.keyword.toLowerCase());
+  const matchedPlugins = plugins.filter(p => kw.length && kw.toLowerCase() === p.keyword.toLowerCase());
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins && matchedPlugins.length) {
@@ -205,6 +206,18 @@ const handleQueryCommand = (evt, message, plugins) => {
     const retval = resultSet
       // flatten and merge items
       .reduce((prev, next) => prev.concat(next))
+      // sort by score
+      .sort((a, b) => {
+        const scoreA = a.title.toLowerCase().score(kw.toLowerCase());
+        const scoreB = b.title.toLowerCase().score(kw.toLowerCase());
+        if (scoreA === scoreB) {
+          return 0;
+        } else if (scoreA < scoreB) {
+          return 1;
+        }
+        return -1;
+      })
+      .filter(i => i.title.toLowerCase().score(kw.toLowerCase()) > 0.25)
       // filter max results
       .slice(0, MAX_RESULTS);
     // send the results back to the renderer
