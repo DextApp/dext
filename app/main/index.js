@@ -41,9 +41,7 @@ let win = null;
 // create a user config
 const config = new Config();
 
-const hideWindow = () => (
-  win && win.hide()
-);
+const hideWindow = () => win && win.hide();
 
 // toggles the main window visibility
 const toggleMainWindow = () => {
@@ -53,7 +51,6 @@ const toggleMainWindow = () => {
     win.show();
   }
 };
-
 
 const execute = message => {
   switch (message.action) {
@@ -161,7 +158,7 @@ const handleQueryCommand = (evt, message, plugins) => {
   // collect results
   const results = [];
   // find if it matches the current keyword
-  const matchedPlugins = plugins.filter(p => kw.length && kw.toLowerCase() === p.keyword.toLowerCase());
+  const matchedPlugins = plugins.filter(p => kw.length && kw === p.keyword.toLowerCase());
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins && matchedPlugins.length) {
@@ -208,8 +205,8 @@ const handleQueryCommand = (evt, message, plugins) => {
       .reduce((prev, next) => prev.concat(next))
       // sort by score
       .sort((a, b) => {
-        const scoreA = a.title.toLowerCase().score(kw.toLowerCase());
-        const scoreB = b.title.toLowerCase().score(kw.toLowerCase());
+        const scoreA = a.title.toLowerCase().score(kw);
+        const scoreB = b.title.toLowerCase().score(kw);
         if (scoreA === scoreB) {
           return 0;
         } else if (scoreA < scoreB) {
@@ -217,7 +214,7 @@ const handleQueryCommand = (evt, message, plugins) => {
         }
         return -1;
       })
-      .filter(i => i.title.toLowerCase().score(kw.toLowerCase()) > 0.25)
+      .filter(i => i.title.toLowerCase().score(kw) > 0.25)
       // filter max results
       .slice(0, MAX_RESULTS);
     // send the results back to the renderer
