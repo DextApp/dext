@@ -1,4 +1,5 @@
 const path = require('path');
+const { spawn } = require('child_process');
 const electron = require('electron');
 const {
   loadPlugins,
@@ -58,6 +59,11 @@ const execute = message => {
     case 'openurl':
       if (message.item.arg) {
         shell.openExternal(message.item.arg);
+      }
+      break;
+    case 'exec':
+      if (message.item.arg) {
+        spawn('node', [message.item.arg], { cwd: message.item.plugin.path });
       }
       break;
     default:

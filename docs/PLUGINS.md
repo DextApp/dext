@@ -8,14 +8,31 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 
 ## Creating Your Plugin
 
+All plugin modules are required to have a `keyword` property. You will also need to define the type of `action` for your items.
+
+### Plugin Actions
+
+#### openurl
+
+Opens the item in a new browser window.
+
+#### exec
+
+Executes a node script.
+
 ### Examples
 
 A very basic module.
 
 ```js
 module.exports = {
+  // specify the keyword filter for your plugin
   keyword: 'foo',
+  // the type of action to be executed when an item is chosen
   action: 'openurl',
+  // an object containing an items array
+  // or a function returning the object
+  // or a Promise resolving the object
   execute: {
     items: [], // array of items (refer to the item schema below)
   },
