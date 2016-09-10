@@ -56,19 +56,19 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "browser-bookmarks": "^0.1.0",
     "conf": "^0.11.2",
     "deep-assign": "^2.0.0",
-    "dext-core-plugin-bookmarks": "^0.4.0",
-    "dext-core-plugin-calculator": "^0.3.0",
     "glamor": "^2.14.1",
     "is_js": "^0.8.0",
     "markdown-it": "^7.0.1",
-    "mathjs": "^3.4.1",
+    "mathjs": "^3.5.0",
     "plist": "^2.0.1",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-saga": "^0.11.0"
+    "redux-saga": "^0.11.0",
+    "string_score": "^0.1.22"
   }
 }
