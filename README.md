@@ -64,8 +64,9 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 
 ### Core Plugins
 
-- [dext-core-plugin-bookmarks](https://github.com/vutran/dext-core-plugin-bookmarks) - Search your Chrome bookmarks.
-- [dext-core-plugin-calculator](https://github.com/vutran/dext-core-plugin-calculator) - Quickly calculate something.
+- **Bookmarks** - Search your Chrome bookmarks.
+- **Calculator** - Quickly calculate something.
+- **Screen Saver** - Starts the screen saver.
 
 ### Community Plugins
 
