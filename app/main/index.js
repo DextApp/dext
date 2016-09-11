@@ -214,7 +214,12 @@ const handleQueryCommand = (evt, message, plugins) => {
         }
         return -1;
       })
-      .filter(i => i.title.toLowerCase().score(kw) > 0.25)
+      .filter(i => {
+        const score = i.title.toLowerCase().score(kw);
+        return Boolean(score)
+          ? score > 0.25
+          : true // return by default if there is no score in the first place.
+      })
       // filter max results
       .slice(0, MAX_RESULTS);
     // send the results back to the renderer
