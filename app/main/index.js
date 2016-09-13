@@ -104,6 +104,7 @@ const handleWindowShow = () => {
   globalShortcut.register('up', selectPreviousItem);
   globalShortcut.register('down', selectNextItem);
   globalShortcut.register('enter', executeCurrentItem);
+  globalShortcut.register('escape', hideWindow);
   win.webContents.send(IPC_WINDOW_SHOW);
 };
 
@@ -111,6 +112,7 @@ const handleWindowHide = () => {
   globalShortcut.unregister('up');
   globalShortcut.unregister('down');
   globalShortcut.unregister('enter');
+  globalShortcut.unregister('escape');
   win.webContents.send(IPC_WINDOW_HIDE);
 };
 
@@ -285,7 +287,6 @@ const createWindow = () => {
 
   // register global shortcuts
   globalShortcut.register(config.get('hotKey'), toggleMainWindow);
-  globalShortcut.register('escape', hideWindow);
 
   /**
    * Registers the query command listeners for all plugins
