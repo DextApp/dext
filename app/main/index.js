@@ -18,6 +18,8 @@ const {
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
+  IPC_COPY_CURRENT_ITEM,
+  IPC_COPY_CURRENT_ITEM_KEY,
   IPC_EXECUTE_CURRENT_ITEM,
   IPC_EXECUTE_ITEM,
   IPC_ITEM_DETAILS_REQUEST,
@@ -27,7 +29,7 @@ const {
 const Config = require('../../utils/conf');
 const { debounce } = require('../../utils/helpers');
 
-const { app, BrowserWindow, globalShortcut, ipcMain, shell } = electron;
+const { app, BrowserWindow, clipboard, globalShortcut, ipcMain, shell } = electron;
 
 // set default window values
 const WINDOW_DEFAULT_WIDTH = 700;
@@ -82,6 +84,10 @@ const executeCurrentItem = () => {
   win.webContents.send(IPC_EXECUTE_CURRENT_ITEM);
 };
 
+const copyItem = () => {
+  win.webContents.send(IPC_COPY_CURRENT_ITEM_KEY);
+};
+
 const repositionWindow = () => {
   const { screen } = electron;
   const cursorPoint = screen.getCursorScreenPoint();
@@ -105,6 +111,7 @@ const handleWindowShow = () => {
   globalShortcut.register('down', selectNextItem);
   globalShortcut.register('enter', executeCurrentItem);
   globalShortcut.register('escape', hideWindow);
+  globalShortcut.register('cmd+c', copyItem);
   win.webContents.send(IPC_WINDOW_SHOW);
 };
 
@@ -113,6 +120,7 @@ const handleWindowHide = () => {
   globalShortcut.unregister('down');
   globalShortcut.unregister('enter');
   globalShortcut.unregister('escape');
+  globalShortcut.unregister('cmd+c');
   win.webContents.send(IPC_WINDOW_HIDE);
 };
 
@@ -244,11 +252,27 @@ const handleItemDetailsRequest = (evt, item) => {
 };
 
 /**
+ * Copies the item data to the clipboard
+ *
+ * @param {Event} evt
+ * @param {Object} item
+ */
+const handleCopyItemToClipboard = (evt, item) => {
+  let content = item.arg;
+  if (item.text && item.text.copy) {
+    content = item.text.copy;
+  }
+  clipboard.writeText(content);
+};
+
+/**
  * Create a debounced function for handling the query command
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, 500);
 
 const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 500);
+
+const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 500);
 
 /**
  * Creates a new Browser window and loads the renderer index
@@ -305,6 +329,8 @@ const createWindow = () => {
     });
     // listen for item details requests
     ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) => debounceHandleItemDetailsRequest(evt, item));
+    // copies to clipboard
+    ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) => debounceHandleCopyItemToClipboard(evt, item));
   };
 
   // load all plugins and then

@@ -11,6 +11,7 @@ module.exports = {
       items.push({
         title: ans.toString(),
         subtitle: q,
+        arg: ans.toString(),
         icon: {
           path: './icon.png',
         },
