@@ -257,6 +257,18 @@ Type: `String`
 
 Additional parameters to be passed to the action.
 
+#### text
+
+Type: `Object`
+
+##### Options
+
+###### text.copy
+
+Type: `String`
+
+If specified, this string will be copied into the clipboard when the user activates the copy to clipboard command: <kbd>cmd</kbd> + <kbd>c</kbd>.
+
 #### icon
 
 Type: `object`

@@ -10,6 +10,8 @@ import {
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
   IPC_SELECT_NEXT_ITEM,
+  IPC_COPY_CURRENT_ITEM_KEY,
+  IPC_COPY_CURRENT_ITEM,
   IPC_EXECUTE_CURRENT_ITEM,
   IPC_ITEM_DETAILS_REQUEST,
   IPC_EXECUTE_ITEM,
@@ -47,6 +49,9 @@ const ResultListContainer = class extends Component {
         self.retrieveDetails(self.props.selectedIndex);
       }
     });
+    ipcRenderer.on(IPC_COPY_CURRENT_ITEM_KEY, () => {
+      self.copyItem();
+    });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
       self.execute();
     });
@@ -62,6 +67,18 @@ const ResultListContainer = class extends Component {
     ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, item);
   }
 
+  /**
+   * Copies the selected item to the clipboard
+   */
+  copyItem() {
+    const { results, selectedIndex } = this.props;
+    const item = results[selectedIndex];
+    ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
+  }
+
+  /**
+   * Executs the current item
+   */
   execute() {
     const { results, selectedIndex } = this.props;
     const item = results[selectedIndex];
