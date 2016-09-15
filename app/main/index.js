@@ -154,6 +154,10 @@ const handleDidFinishLoad = () => {
 };
 
 /**
+ * @TODO: pass in MAX_RESULTS to the plugins
+ *   There may be plugins that need a limit on their requests, pass it from
+ *   dext before they set their own default
+ *
  * Makes a query to all plugins.
  *
  * plugins { path, name, isCore, schema, action, keyword }
@@ -162,29 +166,35 @@ const handleDidFinishLoad = () => {
  * @param {Object} message - The IPC message { q, type }
  * @param {Object[]} plugins - An array of plugin objects
  */
-const handleQueryCommand = (evt, message, plugins) => {
-  let args = message.q.split(' ');
-  const kw = args.shift().toLowerCase();
-  // collect results
-  const results = [];
-  // find if it matches the current keyword
-  const matchedPlugins = plugins.filter(p => kw.length && kw === p.keyword.toLowerCase());
+const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
+  const results = []; // the end result of promises
+  const fractions = queryPhrase.split(' ');
+  const [keyword, ...args] = fractions;
+  const queryString = args.join(' ').trim();
+
+  const matchedPlugins = plugins
+    .filter(p => keyword === p.keyword);
+
   // if plugins are found with the current keyword
   // only make queries to those plugins
-  if (matchedPlugins && matchedPlugins.length) {
+  if (matchedPlugins.length) {
     // if no args are set, display the keyword helper
-    if (!args.length || !args[0].trim().length) {
+    if (!queryString.length) {
       // retrieve the helper item
       // call if it's a function
       // and resolve as necessary
       const helper = matchedPlugins[0].helper;
       let helperItem = helper;
       if (typeof helper === 'function') {
-        helperItem = helper(kw);
+        helperItem = helper(keyword);
       }
+
       Promise.resolve(helperItem).then(item => {
         // send a result for the current filtered keyword
-        evt.sender.send(IPC_QUERY_RESULTS, connectItems([item], matchedPlugins[0]));
+        evt.sender.send(
+          IPC_QUERY_RESULTS,
+          connectItems([item], matchedPlugins[0])
+        );
       });
     } else {
       matchedPlugins.forEach(plugin => {
@@ -192,31 +202,23 @@ const handleQueryCommand = (evt, message, plugins) => {
       });
     }
   } else {
-    // otherwise, do a regular query
+    // otherwise, do a regular query to core plugins
     plugins.forEach(plugin => {
-      // make sure to reset the args array for each plugin
-      args = message.q.split(' ');
       // if core, then just apply the output method
       if (plugin.isCore) {
-        results.push(queryResults(plugin, args));
-      } else {
-        // extract the keyword
-        const keyword = args.shift();
-        // if the keyword exists and query matches the plugin's keyword
-        if (keyword && plugin.keyword.toLowerCase() === keyword.toLowerCase()) {
-          results.push(queryResults(plugin, args));
-        }
+        results.push(queryResults(plugin, fractions));
       }
     });
   }
+
   Promise.all(results).then(resultSet => {
     const retval = resultSet
       // flatten and merge items
       .reduce((prev, next) => prev.concat(next))
       // sort by score
       .sort((a, b) => {
-        const scoreA = a.title.toLowerCase().score(kw);
-        const scoreB = b.title.toLowerCase().score(kw);
+        const scoreA = a.title.toLowerCase().score(keyword);
+        const scoreB = b.title.toLowerCase().score(keyword);
         if (scoreA === scoreB) {
           return 0;
         } else if (scoreA < scoreB) {
@@ -225,13 +227,15 @@ const handleQueryCommand = (evt, message, plugins) => {
         return -1;
       })
       .filter(i => {
-        const score = i.title.toLowerCase().score(kw);
+        const score = i.title.toLowerCase().score(keyword);
+        // eslint-disable-line no-extra-boolean-cast
         return Boolean(score)
           ? score > 0.25
-          : true // return by default if there is no score in the first place.
+          : true; // return by default if there is no score in the first place.
       })
       // filter max results
       .slice(0, MAX_RESULTS);
+
     // send the results back to the renderer
     evt.sender.send(IPC_QUERY_RESULTS, retval || []);
   });
