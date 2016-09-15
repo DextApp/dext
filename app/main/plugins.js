@@ -183,8 +183,8 @@ exports.connectItems = (items, plugin) => items.map(i => {
  *
  * plugin { path, name, isCore, schema, keyword, action, helper }
  *
- * @param {Object} - The plugin object
- * @param {String[]} - An array of arguments
+ * @param {Object} plugin - The plugin object
+ * @param {String[]} args - An array of arguments
  * @return {Promise} - An array of results
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
@@ -249,6 +249,34 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       break;
     }
   }
+});
+
+/**
+ * Retrieve helper items
+ *
+ * plugin { path, name, isCore, schema, keyword, action, helper }
+ *
+ * @param {Object} plugin - The plugin object
+ * @param {String[]} keyword - The query keyword
+ * @return {Promise} - An array of results
+ */
+exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
+  let items = [];
+  if (!plugin.helper) {
+    resolve(items);
+    return;
+  }
+  let helperItem = plugin.helper;
+  // retrieve the helper item call if it's
+  // a function and resolve as necessary
+  if (typeof plugin.helper === 'function') {
+    helperItem = plugin.helper(keyword);
+  }
+  Promise.resolve(helperItem).then(item => {
+    items.push(item);
+    items = exports.connectItems(items, plugin);
+    resolve(items);
+  });
 });
 
 /**
