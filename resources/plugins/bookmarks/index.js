@@ -1,3 +1,4 @@
+require('string_score');
 const browserBookmarks = require('browser-bookmarks');
 
 /**
