@@ -18,7 +18,7 @@ const mapDextItem = item => ({
 
 module.exports = {
   action: 'openurl',
-  execute: ({ query }) => new Promise(resolve => {
+  execute: query => new Promise(resolve => {
     browserBookmarks.getChrome().then(bookmarks => {
       // resolve and exist if there's no bookmarks
       if (!bookmarks.length) {

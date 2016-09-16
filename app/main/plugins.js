@@ -233,7 +233,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       // eslint-disable-next-line global-require
       const pluginObj = require(plugin.path);
       const output = (typeof pluginObj.execute === 'function')
-        ? pluginObj.execute({ query, size: MAX_RESULTS })
+        ? pluginObj.execute(query, { size: MAX_RESULTS })
         : pluginObj.execute;
 
       if (output) {

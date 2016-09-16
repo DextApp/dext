@@ -3,7 +3,7 @@
 
 module.exports = {
   action: 'openurl',
-  execute: ({ query }) => {
+  execute: query => {
     let items = [];
     if (query === '?') {
       items = [
