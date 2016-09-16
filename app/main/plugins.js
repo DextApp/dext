@@ -5,8 +5,7 @@ const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
-const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
-const CacheConf = require('../../utils/CacheConf');
+const { PLUGIN_PATH } = require('../../utils/paths');
 const { MAX_RESULTS } = require('../constants');
 
 /**
@@ -30,6 +29,12 @@ exports.loadPluginsInPath = directory => new Promise(resolve => {
   });
 });
 
+/**
+ * Checks to see if a plugin is a core plugin.
+ * (Lives inside the core plugin path)
+ *
+ * @param
+ */
 exports.isCorePlugin = directory => {
   const dirname = path.dirname(directory);
   if (dirname === PLUGIN_PATH) {
@@ -114,12 +119,15 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
 });
 
 /**
- * Loads core and user plugins
+ * Loads all plugins from the given set of
+ * directories and apply module properties.
+ *
+ * @param {String[]} directories - An array of directories to load
+ * @return {Promise} - Resolves a list of plugin objects
  */
-exports.loadPlugins = () => new Promise(resolve => {
-  const corePlugins = exports.loadPluginsInPath(CORE_PLUGIN_PATH);
-  const userPlugins = exports.loadPluginsInPath(PLUGIN_PATH);
-  Promise.all([corePlugins, userPlugins])
+exports.loadPlugins = (directories) => new Promise(resolve => {
+  const prom = directories.map(exports.loadPluginsInPath);
+  Promise.all(prom)
     .then(pluginSets => {
       const allPlugins = pluginSets
         // merge promise results
@@ -189,15 +197,8 @@ exports.connectItems = (items, plugin) => items.map(i => {
  * @return {Promise} - An array of results
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
-  // load from cache
-  const cacheConf = new CacheConf({ configName: path.basename(plugin.path) });
   const query = args.join(' ');
-  const cacheKey = query;
-  // if (cacheConf.has(cacheKey)) {
-  //   const cachedResults = cacheConf.get(cacheKey);
-  //   resolve(cachedResults);
-  //   return;
-  // }
+
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
@@ -222,7 +223,6 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
             items = exports.connectItems(output.items, plugin);
           }
         }
-        cacheConf.set(cacheKey, items);
         resolve(items);
       });
       break;
@@ -239,7 +239,6 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       if (output) {
         Promise.resolve(output).then(i => {
           const items = exports.connectItems(i.items, plugin);
-          cacheConf.set(cacheKey, items);
           resolve(items);
         });
       } else {
@@ -281,34 +280,26 @@ exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
 /**
  * Retrieve the item's details
  *
+ * plugin { path, name, isCore, schema, keyword, action, helper }
+ *
  * @cached
  * @param {Object} item
+ * @param {Object} plugin - The plugin object
  * @return {Promise} - Resolves to the rendered html string
  */
-exports.retrieveItemDetails = item => new Promise(resolve => {
-  // load from cache
-  const configName = `${path.basename(item.plugin.path)}-itemDetails`;
-  const cacheConf = new CacheConf({ configName });
-  const cacheKey = JSON.stringify(item);
-  if (cacheConf.has(cacheKey)) {
-    const content = cacheConf.get(cacheKey);
-    resolve(content);
-    return;
-  }
+exports.retrieveItemDetails = (item, plugin) => new Promise(resolve => {
   // retrieve the rendered content
   let type = 'html';
   let content = '';
-  // retrieve the plugin's module
-  const m = require(item.plugin.path); // eslint-disable-line global-require
-  if (m && m.details) {
-    if (m.details.type) {
-      type = m.details.type;
+  if (plugin && plugin.details) {
+    if (plugin.details.type) {
+      type = plugin.details.type;
     }
-    if (m.details.render) {
-      if (typeof m.details.render === 'function') {
-        content = m.details.render(item);
+    if (plugin.details.render) {
+      if (typeof plugin.details.render === 'function') {
+        content = plugin.details.render(item);
       } else {
-        content = m.details.render;
+        content = plugin.details.render;
       }
     }
   }
@@ -319,7 +310,6 @@ exports.retrieveItemDetails = item => new Promise(resolve => {
       const md = new MarkdownIt();
       html = md.render(res);
     }
-    cacheConf.set(cacheKey, html);
     resolve(html);
   });
 });
