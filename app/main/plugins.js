@@ -5,7 +5,7 @@ const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
-const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
+const { PLUGIN_PATH } = require('../../utils/paths');
 
 /**
  * Loads plugins in the given path
