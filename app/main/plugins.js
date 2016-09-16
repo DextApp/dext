@@ -29,6 +29,12 @@ exports.loadPluginsInPath = directory => new Promise(resolve => {
   });
 });
 
+/**
+ * Checks to see if a plugin is a core plugin.
+ * (Lives inside the core plugin path)
+ *
+ * @param
+ */
 exports.isCorePlugin = directory => {
   const dirname = path.dirname(directory);
   if (dirname === PLUGIN_PATH) {
@@ -282,34 +288,26 @@ exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
 /**
  * Retrieve the item's details
  *
+ * plugin { path, name, isCore, schema, keyword, action, helper }
+ *
  * @cached
  * @param {Object} item
+ * @param {Object} plugin - The plugin object
  * @return {Promise} - Resolves to the rendered html string
  */
-exports.retrieveItemDetails = item => new Promise(resolve => {
-  // load from cache
-  const configName = `${path.basename(item.plugin.path)}-itemDetails`;
-  const cacheConf = new CacheConf({ configName });
-  const cacheKey = JSON.stringify(item);
-  if (cacheConf.has(cacheKey)) {
-    const content = cacheConf.get(cacheKey);
-    resolve(content);
-    return;
-  }
+exports.retrieveItemDetails = (item, plugin) => new Promise(resolve => {
   // retrieve the rendered content
   let type = 'html';
   let content = '';
-  // retrieve the plugin's module
-  const m = require(item.plugin.path); // eslint-disable-line global-require
-  if (m && m.details) {
-    if (m.details.type) {
-      type = m.details.type;
+  if (plugin && plugin.details) {
+    if (plugin.details.type) {
+      type = plugin.details.type;
     }
-    if (m.details.render) {
-      if (typeof m.details.render === 'function') {
-        content = m.details.render(item);
+    if (plugin.details.render) {
+      if (typeof plugin.details.render === 'function') {
+        content = plugin.details.render(item);
       } else {
-        content = m.details.render;
+        content = plugin.details.render;
       }
     }
   }
@@ -320,7 +318,6 @@ exports.retrieveItemDetails = item => new Promise(resolve => {
       const md = new MarkdownIt();
       html = md.render(res);
     }
-    cacheConf.set(cacheKey, html);
     resolve(html);
   });
 });

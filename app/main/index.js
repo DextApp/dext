@@ -27,6 +27,7 @@ const {
   IPC_LOAD_THEME,
 } = require('../ipc');
 const Config = require('../../utils/conf');
+const CacheConf = require('../../utils/CacheConf');
 const { debounce } = require('../../utils/helpers');
 
 const { app, BrowserWindow, clipboard, globalShortcut, ipcMain, shell } = electron;
@@ -229,15 +230,29 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
 };
 
 /**
- * Retrieve item details and sends back the response
+ * Retrieve item details and sends back the response.
+ * Loads from cache if necessary.
  *
  * @param {Event} evt
  * @param {Object} item
  */
 const handleItemDetailsRequest = (evt, item) => {
-  const content = retrieveItemDetails(item);
+  // set empty content
+  let content = '';
+  // load from cache if available
+  const configName = `${path.basename(item.plugin.path)}-itemDetails`;
+  const cacheConf = new CacheConf({ configName });
+  const cacheKey = JSON.stringify(item);
+  if (cacheConf.has(cacheKey)) {
+    content = cacheConf.get(cacheKey);
+  } else {
+    // otherwise, load from plugin
+    const plugin = require(item.plugin.path); // eslint-disable-line global-require
+    content = retrieveItemDetails(item, plugin);
+    cacheConf.set(cacheKey, content);
+  }
   // resolve and update the state
-  content.then(html => {
+  Promise.resolve(content).then(html => {
     evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
   });
 };
