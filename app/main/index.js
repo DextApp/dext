@@ -341,9 +341,7 @@ const createWindow = () => {
 
   // load all plugins and then
   // registers the ipc listeners
-  loadPlugins().then(plugins => {
-    registerIpcListeners(plugins);
-  });
+  loadPlugins().then(registerIpcListeners);
 };
 
 app.on('ready', createWindow);
