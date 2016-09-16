@@ -172,8 +172,7 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   const [keyword, ...args] = fractions;
   const queryString = args.join(' ').trim();
 
-  const matchedPlugins = plugins
-    .filter(p => keyword === p.keyword);
+  const matchedPlugins = plugins.filter(p => keyword === p.keyword);
 
   // if plugins are found with the current keyword
   // only make queries to those plugins
