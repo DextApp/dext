@@ -30,7 +30,7 @@
   ```bash
   $ npm start
   ```
-5. Submit a [Pull Request](https://github.com/vutran/dext/pulls) if you have something great to contribute and a review will proceed.
+5. Submit a [Pull Request](https://github.com/vutran/dext/pulls) to the `develop` branch if you have something great to contribute and a review will proceed.
 
 ## Bug Reports
 
