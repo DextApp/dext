@@ -18,7 +18,8 @@ const mapDextItem = item => ({
 
 module.exports = {
   action: 'openurl',
-  execute: (query, { size }) => new Promise(resolve => {
+  execute: (query, options = { size: 20 }) => new Promise(resolve => {
+    const { size } = options;
     browserBookmarks.getChrome().then(bookmarks => {
       // resolve and exist if there's no bookmarks
       if (!bookmarks.length) {
@@ -49,7 +50,7 @@ module.exports = {
           }
           return -1;
         })
-        .slice(0, size)
+        .slice(0, size);
       resolve({ items: sortedItems });
     });
   }),
