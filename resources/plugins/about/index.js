@@ -3,9 +3,9 @@
 
 module.exports = {
   action: 'openurl',
-  execute: q => {
+  execute: ({ query }) => {
     let items = [];
-    if (q === '?') {
+    if (query === '?') {
       items = [
         {
           title: 'Dext',

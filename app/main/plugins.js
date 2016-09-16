@@ -7,6 +7,7 @@ const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 const CacheConf = require('../../utils/CacheConf');
+const { MAX_RESULTS } = require('../constants');
 
 /**
  * Loads plugins in the given path
@@ -190,8 +191,8 @@ exports.connectItems = (items, plugin) => items.map(i => {
 exports.queryResults = (plugin, args) => new Promise(resolve => {
   // load from cache
   const cacheConf = new CacheConf({ configName: path.basename(plugin.path) });
-  const q = args.join(' ');
-  const cacheKey = q;
+  const query = args.join(' ');
+  const cacheKey = query;
   // if (cacheConf.has(cacheKey)) {
   //   const cachedResults = cacheConf.get(cacheKey);
   //   resolve(cachedResults);
@@ -229,17 +230,15 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
     case 'dext':
       // no break
     default: { // eslint-disable-line no-fallthrough
-      const m = require(plugin.path); // eslint-disable-line global-require
-      let output = '';
-      if (typeof m.execute === 'function') {
-        output = m.execute(q);
-      } else {
-        output = m.execute;
-      }
-      let items = [];
+      // eslint-disable-next-line global-require
+      const pluginObj = require(plugin.path);
+      const output = (typeof pluginObj.execute === 'function')
+        ? pluginObj.execute({ query, size: MAX_RESULTS })
+        : pluginObj.execute
+
       if (output) {
         Promise.resolve(output).then(i => {
-          items = exports.connectItems(i.items, plugin);
+          const items = exports.connectItems(i.items, plugin);
           cacheConf.set(cacheKey, items);
           resolve(items);
         });
