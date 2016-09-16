@@ -6,7 +6,6 @@ const deepAssign = require('deep-assign');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
-const CacheConf = require('../../utils/CacheConf');
 
 /**
  * Loads plugins in the given path
@@ -194,15 +193,7 @@ exports.connectItems = (items, plugin) => items.map(i => {
  * @return {Promise} - An array of results
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
-  // load from cache
-  const cacheConf = new CacheConf({ configName: path.basename(plugin.path) });
   const q = args.join(' ');
-  const cacheKey = q;
-  // if (cacheConf.has(cacheKey)) {
-  //   const cachedResults = cacheConf.get(cacheKey);
-  //   resolve(cachedResults);
-  //   return;
-  // }
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
@@ -227,7 +218,6 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
             items = exports.connectItems(output.items, plugin);
           }
         }
-        cacheConf.set(cacheKey, items);
         resolve(items);
       });
       break;
@@ -246,7 +236,6 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       if (output) {
         Promise.resolve(output).then(i => {
           items = exports.connectItems(i.items, plugin);
-          cacheConf.set(cacheKey, items);
           resolve(items);
         });
       } else {
