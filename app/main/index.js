@@ -29,6 +29,7 @@ const {
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce } = require('../../utils/helpers');
+const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 
 const { app, BrowserWindow, clipboard, globalShortcut, ipcMain, shell } = electron;
 
@@ -339,9 +340,9 @@ const createWindow = () => {
     ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) => debounceHandleCopyItemToClipboard(evt, item));
   };
 
-  // load all plugins and then
-  // registers the ipc listeners
-  loadPlugins().then(registerIpcListeners);
+  // load all plugins (core and user) and
+  // then registers the ipc listeners
+  loadPlugins([CORE_PLUGIN_PATH, PLUGIN_PATH]).then(registerIpcListeners);
 };
 
 app.on('ready', createWindow);

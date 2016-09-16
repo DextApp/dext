@@ -118,12 +118,15 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
 });
 
 /**
- * Loads core and user plugins
+ * Loads all plugins from the given set of
+ * directories and apply module properties.
+ *
+ * @param {String[]} directories - An array of directories to load
+ * @return {Promise} - Resolves a list of plugin objects
  */
-exports.loadPlugins = () => new Promise(resolve => {
-  const corePlugins = exports.loadPluginsInPath(CORE_PLUGIN_PATH);
-  const userPlugins = exports.loadPluginsInPath(PLUGIN_PATH);
-  Promise.all([corePlugins, userPlugins])
+exports.loadPlugins = (directories) => new Promise(resolve => {
+  const prom = directories.map(exports.loadPluginsInPath);
+  Promise.all(prom)
     .then(pluginSets => {
       const allPlugins = pluginSets
         // merge promise results
