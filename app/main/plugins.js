@@ -234,7 +234,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       const pluginObj = require(plugin.path);
       const output = (typeof pluginObj.execute === 'function')
         ? pluginObj.execute({ query, size: MAX_RESULTS })
-        : pluginObj.execute
+        : pluginObj.execute;
 
       if (output) {
         Promise.resolve(output).then(i => {
