@@ -45,7 +45,7 @@ You can use functions for your search query.
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  execute: function(q) {
+  execute: function(q /**, options */) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
     return {
@@ -61,7 +61,7 @@ Your function can also return Promises that resolves the result object.
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  execute: function(q) {
+  execute: function(q /**, options */) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
     return new Promise(function(resolve) {
@@ -71,6 +71,23 @@ module.exports = {
     });
   },
 };
+```
+
+The `options` parameter contains the following key(s):
+
+##### _size_
+
+Type: `Number`<br/>
+You can use `size` to set a limit on an API call in your plugin
+
+```js
+execute: function(q, { size }) {
+  return new Promise(function(resolve) {
+    request.get({ url: `example.org?search=${q}&limit=${size}` }, (err, response, body) => {
+      // handle response...
+    })
+  });
+},
 ```
 
 ## Helper Item
