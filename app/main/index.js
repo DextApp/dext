@@ -26,6 +26,7 @@ const {
   IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
 } = require('../ipc');
+const { MAX_RESULTS } = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce } = require('../../utils/helpers');
@@ -38,7 +39,6 @@ const WINDOW_DEFAULT_WIDTH = 700;
 const WINDOW_DEFAULT_HEIGHT = 80;
 const WINDOW_MIN_HEIGHT = 80;
 const WINDOW_MAX_HEIGHT = 710; // results + query + padding
-const MAX_RESULTS = 20;
 
 let win = null;
 
@@ -156,10 +156,6 @@ const handleDidFinishLoad = () => {
 };
 
 /**
- * @TODO: pass in MAX_RESULTS to the plugins
- *   There may be plugins that need a limit on their requests, pass it from
- *   dext before they set their own default
- *
  * Makes a query to all plugins.
  *
  * plugins { path, name, isCore, schema, action, keyword }

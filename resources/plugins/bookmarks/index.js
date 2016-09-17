@@ -18,26 +18,31 @@ const mapDextItem = item => ({
 
 module.exports = {
   action: 'openurl',
-  execute: q => new Promise(resolve => {
+  execute: (query, options = { size: 20 }) => new Promise(resolve => {
+    const { size } = options;
     browserBookmarks.getChrome().then(bookmarks => {
       // resolve and exist if there's no bookmarks
       if (!bookmarks.length) {
         resolve([]);
         return;
       }
-      // map to Dext
-      const items = bookmarks.map(mapDextItem);
-      // apply scores
-      items.forEach(i => {
-        i.score = i.title.score(q); // eslint-disable-line no-param-reassign
+
+      // map to Dext items and apply scores
+      const items = bookmarks.map((bookmark) => {
+        const dextItem = mapDextItem(bookmark);
+        const score = dextItem.title.score(query);
+        return Object.assign({}, dextItem, {
+          score,
+        });
       });
+
       const sortedItems = items
         // filter out 0's
         .filter(i => i.score > 0)
         // sort by score
         .sort((a, b) => {
-          const scoreA = a.title.score(q);
-          const scoreB = b.title.score(q);
+          const scoreA = a.title.score(query);
+          const scoreB = b.title.score(query);
           if (scoreA === scoreB) {
             return 0;
           } else if (scoreA < scoreB) {
@@ -45,8 +50,7 @@ module.exports = {
           }
           return -1;
         })
-        // return only top 20
-        .filter((a, b) => b < 20);
+        .slice(0, size);
       resolve({ items: sortedItems });
     });
   }),

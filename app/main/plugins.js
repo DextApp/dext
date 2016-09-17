@@ -6,6 +6,7 @@ const deepAssign = require('deep-assign');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { PLUGIN_PATH } = require('../../utils/paths');
+const { MAX_RESULTS } = require('../constants');
 
 /**
  * Loads plugins in the given path
@@ -196,7 +197,8 @@ exports.connectItems = (items, plugin) => items.map(i => {
  * @return {Promise} - An array of results
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
-  const q = args.join(' ');
+  const query = args.join(' ');
+
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
@@ -228,17 +230,15 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
     case 'dext':
       // no break
     default: { // eslint-disable-line no-fallthrough
-      const m = require(plugin.path); // eslint-disable-line global-require
-      let output = '';
-      if (typeof m.execute === 'function') {
-        output = m.execute(q);
-      } else {
-        output = m.execute;
-      }
-      let items = [];
+      // eslint-disable-next-line global-require
+      const pluginObj = require(plugin.path);
+      const output = (typeof pluginObj.execute === 'function')
+        ? pluginObj.execute(query, { size: MAX_RESULTS })
+        : pluginObj.execute;
+
       if (output) {
         Promise.resolve(output).then(i => {
-          items = exports.connectItems(i.items, plugin);
+          const items = exports.connectItems(i.items, plugin);
           resolve(items);
         });
       } else {

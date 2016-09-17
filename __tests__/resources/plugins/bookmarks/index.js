@@ -2,7 +2,7 @@ import m from '../../../../resources/plugins/bookmarks';
 
 describe('retrieve bookmarks', () => {
   it('should return something', async () => {
-    const data = await m.execute('GitHub');
+    const data = await m.execute('GitHub', { size: 20 });
     if (process.platform === 'darwin') {
       expect(data).toBeTruthy();
       expect(data.items instanceof Array).toBeTruthy();

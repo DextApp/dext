@@ -4,13 +4,13 @@ const math = require('mathjs');
 
 module.exports = {
   action: 'openurl',
-  execute: q => {
+  execute: query => {
     try {
-      const ans = math.eval(q);
+      const ans = math.eval(query);
       const items = [];
       items.push({
         title: ans.toString(),
-        subtitle: q,
+        subtitle: query,
         arg: ans.toString(),
         icon: {
           path: './icon.png',
