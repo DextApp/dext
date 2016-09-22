@@ -33,16 +33,24 @@ const shown = style({
 
 const ResultList = class extends Component {
   render() {
-    const props = this.props;
     // Retrieve an array of <ResultItemContainer /> containers
-    const getResultItems = (results, selectedIndex, theme) => results.map((item, key) => <ResultItemContainer key={key} theme={theme} item={item} selected={selectedIndex === key} />);
+    const getResultItems = (results, selectedIndex, theme) => results.map(
+      (item, key) => (
+        <ResultItemContainer
+          key={key}
+          theme={theme}
+          item={item}
+          selected={selectedIndex === key}
+        />
+      )
+    );
     // get current item
-    const currItem = props.results[props.selectedIndex];
+    const currItem = this.props.results[this.props.selectedIndex];
 
     return (
       <div {...style({ position: 'relative', paddingTop: 15, paddingBottom: 15 })}>
-        <ol {...compose(base, props.results.length && shown)} ref={c => { this.c = c; }}>
-          {getResultItems(props.results, props.selectedIndex, props.theme)}
+        <ol {...compose(base, this.props.results.length && shown)} ref={c => { this.c = c; }}>
+          {getResultItems(this.props.results, this.props.selectedIndex, this.props.theme)}
         </ol>
         {currItem && <ResultDetailsContainer item={currItem} />}
       </div>
