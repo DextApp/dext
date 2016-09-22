@@ -175,22 +175,33 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins.length) {
-    // if no args are set, query for helper items
-    if (!queryString.length) {
-      matchedPlugins.forEach(plugin => {
+    matchedPlugins.forEach(plugin => {
+      let doHelper = false;
+      let doResults = false;
+      if (plugin.isCore) {
+        doHelper = true;
+        doResults = true;
+      } else if (queryString.length) {
+        // if it's a community plugin,
+        // query for results if the queryString is defined
+        // otherwise, query for helper
+        doResults = true;
+      } else {
+        doHelper = true;
+      }
+      if (doHelper) {
         results.push(queryHelper(plugin, keyword));
-      });
-    } else {
-      // otherwise, make a regular query
-      matchedPlugins.forEach(plugin => {
+      }
+      if (doResults) {
+        // otherwise, make a regular query
         results.push(queryResults(plugin, args));
-      });
-    }
+      }
+    });
   } else {
     // otherwise, do a regular query to core plugins
     plugins.forEach(plugin => {
-      // if core, then just apply the output method
-      if (plugin.isCore) {
+      // if core, then query the results
+      if (plugin.isCore && (!plugin.keyword || keyword === plugin.keyword)) {
         results.push(queryResults(plugin, fractions));
       }
     });
