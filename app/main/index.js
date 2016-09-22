@@ -246,10 +246,10 @@ const handleItemDetailsRequest = (evt, item) => {
     // otherwise, load from plugin
     const plugin = require(item.plugin.path); // eslint-disable-line global-require
     content = retrieveItemDetails(item, plugin);
-    cacheConf.set(cacheKey, content);
   }
   // resolve and update the state
   Promise.resolve(content).then(html => {
+    cacheConf.set(cacheKey, html);
     evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
   });
 };
