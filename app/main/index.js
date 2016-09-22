@@ -176,24 +176,12 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   // only make queries to those plugins
   if (matchedPlugins.length) {
     matchedPlugins.forEach(plugin => {
-      let doHelper = false;
-      let doResults = false;
-      if (plugin.isCore) {
-        doHelper = true;
-        doResults = true;
-      } else if (queryString.length) {
-        // if it's a community plugin,
-        // query for results if the queryString is defined
-        // otherwise, query for helper
-        doResults = true;
-      } else {
-        doHelper = true;
-      }
-      if (doHelper) {
+      // query helper only if the query string isn't set
+      if (!queryString.length) {
         results.push(queryHelper(plugin, keyword));
       }
-      if (doResults) {
-        // otherwise, make a regular query
+      // query results if it's a core plugin or has a query string
+      if (plugin.isCore || queryString.length) {
         results.push(queryResults(plugin, args));
       }
     });
