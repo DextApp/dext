@@ -19,5 +19,5 @@ describe('retrieve bookmarks', () => {
     } else {
       expect(data).toEqual([]);
     }
-  })
+  });
 });
