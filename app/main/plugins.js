@@ -62,10 +62,7 @@ exports.loadPluginsInPath = directory => new Promise((resolve, reject) => {
  */
 exports.isCorePlugin = directory => {
   const dirname = path.dirname(directory);
-  if (dirname === CORE_PLUGIN_PATH) {
-    return false;
-  }
-  return true;
+  return (dirname === CORE_PLUGIN_PATH);
 };
 
 /**
@@ -161,12 +158,7 @@ exports.loadPlugins = (directories) => new Promise(resolve => {
         .map(plugin => ({
           path: plugin,
           name: path.basename(plugin),
-          // @FIXME
-          // Due to a change in isCorePlugin
-          // from using PLUGIN_PATH to CORE_PLUGIN_PATH
-          // search results from core plugins stopped working,
-          // so here we have to negate the return value.
-          isCore: !exports.isCorePlugin(plugin),
+          isCore: exports.isCorePlugin(plugin),
           schema: 'dext',
           action: 'openurl',
           keyword: '',
