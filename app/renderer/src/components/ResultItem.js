@@ -56,7 +56,7 @@ const subtitle = style({
   WebkitLineClamp: 1,
 });
 
-const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
+const ResultItem = ({ theme, selected, item, isAltMod, isMetaMod, onDoubleClick }) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
 
@@ -67,6 +67,15 @@ const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
     )
     : {};
 
+  let itemSubtitle = item.subtitle;
+
+  // apply modifiers if necessary
+  if (isMetaMod) {
+    itemSubtitle = item.mods && item.mods.cmd && item.mods.cmd.subtitle;
+  } else if (isAltMod) {
+    itemSubtitle = item.mods && item.mods.alt && item.mods.alt.subtitle;
+  }
+
   return (
     <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
       <div {...icon}>
@@ -74,7 +83,7 @@ const ResultItem = ({ theme, selected, item, onDoubleClick }) => {
       </div>
       <div {...details}>
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
-        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{item.subtitle}</h3>
+        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{itemSubtitle}</h3>
       </div>
     </li>
   );
@@ -86,6 +95,8 @@ ResultItem.propTypes = {
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
   item: ResultItemSchema,
   selected: PropTypes.bool,
+  isAltMod: PropTypes.bool,
+  isMetaMod: PropTypes.bool,
   onDoubleClick: PropTypes.func,
 };
 

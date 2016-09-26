@@ -19,20 +19,35 @@ const ResultItemContainer = class extends Component {
     this.execute();
   }
 
+  isAltMod() {
+    return this.props.selected && this.props.keys && this.props.keys.indexOf('alt') > -1;
+  }
+
+  isMetaMod() {
+    return this.props.selected && this.props.keys && this.props.keys.indexOf('meta') > -1;
+  }
+
   execute() {
     const { item } = this.props;
     const { action } = item;
-    ipcRenderer.send(IPC_EXECUTE_ITEM, { action, item });
+    ipcRenderer.send(IPC_EXECUTE_ITEM, {
+      action,
+      item,
+      isAltMod: this.isAltMod(),
+      isMetaMod: this.isMetaMod(),
+    });
   }
 
   render() {
-    const { theme, item, selected } = this.props;
+    const { theme, item, selected, keys } = this.props;
     return (
       <ResultItem
         theme={theme}
         item={item}
         selected={selected}
         onDoubleClick={this.handleDoubleClick}
+        isAltMod={this.isAltMod()}
+        isMetaMod={this.isMetaMod()}
       />
     );
   }
@@ -48,8 +63,13 @@ ResultItemContainer.propTypes = {
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
   item: ResultItemSchema,
   selected: PropTypes.bool,
+  keys: PropTypes.array,
 };
+
+const mapStateToProps = state => ({
+  keys: state.keys,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
-export default connect(null, mapDispatchToProps)(ResultItemContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ResultItemContainer);

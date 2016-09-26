@@ -12,6 +12,8 @@ import {
   RESET_DETAILS,
   CLOSE_DETAILS,
   OPEN_DETAILS,
+  SET_ACTIVE_KEY,
+  CLEAR_ACTIVE_KEY,
 } from './types';
 
 /**
@@ -114,4 +116,20 @@ export function closeDetails() {
  */
 export function openDetails() {
   return { type: OPEN_DETAILS };
+}
+
+/**
+ * Sets the active key
+ *
+ * @param {String} key
+ */
+export function setActiveKey(key) {
+  return { type: SET_ACTIVE_KEY, key };
+}
+
+/**
+ * Clears the active key
+ */
+export function clearActiveKey(key) {
+  return { type: CLEAR_ACTIVE_KEY, key };
 }
