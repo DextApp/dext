@@ -198,7 +198,6 @@ exports.connectItems = (items, plugin) => items.map(i => {
  */
 exports.queryResults = (plugin, args) => new Promise(resolve => {
   const query = args.join(' ');
-
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {

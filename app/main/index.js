@@ -175,22 +175,21 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins.length) {
-    // if no args are set, query for helper items
-    if (!queryString.length) {
-      matchedPlugins.forEach(plugin => {
+    matchedPlugins.forEach(plugin => {
+      // query helper only if the query string isn't set
+      if (!queryString.length) {
         results.push(queryHelper(plugin, keyword));
-      });
-    } else {
-      // otherwise, make a regular query
-      matchedPlugins.forEach(plugin => {
+      }
+      // query results if it's a core plugin or has a query string
+      if (plugin.isCore || queryString.length) {
         results.push(queryResults(plugin, args));
-      });
-    }
+      }
+    });
   } else {
     // otherwise, do a regular query to core plugins
     plugins.forEach(plugin => {
-      // if core, then just apply the output method
-      if (plugin.isCore) {
+      // if core, then query the results
+      if (plugin.isCore && (!plugin.keyword || keyword === plugin.keyword)) {
         results.push(queryResults(plugin, fractions));
       }
     });
