@@ -36,7 +36,7 @@ const QueryField = class extends Component {
     return (
       <div {...base}>
         <input
-          ref={c => { this.input = c && c; }}
+          ref={(c) => { this.input = c && c; }}
           onChange={onChange}
           value={value}
           {...styles}

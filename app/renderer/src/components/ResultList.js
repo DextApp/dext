@@ -49,7 +49,7 @@ const ResultList = class extends Component {
 
     return (
       <div {...style({ position: 'relative', paddingTop: 15, paddingBottom: 15 })}>
-        <ol {...compose(base, this.props.results.length && shown)} ref={c => { this.c = c; }}>
+        <ol {...compose(base, this.props.results.length && shown)} ref={(c) => { this.c = c; }}>
           {getResultItems(this.props.results, this.props.selectedIndex, this.props.theme)}
         </ol>
         {currItem && <ResultDetailsContainer item={currItem} />}
