@@ -23,16 +23,14 @@ const iconImgText = compose(
   }),
 );
 
-const Icon = ({ icon }) => {
-  let src = '';
-  switch (icon.type) {
+const Icon = (props) => {
+  switch (props.icon.type) {
     case 'text':
-      return <span {...iconImgText} role="presentation">{icon.letter}</span>;
+      return <span {...iconImgText} role="presentation">{props.icon.letter}</span>;
     case 'file':
       // no break
     default: // eslint-disable-line no-fallthrough
-      src = icon.path;
-      return <img {...iconImg} src={src} role="presentation" />;
+      return <img {...iconImg} src={props.icon.path} role="presentation" />;
   }
 };
 
