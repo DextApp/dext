@@ -73,25 +73,11 @@ const ResultListContainer = class extends Component {
   }
 
   handleKeyDown(e) {
-    switch (e.key.toLowerCase()) {
-      case 'alt':
-        this.props.setActiveKey('alt');
-        break;
-      case 'meta':
-        this.props.setActiveKey('meta');
-        break;
-    }
+    this.props.setActiveKey(e.key.toLowerCase());
   }
 
   handleKeyUp(e) {
-    switch (e.key.toLowerCase()) {
-      case 'alt':
-        this.props.clearActiveKey('alt');
-        break;
-      case 'meta':
-        this.props.clearActiveKey('meta');
-        break;
-    }
+    this.props.clearActiveKey(e.key.toLowerCase());
   }
 
   /**
