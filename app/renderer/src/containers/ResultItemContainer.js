@@ -39,7 +39,7 @@ const ResultItemContainer = class extends Component {
   }
 
   render() {
-    const { theme, item, selected, keys } = this.props;
+    const { theme, item, selected } = this.props;
     return (
       <ResultItem
         theme={theme}
@@ -63,7 +63,7 @@ ResultItemContainer.propTypes = {
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
   item: ResultItemSchema,
   selected: PropTypes.bool,
-  keys: PropTypes.array,
+  keys: PropTypes.arrayOf(PropTypes.string),
 };
 
 const mapStateToProps = state => ({

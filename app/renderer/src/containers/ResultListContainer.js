@@ -1,3 +1,5 @@
+/* global window */
+
 import { ipcRenderer } from 'electron';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -174,20 +176,20 @@ ResultListContainer.defaultProps = {
   updateResults: () => { },
   resetResults: () => { },
   setActiveKey: () => {},
-  clearActiveKeys: () => {},
+  clearActiveKey: () => {},
 };
 
 ResultListContainer.propTypes = {
   theme: ThemeSchema,
-  keys: PropTypes.array,
+  keys: PropTypes.arrayOf(PropTypes.string),
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
   selectNextItem: PropTypes.func,
   selectPreviousItem: PropTypes.func,
   updateResults: PropTypes.func,
   resetResults: PropTypes.func,
-  setActiveKeys: PropTypes.func,
-  clearActiveKeys: PropTypes.func,
+  setActiveKey: PropTypes.func,
+  clearActiveKey: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
