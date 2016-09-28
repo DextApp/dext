@@ -56,7 +56,7 @@ const toggleMainWindow = () => {
   }
 };
 
-const execute = message => {
+const execute = (message) => {
   switch (message.action) {
     case 'openurl':
       if (message.item.arg) {
@@ -146,7 +146,7 @@ const handleWindowCollapse = () => {
  */
 const handleDidFinishLoad = () => {
   const t = config.get('theme') || '';
-  loadTheme(t).then(theme => {
+  loadTheme(t).then((theme) => {
     if (theme) {
       win.webContents.send(IPC_LOAD_THEME, theme);
     }
@@ -175,28 +175,27 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins.length) {
-    // if no args are set, query for helper items
-    if (!queryString.length) {
-      matchedPlugins.forEach(plugin => {
+    matchedPlugins.forEach((plugin) => {
+      // query helper only if the query string isn't set
+      if (!queryString.length) {
         results.push(queryHelper(plugin, keyword));
-      });
-    } else {
-      // otherwise, make a regular query
-      matchedPlugins.forEach(plugin => {
+      }
+      // query results if it's a core plugin or has a query string
+      if (plugin.isCore || queryString.length) {
         results.push(queryResults(plugin, args));
-      });
-    }
+      }
+    });
   } else {
     // otherwise, do a regular query to core plugins
-    plugins.forEach(plugin => {
-      // if core, then just apply the output method
-      if (plugin.isCore) {
+    plugins.forEach((plugin) => {
+      // if core, then query the results
+      if (plugin.isCore && (!plugin.keyword || keyword === plugin.keyword)) {
         results.push(queryResults(plugin, fractions));
       }
     });
   }
 
-  Promise.all(results).then(resultSet => {
+  Promise.all(results).then((resultSet) => {
     const retval = resultSet
       // flatten and merge items
       .reduce((prev, next) => prev.concat(next))
@@ -211,7 +210,7 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
         }
         return -1;
       })
-      .filter(i => {
+      .filter((i) => {
         const score = i.title.toLowerCase().score(keyword);
         // eslint-disable-next-line no-extra-boolean-cast
         return Boolean(score)
@@ -246,10 +245,10 @@ const handleItemDetailsRequest = (evt, item) => {
     // otherwise, load from plugin
     const plugin = require(item.plugin.path); // eslint-disable-line global-require
     content = retrieveItemDetails(item, plugin);
-    cacheConf.set(cacheKey, content);
   }
   // resolve and update the state
-  Promise.resolve(content).then(html => {
+  Promise.resolve(content).then((html) => {
+    cacheConf.set(cacheKey, html);
     evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
   });
 };
@@ -322,7 +321,7 @@ const createWindow = () => {
    *
    * @param {Object[]} plugins - An array of plugin objects
    */
-  const registerIpcListeners = plugins => {
+  const registerIpcListeners = (plugins) => {
     // listen to query commands and queries
     // for results and sends it to the renderer
     ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => debounceHandleQueryCommand(evt, message, plugins));

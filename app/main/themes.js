@@ -7,7 +7,7 @@ const { THEME_PATH } = require('../../utils/paths');
  * @param {String} theme - The name of the theme
  * @return {Promise} - The theme module
  */
-exports.loadTheme = theme => new Promise(resolve => {
+exports.loadTheme = theme => new Promise((resolve) => {
   if (theme) {
     const p = path.resolve(THEME_PATH, theme);
     // eslint-disable-next-line global-require

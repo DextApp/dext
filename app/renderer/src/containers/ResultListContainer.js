@@ -104,7 +104,7 @@ const ResultListContainer = class extends Component {
     if (results.length) {
       return (
         <ResultList
-          ref={c => { this.c = c; }}
+          ref={(c) => { this.c = c; }}
           theme={theme}
           results={results}
           selectedIndex={selectedIndex}

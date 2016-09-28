@@ -51,7 +51,7 @@ const QueryFieldContainer = class extends Component {
     const { theme, q } = this.props;
     return (
       <QueryField
-        ref={c => { this.queryField = c; }}
+        ref={(c) => { this.queryField = c; }}
         value={q}
         onChange={this.handleChange}
         theme={theme}

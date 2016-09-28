@@ -2,6 +2,7 @@
 
 module.exports = {
   action: 'exec',
+  keyword: 'screensaver',
   execute: {
     items: [
       {

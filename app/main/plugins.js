@@ -60,7 +60,7 @@ exports.loadPluginsInPath = directory => new Promise((resolve, reject) => {
  *
  * @param
  */
-exports.isCorePlugin = directory => {
+exports.isCorePlugin = (directory) => {
   const dirname = path.dirname(directory);
   return (dirname === CORE_PLUGIN_PATH);
 };
@@ -71,7 +71,7 @@ exports.isCorePlugin = directory => {
  * @param {String} directory - A plugin directory
  * @return {Boolean} - True if it is a theme
  */
-exports.isPluginATheme = directory => {
+exports.isPluginATheme = (directory) => {
   try {
     const pkg = require(path.resolve(directory, 'package.json')); // eslint-disable-line global-require
     // TODO: change the mechanism?
@@ -95,9 +95,9 @@ exports.isPluginATheme = directory => {
  * @param {String} plugin - The plugin object
  * @return {Promise} - A modified clone of the plugin object
  */
-exports.applyModuleProperties = plugin => new Promise(resolve => {
+exports.applyModuleProperties = plugin => new Promise((resolve) => {
   const plistPath = path.resolve(plugin.path, 'info.plist');
-  fs.access(plistPath, fs.constants.R_OK, err1 => {
+  fs.access(plistPath, fs.constants.R_OK, (err1) => {
     if (err1) {
       // retrieve the keyword and action from the plugin
       // eslint-disable-next-line global-require
@@ -120,7 +120,7 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
           const plistData = plist.parse(data);
           let keyword = '';
           let action = '';
-          plistData.objects.forEach(o => {
+          plistData.objects.forEach((o) => {
             if (o.type === 'alfred.workflow.input.scriptfilter') {
               keyword = o.config.keyword;
             } else if (o.type === 'alfred.workflow.action.openurl') {
@@ -147,10 +147,10 @@ exports.applyModuleProperties = plugin => new Promise(resolve => {
  * @param {String[]} directories - An array of directories to load
  * @return {Promise} - Resolves a list of plugin objects
  */
-exports.loadPlugins = (directories) => new Promise(resolve => {
+exports.loadPlugins = directories => new Promise((resolve) => {
   const prom = directories.map(exports.loadPluginsInPath);
   Promise.all(prom)
-    .then(pluginSets => {
+    .then((pluginSets) => {
       const allPlugins = pluginSets
         // merge promise results
         .reduce((a, b) => a.concat(b))
@@ -188,7 +188,7 @@ exports.loadPlugins = (directories) => new Promise(resolve => {
  * @param {Object} plugin - The plugin object data
  * @return {Object}
  */
-exports.connectItems = (items, plugin) => items.map(i => {
+exports.connectItems = (items, plugin) => items.map((i) => {
   const icon = {
     path: '',
   };
@@ -226,9 +226,8 @@ exports.connectItems = (items, plugin) => items.map(i => {
  * @param {String[]} args - An array of arguments
  * @return {Promise} - An array of results
  */
-exports.queryResults = (plugin, args) => new Promise(resolve => {
+exports.queryResults = (plugin, args) => new Promise((resolve) => {
   const query = args.join(' ');
-
   // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
@@ -240,7 +239,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
       };
       const child = fork(plugin.path, args, options);
       let msg = '';
-      child.stdout.on('data', data => {
+      child.stdout.on('data', (data) => {
         if (data) {
           msg += data.toString();
         }
@@ -267,7 +266,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
         : pluginObj.execute;
 
       if (output) {
-        Promise.resolve(output).then(i => {
+        Promise.resolve(output).then((i) => {
           const items = exports.connectItems(i.items, plugin);
           resolve(items);
         });
@@ -288,7 +287,7 @@ exports.queryResults = (plugin, args) => new Promise(resolve => {
  * @param {String[]} keyword - The query keyword
  * @return {Promise} - An array of results
  */
-exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
+exports.queryHelper = (plugin, keyword) => new Promise((resolve) => {
   let items = [];
   if (!plugin.helper) {
     resolve(items);
@@ -300,7 +299,7 @@ exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
   if (typeof plugin.helper === 'function') {
     helperItem = plugin.helper(keyword);
   }
-  Promise.resolve(helperItem).then(item => {
+  Promise.resolve(helperItem).then((item) => {
     items.push(item);
     items = exports.connectItems(items, plugin);
     resolve(items);
@@ -317,7 +316,7 @@ exports.queryHelper = (plugin, keyword) => new Promise(resolve => {
  * @param {Object} plugin - The plugin object
  * @return {Promise} - Resolves to the rendered html string
  */
-exports.retrieveItemDetails = (item, plugin) => new Promise(resolve => {
+exports.retrieveItemDetails = (item, plugin) => new Promise((resolve) => {
   // retrieve the rendered content
   let type = 'html';
   let content = '';
@@ -334,7 +333,7 @@ exports.retrieveItemDetails = (item, plugin) => new Promise(resolve => {
     }
   }
   // resolve and update the state
-  Promise.resolve(content).then(res => {
+  Promise.resolve(content).then((res) => {
     let html = res;
     if (type === 'md') {
       const md = new MarkdownIt();
