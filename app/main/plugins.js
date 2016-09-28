@@ -15,7 +15,7 @@ const { MAX_RESULTS } = require('../constants');
  * Attempt to read the config.json file in the DEXT_PATH
  * @return {Promise}
  */
-const readConfig = () => (new Promise((resolve, reject) => {
+exports.readConfig = () => (new Promise((resolve, reject) => {
   const file = `${DEXT_PATH}/config.json`;
   fs.readFile(file, (err, data = '{}') => {
     if (err) {
@@ -35,11 +35,11 @@ const readConfig = () => (new Promise((resolve, reject) => {
 exports.loadPluginsInPath = directory => new Promise((resolve, reject) => {
   const loadedPlugin = [];
   const isCoreDirectory = directory === CORE_PLUGIN_PATH;
-  return readConfig()
-    .then(config => {
+  return exports.readConfig()
+    .then((config) => {
       fs.readdir(directory, (err, plugins) => {
         if (plugins && plugins.length) {
-          plugins.forEach(plugin => {
+          plugins.forEach((plugin) => {
             if (plugin !== '.DS_Store') {
               if (isCoreDirectory || config.plugins.includes(plugin)) {
                 const pluginPath = path.resolve(directory, plugin);
