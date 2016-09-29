@@ -243,7 +243,8 @@ const handleItemDetailsRequest = (evt, item) => {
     content = cacheConf.get(cacheKey);
   } else {
     // otherwise, load from plugin
-    const plugin = require(item.plugin.path); // eslint-disable-line global-require
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    const plugin = require(item.plugin.path);
     content = retrieveItemDetails(item, plugin);
   }
   // resolve and update the state

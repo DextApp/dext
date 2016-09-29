@@ -10,7 +10,7 @@ const { THEME_PATH } = require('../../utils/paths');
 exports.loadTheme = theme => new Promise((resolve) => {
   if (theme) {
     const p = path.resolve(THEME_PATH, theme);
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     const m = require(p);
     resolve(m);
   } else {

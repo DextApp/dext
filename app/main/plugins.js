@@ -51,7 +51,8 @@ exports.isCorePlugin = (directory) => {
  */
 exports.isPluginATheme = (directory) => {
   try {
-    const pkg = require(path.resolve(directory, 'package.json')); // eslint-disable-line global-require
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    const pkg = require(path.resolve(directory, 'package.json'));
     // TODO: change the mechanism?
     // don't load themes by checking if dext-theme is non-existent in keywords
     if (!pkg.keywords || pkg.keywords.indexOf('dext-theme') > -1) {
@@ -78,7 +79,7 @@ exports.applyModuleProperties = plugin => new Promise((resolve) => {
   fs.access(plistPath, fs.constants.R_OK, (err1) => {
     if (err1) {
       // retrieve the keyword and action from the plugin
-      // eslint-disable-next-line global-require
+      // eslint-disable-next-line global-require, import/no-dynamic-require
       const { keyword, action, helper } = require(plugin.path);
       // set the plugin object overrides
       const newOpts = {
@@ -229,7 +230,7 @@ exports.queryResults = (plugin, args) => new Promise((resolve) => {
     case 'dext':
       // no break
     default: { // eslint-disable-line no-fallthrough
-      // eslint-disable-next-line global-require
+      // eslint-disable-next-line global-require, import/no-dynamic-require
       const pluginObj = require(plugin.path);
       const output = (typeof pluginObj.execute === 'function')
         ? pluginObj.execute(query, { size: MAX_RESULTS })
