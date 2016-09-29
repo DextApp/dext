@@ -67,14 +67,10 @@ const ResultItem = ({ theme, selected, item, isAltMod, isMetaMod, onDoubleClick 
     )
     : {};
 
-  let itemSubtitle = item.subtitle;
-
   // apply modifiers if necessary
-  if (isMetaMod) {
-    itemSubtitle = item.mods && item.mods.cmd && item.mods.cmd.subtitle;
-  } else if (isAltMod) {
-    itemSubtitle = item.mods && item.mods.alt && item.mods.alt.subtitle;
-  }
+  const itemSubtitle = (isMetaMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle)
+    || (isAltMod && item.mods && item.mods.alt && item.mods.alt.subtitle)
+    || item.subtitle;
 
   return (
     <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>

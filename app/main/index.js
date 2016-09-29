@@ -57,14 +57,10 @@ const toggleMainWindow = () => {
 };
 
 const execute = (message) => {
-  let arg = message.item.arg;
-
   // apply modifiers if necessary
-  if (message.isMetaMod) {
-    arg = message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg;
-  } else if (message.isAltMod) {
-    arg = message.item.mods && message.item.mods.alt && message.item.mods.alt.arg;
-  }
+  const arg = (message.isMetaMod && message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg)
+    || (message.isAltMod && message.item.mods && message.item.mods.alt && message.item.mods.alt.arg)
+    || message.item.arg;
 
   switch (message.action) {
     case 'openurl':
