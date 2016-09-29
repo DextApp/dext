@@ -23,7 +23,7 @@ const ResultItemContainer = class extends Component {
     return this.props.selected && this.props.keys && this.props.keys.indexOf('alt') > -1;
   }
 
-  isMetaMod() {
+  isSuperMod() {
     return this.props.selected && this.props.keys && this.props.keys.indexOf('meta') > -1;
   }
 
@@ -34,7 +34,7 @@ const ResultItemContainer = class extends Component {
       action,
       item,
       isAltMod: this.isAltMod(),
-      isMetaMod: this.isMetaMod(),
+      isSuperMod: this.isSuperMod(),
     });
   }
 
@@ -47,7 +47,7 @@ const ResultItemContainer = class extends Component {
         selected={selected}
         onDoubleClick={this.handleDoubleClick}
         isAltMod={this.isAltMod()}
-        isMetaMod={this.isMetaMod()}
+        isSuperMod={this.isSuperMod()}
       />
     );
   }

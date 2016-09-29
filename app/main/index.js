@@ -58,7 +58,7 @@ const toggleMainWindow = () => {
 
 const execute = (message) => {
   // apply modifiers if necessary
-  const arg = (message.isMetaMod && message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg)
+  const arg = (message.isSuperMod && message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg)
     || (message.isAltMod && message.item.mods && message.item.mods.alt && message.item.mods.alt.arg)
     || message.item.arg;
 

@@ -56,7 +56,7 @@ const subtitle = style({
   WebkitLineClamp: 1,
 });
 
-const ResultItem = ({ theme, selected, item, isAltMod, isMetaMod, onDoubleClick }) => {
+const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick }) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
 
@@ -68,7 +68,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isMetaMod, onDoubleClick 
     : {};
 
   // apply modifiers if necessary
-  const itemSubtitle = (isMetaMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle)
+  const itemSubtitle = (isSuperMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle)
     || (isAltMod && item.mods && item.mods.alt && item.mods.alt.subtitle)
     || item.subtitle;
 
@@ -92,7 +92,7 @@ ResultItem.propTypes = {
   item: ResultItemSchema,
   selected: PropTypes.bool,
   isAltMod: PropTypes.bool,
-  isMetaMod: PropTypes.bool,
+  isSuperMod: PropTypes.bool,
   onDoubleClick: PropTypes.func,
 };
 
