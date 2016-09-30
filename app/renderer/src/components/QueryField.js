@@ -29,12 +29,17 @@ const search = style({
 const QueryField = class extends Component {
   render() {
     const { theme, onChange, value } = this.props;
+
+    const baseStyle = theme && theme.searchBase
+      ? compose(base, theme.searchBase)
+      : base;
+
     const styles = theme && theme.search
       ? compose(search, theme.search)
       : search;
 
     return (
-      <div {...base}>
+      <div {...baseStyle}>
         <input
           ref={(c) => { this.input = c && c; }}
           onChange={onChange}
