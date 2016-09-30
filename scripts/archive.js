@@ -2,9 +2,15 @@ const path = require('path');
 const { exec } = require('child_process');
 const chalk = require('chalk');
 
-const archive = filename => new Promise(resolve => {
+const archive = filename => new Promise((resolve) => {
   const { name } = path.parse(filename);
-  exec(`cd dist && mkdir -p releases && cd package && zip -9 -r --symlinks ../releases/${filename} ${name}`, err => {
+  const cmd = [
+    'cd dist',
+    'mkdir -p releases',
+    'cd package',
+    `zip -9 -r --symlinks ../releases/${filename} ${name}`,
+  ].join(' && ');
+  exec(cmd, (err) => {
     resolve({ err, options: { filename } });
   });
 });
