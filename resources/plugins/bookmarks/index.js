@@ -23,7 +23,7 @@ module.exports = {
     browserBookmarks.getChrome().then(bookmarks => {
       // resolve and exist if there's no bookmarks
       if (!bookmarks.length) {
-        resolve([]);
+        resolve({ items: [] });
         return;
       }
 

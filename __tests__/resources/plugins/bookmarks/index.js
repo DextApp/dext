@@ -1,23 +1,51 @@
 import m from '../../../../resources/plugins/bookmarks';
 
-describe('retrieve bookmarks', () => {
+jest.mock('browser-bookmarks');
+
+describe('bookmarks', () => {
+  // eslint-disable-next-line global-require
+  require('browser-bookmarks').mockSetBookmarks([
+    {
+      title: 'GitHub',
+      url: 'https://github.com/',
+      favicon: '',
+      folder: '',
+    },
+    {
+      title: 'GitHub - Foo',
+      url: 'https://github.com/vutran/foo',
+      favicon: '',
+      folder: '',
+    },
+    {
+      title: 'GitHub - Bar',
+      url: 'https://github.com/vutran/bar',
+      favicon: '',
+      folder: '',
+    },
+    {
+      title: 'GitHub',
+      url: 'https://github.com/',
+      favicon: '',
+      folder: '',
+    },
+  ]);
+
   it('should return something with options supplied', async () => {
     const data = await m.execute('GitHub', { size: 20 });
-    if (process.platform === 'darwin') {
-      expect(data).toBeTruthy();
-      expect(data.items instanceof Array).toBeTruthy();
-    } else {
-      expect(data).toEqual([]);
-    }
+    expect(data.items.length).toBeGreaterThan(0);
+    expect(data.items[0].title).toBe('GitHub');
   });
 
   it('should return something with missing options', async () => {
-    const data = await m.execute('Github')
-    if (process.platform === 'darwin') {
-      expect(data).toBeTruthy();
-      expect(data.items instanceof Array).toBeTruthy();
-    } else {
-      expect(data).toEqual([]);
-    }
+    const data = await m.execute('Github');
+    expect(data.items.length).toBeGreaterThan(0);
+    expect(data.items[0].title).toBe('GitHub');
+  });
+
+  it('should retrieve no bookmarks', async () => {
+    require('browser-bookmarks').mockSetBookmarks([]);
+    const data = await m.execute('abc');
+    expect(data.items.length).not.toBeGreaterThan(0);
   });
 });
