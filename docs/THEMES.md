@@ -12,9 +12,13 @@ For an example, please refer to the [dext-default-theme](https://github.com/vutr
 
 Launcher window
 
+### searchBase
+
+Search bar (container)
+
 ### search
 
-Search bar
+Search bar (input field)
 
 ### result
 
@@ -32,6 +36,10 @@ Result item title
 
 Result item subtitle
 
+### resultDetails
+
+Result details container
+
 ## Example Theme JSON
 
 ```json
@@ -41,6 +49,9 @@ Result item subtitle
     "color": "#333333",
     "fontFamily": "Lucida Grande, Arial, sans-serif",
     "fontWeight": "lighter"
+  },
+  "searchBase": {
+    "backgroundColor": "#f7f2f0"
   },
   "search": {
     "fontSize": "50"
@@ -56,6 +67,9 @@ Result item subtitle
   },
   "resultSubtitle": {
     "fontSize": 11
+  },
+  "resultDetails": {
+    "backgroundColor": "#f7f2f0"
   }
 }
 ```

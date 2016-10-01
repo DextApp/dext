@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { compose, pseudo, style } from 'glamor';
+import { ThemeSchema } from '../schema';
 
-const ResultDetails = ({ content, expanded }) => {
-  const styles = compose(
+const ResultDetails = ({ theme, content, expanded }) => {
+  const base = compose(
     // apply base style
     style({
       boxSizing: 'border-box',
@@ -32,6 +33,12 @@ const ResultDetails = ({ content, expanded }) => {
       right: '0%',
     }) : {},
   );
+
+  // apply theme styles
+  const styles = theme && theme.resultDetails
+    ? compose(base, theme.resultDetails)
+    : base;
+
   return (
     // eslint-disable-next-line react/no-danger
     <div {...styles} dangerouslySetInnerHTML={{ __html: content }} />
@@ -46,6 +53,7 @@ ResultDetails.defaultProps = {
 ResultDetails.propTypes = {
   content: PropTypes.string,
   expanded: PropTypes.bool,
+  theme: ThemeSchema,
 };
 
 export default ResultDetails;
