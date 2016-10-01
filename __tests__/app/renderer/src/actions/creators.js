@@ -70,4 +70,25 @@ describe('action creators', () => {
     };
     expect(actions.setTheme('foo-theme')).toEqual(expectedAction);
   });
+
+  it('should create an action to reset the details pane content', () => {
+    const expectedAction = {
+      type: types.RESET_DETAILS
+    };
+    expect(actions.resetDetails()).toEqual(expectedAction);
+  });
+
+  it('should create an action to close the details pane', () => {
+    const expectedAction = {
+      type: types.CLOSE_DETAILS
+    };
+    expect(actions.closeDetails()).toEqual(expectedAction);
+  });
+
+  it('should create an action to open the details pane', () => {
+    const expectedAction = {
+      type: types.OPEN_DETAILS
+    };
+    expect(actions.openDetails()).toEqual(expectedAction);
+  })
 });
