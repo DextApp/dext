@@ -8,6 +8,13 @@ describe('theme reducer', () => {
     expect(selectedIndex(state, action)).toEqual(0);
   });
 
+  it('should handle SELECT_ITEM', () => {
+    const state = 5;
+    const index = 1;
+    const action = { type: types.SELECT_ITEM, index: index };
+    expect(selectedIndex(state, action)).toEqual(index);
+  });
+
   it('should handle SELECT_NEXT_ITEM', () => {
     const state = 5;
     const action = { type: types.SELECT_NEXT_ITEM };
