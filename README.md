@@ -1,6 +1,7 @@
 # Dext
 
 [![Build Status](https://travis-ci.org/vutran/dext.svg?branch=develop)](https://travis-ci.org/vutran/dext) [![Coverage Status](https://coveralls.io/repos/github/vutran/dext/badge.svg?branch=develop)](https://coveralls.io/github/vutran/dext?branch=develop) [![Join the chat at https://gitter.im/dext-app/Lobby](https://badges.gitter.im/dext-app/Lobby.svg)](https://gitter.im/dext-app/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 > A smart launcher for Mac. Powered by JavaScript.
 
