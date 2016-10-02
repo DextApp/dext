@@ -20,12 +20,12 @@ const DEFAULT_OPTIONS = {
  * @param {String} platform
  * @param {String} arch
  */
-const pkg = (platform, arch) => new Promise(resolve => {
+const pkg = (platform, arch) => new Promise((resolve) => {
   const opts = Object.assign({}, DEFAULT_OPTIONS, {
     platform,
     arch,
   });
-  packager(opts, err => {
+  packager(opts, (err) => {
     resolve({ err, options: { platform, arch } });
   });
 });

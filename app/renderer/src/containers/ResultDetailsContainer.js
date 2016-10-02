@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
 import ResultDetails from '../components/ResultDetails';
 import { IPC_ITEM_DETAILS_RESPONSE } from '../../../ipc';
+import { ThemeSchema } from '../schema';
 
 const ResultDetailsContainer = class extends Component {
   componentDidMount() {
@@ -17,8 +18,14 @@ const ResultDetailsContainer = class extends Component {
   }
 
   render() {
-    const { detailsPane, detailsPaneExpanded } = this.props;
-    return <ResultDetails content={detailsPane} expanded={detailsPaneExpanded} />;
+    const { theme, detailsPane, detailsPaneExpanded } = this.props;
+    return (
+      <ResultDetails
+        theme={theme}
+        content={detailsPane}
+        expanded={detailsPaneExpanded}
+      />
+    );
   }
 };
 
@@ -27,12 +34,14 @@ ResultDetailsContainer.defaultProps = {
   detailsPane: '',
   detailsPaneExpanded: false,
   setDetails: () => {},
+  theme: {},
 };
 
 ResultDetailsContainer.propTypes = {
   detailsPane: PropTypes.string,
   detailsPaneExpanded: PropTypes.bool,
   setDetails: PropTypes.func,
+  theme: ThemeSchema,
 };
 
 const mapStateToProps = state => ({

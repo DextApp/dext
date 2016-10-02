@@ -52,7 +52,7 @@ const ResultList = class extends Component {
         <ol {...compose(base, this.props.results.length && shown)} ref={(c) => { this.c = c; }}>
           {getResultItems(this.props.results, this.props.selectedIndex, this.props.theme)}
         </ol>
-        {currItem && <ResultDetailsContainer item={currItem} />}
+        {currItem && <ResultDetailsContainer theme={this.props.theme} item={currItem} />}
       </div>
     );
   }
