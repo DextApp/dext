@@ -4,7 +4,7 @@ const math = require('mathjs');
 
 module.exports = {
   action: 'openurl',
-  execute: query => {
+  query: query => {
     try {
       const ans = math.eval(query);
       const items = [];

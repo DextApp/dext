@@ -8,6 +8,9 @@ const MarkdownIt = require('markdown-it');
 const { PLUGIN_PATH } = require('../../utils/paths');
 const { MAX_RESULTS } = require('../constants');
 
+// @TODO: Move to a `constants` file
+const isDev = process.env.NODE_ENV === 'development';
+
 /**
  * Loads plugins in the given path
  *
@@ -232,11 +235,26 @@ exports.queryResults = (plugin, args) => new Promise((resolve) => {
     default: { // eslint-disable-line no-fallthrough
       // eslint-disable-next-line global-require, import/no-dynamic-require
       const pluginObj = require(plugin.path);
-      const output = (typeof pluginObj.execute === 'function')
-        ? pluginObj.execute(query, { size: MAX_RESULTS })
-        : pluginObj.execute;
+
+      // The new API:
+      // - `query`: querying the plugin with arguments
+      // - `execute`: executing the specific item
+      const isOutdatedPlugin = Boolean(pluginObj && pluginObj.execute);
+      const queryCommand = isOutdatedPlugin ? 'execute' : 'query';
+      const command = pluginObj[queryCommand];
+      const output = (typeof command === 'function')
+        ? command(query, { size: MAX_RESULTS })
+        : command;
 
       if (output) {
+        if (isDev && isOutdatedPlugin) {
+          console.log(`
+            Plugin is outdated.
+            Please update the plugin accordingly to the new API.
+            @see https://github.com/vutran/dext/issues/52 for reference.
+          `);
+        }
+
         Promise.resolve(output).then((i) => {
           const items = exports.connectItems(i.items, plugin);
           resolve(items);

@@ -325,15 +325,30 @@ const createWindow = () => {
   const registerIpcListeners = (plugins) => {
     // listen to query commands and queries
     // for results and sends it to the renderer
-    ipcMain.on(IPC_QUERY_COMMAND, (evt, message) => debounceHandleQueryCommand(evt, message, plugins));
+    ipcMain.on(
+      IPC_QUERY_COMMAND,
+      (evt, message) => debounceHandleQueryCommand(evt, message, plugins)
+    );
+
     // listen for execution commands
-    ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
-      execute(message);
-    });
+    ipcMain.on(
+      IPC_EXECUTE_ITEM,
+      (evt, message) => {
+        execute(message);
+      }
+    );
+
     // listen for item details requests
-    ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) => debounceHandleItemDetailsRequest(evt, item));
+    ipcMain.on(
+      IPC_ITEM_DETAILS_REQUEST,
+      (evt, item) => debounceHandleItemDetailsRequest(evt, item)
+    );
+
     // copies to clipboard
-    ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) => debounceHandleCopyItemToClipboard(evt, item));
+    ipcMain.on(
+      IPC_COPY_CURRENT_ITEM,
+      (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
+    );
   };
 
   // load all plugins (core and user) and
