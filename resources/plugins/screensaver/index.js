@@ -3,7 +3,7 @@
 module.exports = {
   action: 'exec',
   keyword: 'screensaver',
-  execute: {
+  query: {
     items: [
       {
         title: 'Screen Saver',
