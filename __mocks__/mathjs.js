@@ -8,7 +8,8 @@ let mockSetThrowError = false;
  *
  * @param {String} value
  */
-math.mockSetReturnValue = (value) => {
+// eslint-disable-next-line no-underscore-dangle
+math.__setReturnValue = (value) => {
   mockReturnValue = value;
 };
 
@@ -17,7 +18,8 @@ math.mockSetReturnValue = (value) => {
  *
  * @param {Boolean} flag
  */
-math.mockSetThrowError = (flag) => {
+// eslint-disable-next-line no-underscore-dangle
+math.__setThrowError = (flag) => {
   mockSetThrowError = flag;
 };
 
@@ -26,7 +28,7 @@ math.mockSetThrowError = (flag) => {
  *
  * @return {String}
  */
-math.eval = jest.fn((expression) => {
+math.eval = jest.fn(() => {
   if (mockSetThrowError) {
     throw new Error(true);
   }
