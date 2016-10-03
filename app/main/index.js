@@ -57,15 +57,20 @@ const toggleMainWindow = () => {
 };
 
 const execute = (message) => {
+  // apply modifiers if necessary
+  const arg = (message.isSuperMod && message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg)
+    || (message.isAltMod && message.item.mods && message.item.mods.alt && message.item.mods.alt.arg)
+    || message.item.arg;
+
   switch (message.action) {
     case 'openurl':
-      if (message.item.arg) {
-        shell.openExternal(message.item.arg);
+      if (arg) {
+        shell.openExternal(arg);
       }
       break;
     case 'exec':
-      if (message.item.arg) {
-        spawn('node', [message.item.arg], { cwd: message.item.plugin.path });
+      if (arg) {
+        spawn('node', [arg], { cwd: message.item.plugin.path });
       }
       break;
     default:
@@ -112,6 +117,8 @@ const handleWindowShow = () => {
   globalShortcut.register('up', selectPreviousItem);
   globalShortcut.register('down', selectNextItem);
   globalShortcut.register('enter', executeCurrentItem);
+  globalShortcut.register('alt+enter', executeCurrentItem);
+  globalShortcut.register('super+enter', executeCurrentItem);
   globalShortcut.register('escape', hideWindow);
   globalShortcut.register('cmd+c', copyItem);
   win.webContents.send(IPC_WINDOW_SHOW);
@@ -121,6 +128,8 @@ const handleWindowHide = () => {
   globalShortcut.unregister('up');
   globalShortcut.unregister('down');
   globalShortcut.unregister('enter');
+  globalShortcut.unregister('alt+enter');
+  globalShortcut.unregister('super+enter');
   globalShortcut.unregister('escape');
   globalShortcut.unregister('cmd+c');
   win.webContents.send(IPC_WINDOW_HIDE);

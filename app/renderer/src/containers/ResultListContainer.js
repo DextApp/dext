@@ -1,3 +1,5 @@
+/* global window */
+
 import { ipcRenderer } from 'electron';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -18,9 +20,17 @@ import {
 } from '../../../ipc';
 
 const ResultListContainer = class extends Component {
+  constructor() {
+    super();
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
+  }
+
   componentDidMount() {
     const self = this;
     const { updateResults, resetResults, selectNextItem, selectPreviousItem } = this.props;
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keyup', this.handleKeyUp);
     // focus the query input field when the window is shown
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
@@ -57,6 +67,19 @@ const ResultListContainer = class extends Component {
     });
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keyup', this.handleKeyUp);
+  }
+
+  handleKeyDown(e) {
+    this.props.setActiveKey(e.key.toLowerCase());
+  }
+
+  handleKeyUp(e) {
+    this.props.clearActiveKey(e.key.toLowerCase());
+  }
+
   /**
    * Retrieves the extended details for the given item
    *
@@ -76,6 +99,14 @@ const ResultListContainer = class extends Component {
     ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
   }
 
+  isAltMod() {
+    return this.props.keys && this.props.keys.indexOf('alt') > -1;
+  }
+
+  isSuperMod() {
+    return this.props.keys && this.props.keys.indexOf('meta') > -1;
+  }
+
   /**
    * Executs the current item
    */
@@ -83,7 +114,12 @@ const ResultListContainer = class extends Component {
     const { results, selectedIndex } = this.props;
     const item = results[selectedIndex];
     const { action } = item;
-    ipcRenderer.send(IPC_EXECUTE_ITEM, { action, item });
+    ipcRenderer.send(IPC_EXECUTE_ITEM, {
+      action,
+      item,
+      isAltMod: this.isAltMod(),
+      isSuperMod: this.isSuperMod(),
+    });
   }
 
   /**
@@ -117,6 +153,7 @@ const ResultListContainer = class extends Component {
 
 ResultListContainer.defaultProps = {
   theme: {},
+  keys: [],
   results: [],
   selectedIndex: 0,
   selectItem: () => { },
@@ -124,21 +161,27 @@ ResultListContainer.defaultProps = {
   selectPreviousItem: () => { },
   updateResults: () => { },
   resetResults: () => { },
+  setActiveKey: () => {},
+  clearActiveKey: () => {},
 };
 
 ResultListContainer.propTypes = {
   theme: ThemeSchema,
+  keys: PropTypes.arrayOf(PropTypes.string),
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
   selectNextItem: PropTypes.func,
   selectPreviousItem: PropTypes.func,
   updateResults: PropTypes.func,
   resetResults: PropTypes.func,
+  setActiveKey: PropTypes.func,
+  clearActiveKey: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   results: state.results,
   selectedIndex: state.selectedIndex,
+  keys: state.keys,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);

@@ -12,12 +12,15 @@ import {
   RESET_DETAILS,
   CLOSE_DETAILS,
   OPEN_DETAILS,
+  SET_ACTIVE_KEY,
+  CLEAR_ACTIVE_KEY,
 } from './types';
 
 /**
  * Updates the query value
  *
  * @param {String} q - The command query
+ * @return {Object}
  */
 export function updateQuery(q) {
   return { type: UPDATE_QUERY, q };
@@ -25,6 +28,8 @@ export function updateQuery(q) {
 
 /**
  * Resets the query value
+ *
+ * @return {Object}
  */
 export function resetQuery() {
   return { type: RESET_QUERY };
@@ -34,6 +39,7 @@ export function resetQuery() {
  * Updates the results
  *
  * @param {Object[]} results - The results array
+ * @return {Object}
  */
 export function updateResults(results) {
   return { type: UPDATE_RESULTS, results };
@@ -41,6 +47,8 @@ export function updateResults(results) {
 
 /**
  * Resets the results
+ *
+ * @return {Object}
  */
 export function resetResults() {
   return { type: RESET_RESULTS };
@@ -48,6 +56,8 @@ export function resetResults() {
 
 /**
  * Resets the selected item
+ *
+ * @return {Object}
  */
 export function resetSelectedItem() {
   return { type: RESET_SELECTED_ITEM };
@@ -58,6 +68,7 @@ export function resetSelectedItem() {
  *
  * @param {Number} index
  * @param {Object} item
+ * @return {Object}
  */
 export function selectItem(index, item) {
   return { type: SELECT_ITEM, index, item };
@@ -65,6 +76,8 @@ export function selectItem(index, item) {
 
 /**
  * Selects the previous item
+ *
+ * @return {Object}
  */
 export function selectPreviousItem() {
   return { type: SELECT_PREVIOUS_ITEM };
@@ -72,6 +85,8 @@ export function selectPreviousItem() {
 
 /**
  * Selects the next item
+ *
+ * @return {Object}
  */
 export function selectNextItem() {
   return { type: SELECT_NEXT_ITEM };
@@ -81,6 +96,7 @@ export function selectNextItem() {
  * Sets the theme
  *
  * @param {Object} theme
+ * @return {Object}
  */
 export function setTheme(theme) {
   return { type: SET_THEME, theme };
@@ -90,6 +106,7 @@ export function setTheme(theme) {
  * Sets the details pane content
  *
  * @param {String} value
+ * @return {Object}
  */
 export function setDetails(value) {
   return { type: SET_DETAILS, value };
@@ -97,6 +114,8 @@ export function setDetails(value) {
 
 /**
  * Resets the details pane content
+ *
+ * @return {Object}
  */
 export function resetDetails() {
   return { type: RESET_DETAILS };
@@ -104,6 +123,8 @@ export function resetDetails() {
 
 /**
  * Closes the details pane
+ *
+ * @return {Object}
  */
 export function closeDetails() {
   return { type: CLOSE_DETAILS };
@@ -111,7 +132,29 @@ export function closeDetails() {
 
 /**
  * Opens the details pane
+ *
+ * @return {Object}
  */
 export function openDetails() {
   return { type: OPEN_DETAILS };
+}
+
+/**
+ * Sets the active key
+ *
+ * @param {String} key
+ * @return {Object}
+ */
+export function setActiveKey(key) {
+  return { type: SET_ACTIVE_KEY, key };
+}
+
+/**
+ * Clears the active key
+ *
+ * @param {String} key
+ * @return {Object}
+ */
+export function clearActiveKey(key) {
+  return { type: CLEAR_ACTIVE_KEY, key };
 }
