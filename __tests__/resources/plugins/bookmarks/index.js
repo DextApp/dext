@@ -32,13 +32,13 @@ describe('bookmarks', () => {
   ]);
 
   it('should return something with options supplied', async () => {
-    const data = await m.execute('GitHub', { size: 20 });
+    const data = await m.query('GitHub', { size: 20 });
     expect(data.items.length).toBeGreaterThan(0);
     expect(data.items[0].title).toBe('GitHub');
   });
 
   it('should return something with missing options', async () => {
-    const data = await m.execute('Github');
+    const data = await m.query('Github');
     expect(data.items.length).toBeGreaterThan(0);
     expect(data.items[0].title).toBe('GitHub');
   });
@@ -46,7 +46,7 @@ describe('bookmarks', () => {
   it('should retrieve no bookmarks', async () => {
     // eslint-disable-next-line global-require, no-underscore-dangle
     require('browser-bookmarks').__setBookmarks([]);
-    const data = await m.execute('abc');
+    const data = await m.query('abc');
     expect(data.items.length).not.toBeGreaterThan(0);
   });
 });
