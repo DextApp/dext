@@ -157,20 +157,3 @@ it('should retrieve the item\'s detail pane content (Promise)', async () => {
   const details = await plugins.retrieveItemDetails(item, plugin);
   expect(details).toEqual('Hello, Foo.');
 });
-
-it('should read config file and resolve a config object', async () => {
-  let { readConfig } = plugins;
-  plugins.__Rewire__(
-    'fs',
-    {
-      readFile: (file, callback) => callback(
-        null,
-        '{ "theme": "dext-default-theme" }'
-      ),
-    }
-  );
-
-  const config = await readConfig();
-  expect(config).toEqual({ theme: 'dext-default-theme' })
-  plugins.__ResetDependency__('fs');
-})
