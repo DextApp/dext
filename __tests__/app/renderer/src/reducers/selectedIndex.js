@@ -11,7 +11,7 @@ describe('theme reducer', () => {
   it('should handle SELECT_ITEM', () => {
     const state = 5;
     const index = 1;
-    const action = { type: types.SELECT_ITEM, index: index };
+    const action = { type: types.SELECT_ITEM, index };
     expect(selectedIndex(state, action)).toEqual(index);
   });
 
