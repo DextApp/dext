@@ -10,6 +10,15 @@ For an example, please refer to the [dext-demo-plugin](https://github.com/vutran
 
 All plugin modules are required to have a `keyword` property. You will also need to define the type of `action` for your items.
 
+### Plugin definition
+
+keyword   | description
+---       | ---
+`keyword` | the keyword filter for your plugin
+`action`  | the type of action to be executed when an item is chosen
+`query`   | an object containing an items array or a function returning the object or a Promise resolving the object
+`details` | see __Details Pane__
+
 ### Plugin Actions
 
 #### openurl
@@ -26,14 +35,12 @@ A very basic module.
 
 ```js
 module.exports = {
-  // specify the keyword filter for your plugin
   keyword: 'foo',
-  // the type of action to be executed when an item is chosen
   action: 'openurl',
-  // an object containing an items array
-  // or a function returning the object
-  // or a Promise resolving the object
-  execute: {
+  //
+  //
+  //
+  query: {
     items: [], // array of items (refer to the item schema below)
   },
 };
@@ -45,7 +52,7 @@ You can use functions for your search query.
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  execute: function(q /**, options */) {
+  query: function(q /**, options */) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
     return {
@@ -61,7 +68,7 @@ Your function can also return Promises that resolves the result object.
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  execute: function(q /**, options */) {
+  query: function(q /**, options */) {
     // q is the query the user entered (excludes the keyword)
     // do something here like query a remote database to retrieve results
     return new Promise(function(resolve) {
@@ -81,7 +88,7 @@ Type: `Number`<br/>
 You can use `size` to set a limit on an API call in your plugin
 
 ```js
-execute: function(q, { size }) {
+query: function(q, { size }) {
   return new Promise(function(resolve) {
     request.get({ url: `example.org?search=${q}&limit=${size}` }, (err, response, body) => {
       // handle response...
@@ -111,7 +118,7 @@ module.exports = {
       path: './icon.png',
     },
   },
-  execute: {
+  query: {
     items: [],
   },
 };
@@ -188,7 +195,7 @@ Using basic HTML.
 ```js
 module.exports = {
   keyword: 'foo',
-  execute: {
+  query: {
     items: [], // array of items
   },
   details: {
@@ -203,7 +210,7 @@ Using Markdown.
 ```js
 module.exports = {
   keyword: 'foo',
-  execute: {
+  query: {
     items: [], // array of items
   },
   details: {
@@ -218,7 +225,7 @@ You can use a function to access the currently selected item.
 ```js
 module.exports = {
   keyword: 'foo',
-  execute: {
+  query: {
     items: [], // array of items
   },
   details: {
@@ -235,7 +242,7 @@ Use a Promise if you need to do some work that requires waiting.
 ```js
 module.exports = {
   keyword: 'foo',
-  execute: {
+  query: {
     items: [], // array of items
   },
   details: {
