@@ -310,6 +310,12 @@ Type: `String`
 
 If `icon.type` is set to `text`, a round circle will be displayed with the specified letter.
 
+###### icon.bgColor
+
+Type: `String`
+
+If `icon.type` is set to `text`, you can specify the background color of the icon with a valid CSS color value.
+
 ### Examples
 
 Sample item with a regular URL icon.
@@ -334,7 +340,8 @@ Sample item with letter icon.
   "arg": "https://github.com",
   "icon": {
     "type": "text",
-    "letter": "G"
+    "letter": "G",
+    "bgColor": "transparent"
   }
 }
 ```

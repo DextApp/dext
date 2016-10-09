@@ -6,7 +6,7 @@ const iconImg = style({
   maxHeight: 40,
 });
 
-const iconImgText = compose(
+const iconImgTextBase = compose(
   iconImg,
   style({
     display: 'block',
@@ -24,9 +24,19 @@ const iconImgText = compose(
 );
 
 const Icon = (props) => {
+
+  const iconTextStyle = props.icon.bgColor
+    ? compose(
+      iconImgTextBase,
+      props.icon.bgColor && style({
+        backgroundColor: props.icon.bgColor,
+      }),
+    )
+    : iconImgTextBase;
+
   switch (props.icon.type) {
     case 'text':
-      return <span {...iconImgText} role="presentation">{props.icon.letter}</span>;
+      return <span {...iconTextStyle} role="presentation">{props.icon.letter}</span>;
     case 'file':
       // no break
     default: // eslint-disable-line no-fallthrough
@@ -39,6 +49,7 @@ Icon.defaultProps = {
     type: '',
     path: '',
     letter: '',
+    bgColor: '',
   },
 };
 
@@ -47,6 +58,7 @@ Icon.propTypes = {
     type: PropTypes.oneOf(['file', 'text', '']),
     path: PropTypes.string,
     letter: PropTypes.string,
+    bgColor: PropTypes.string,
   }),
 };
 
