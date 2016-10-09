@@ -37,9 +37,6 @@ A very basic module.
 module.exports = {
   keyword: 'foo',
   action: 'openurl',
-  //
-  //
-  //
   query: {
     items: [], // array of items (refer to the item schema below)
   },
