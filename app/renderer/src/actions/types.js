@@ -13,3 +13,4 @@ export const CLOSE_DETAILS = 'CLOSE_DETAILS';
 export const OPEN_DETAILS = 'OPEN_DETAILS';
 export const SET_ACTIVE_KEY = 'SET_ACTIVE_KEY';
 export const CLEAR_ACTIVE_KEY = 'CLEAR_ACTIVE_KEY';
+export const RESET_KEYS = 'RESET_KEYS';

@@ -1,4 +1,4 @@
-import { SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY } from '../actions/types';
+import { SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY, RESET_KEYS } from '../actions/types';
 
 const initialState = [];
 
@@ -11,6 +11,8 @@ export default function (state = initialState, action) {
         ...state.slice(0, state.indexOf(action.key)),
         ...state.slice(state.indexOf(action.key) + 1),
       ];
+    case RESET_KEYS:
+      return [];
     default:
       return state;
   }

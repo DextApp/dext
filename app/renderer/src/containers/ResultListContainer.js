@@ -8,6 +8,7 @@ import * as actionCreators from '../actions/creators';
 import ResultList from '../components/ResultList';
 import { ResultItemSchema, ThemeSchema } from '../schema';
 import {
+  IPC_WINDOW_SHOW,
   IPC_WINDOW_RESIZE,
   IPC_QUERY_RESULTS,
   IPC_SELECT_PREVIOUS_ITEM,
@@ -31,7 +32,11 @@ const ResultListContainer = class extends Component {
     const { updateResults, resetResults, selectNextItem, selectPreviousItem } = this.props;
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
-    // focus the query input field when the window is shown
+    // when the window is shown
+    ipcRenderer.on(IPC_WINDOW_SHOW, () => {
+      this.props.resetKeys();
+    });
+    // when results are returned from the main process
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
       if (newResults.length) {
@@ -163,6 +168,7 @@ ResultListContainer.defaultProps = {
   resetResults: () => { },
   setActiveKey: () => {},
   clearActiveKey: () => {},
+  resetKeys: () => {},
 };
 
 ResultListContainer.propTypes = {
@@ -176,6 +182,7 @@ ResultListContainer.propTypes = {
   resetResults: PropTypes.func,
   setActiveKey: PropTypes.func,
   clearActiveKey: PropTypes.func,
+  resetKeys: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

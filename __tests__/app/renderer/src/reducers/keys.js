@@ -25,4 +25,10 @@ describe('keys reducer', () => {
     const action = { type: types.CLEAR_ACTIVE_KEY, key: 'foo' };
     expect(keys(state, action)).toEqual(['alt']);
   });
+
+  it('should handle RESET_KEYS', () => {
+    const state = ['alt', 'cmd'];
+    const action = { type: types.RESET_KEYS };
+    expect(keys(state, action)).toEqual([]);
+  });
 });
