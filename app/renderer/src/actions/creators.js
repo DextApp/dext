@@ -14,6 +14,7 @@ import {
   OPEN_DETAILS,
   SET_ACTIVE_KEY,
   CLEAR_ACTIVE_KEY,
+  RESET_KEYS,
 } from './types';
 
 /**
@@ -157,4 +158,14 @@ export function setActiveKey(key) {
  */
 export function clearActiveKey(key) {
   return { type: CLEAR_ACTIVE_KEY, key };
+}
+
+/**
+ * Resets all keys
+ *
+ * @param {String} key
+ * @return {Object}
+ */
+export function resetKeys() {
+  return { type: RESET_KEYS };
 }
