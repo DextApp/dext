@@ -66,7 +66,7 @@ ResultItemContainer.propTypes = {
   keys: PropTypes.arrayOf(PropTypes.string),
 };
 
-const mapStateToProps = ({ key }) => ({ key });
+const mapStateToProps = ({ keys }) => ({ keys });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 
