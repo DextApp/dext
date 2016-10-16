@@ -1,6 +1,6 @@
 require('string_score');
 const path = require('path');
-const { spawn } = require('child_process');
+const { fork } = require('child_process');
 const electron = require('electron');
 const {
   loadPlugins,
@@ -70,7 +70,7 @@ const execute = (message) => {
       break;
     case 'exec':
       if (arg) {
-        spawn('node', [arg], { cwd: message.item.plugin.path });
+        fork(arg, { cwd: message.item.plugin.path });
       }
       break;
     default:
