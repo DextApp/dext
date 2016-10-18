@@ -10,7 +10,7 @@ const archive = filename => new Promise((resolve) => {
     'cd package',
     `zip -9 -r --symlinks ../releases/${filename} ${name}`,
   ].join(' && ');
-  exec(cmd, (err) => {
+  exec(cmd, { maxBuffer: 800 * 1024 }, (err) => {
     resolve({ err, options: { filename } });
   });
 });
