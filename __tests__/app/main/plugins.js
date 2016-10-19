@@ -3,9 +3,12 @@ import plugins from '../../../app/main/plugins';
 import paths from '../../../utils/paths';
 
 it('should retrieve a list of core plugin paths', async () => {
-  const list = await plugins.loadPluginsInPath(paths.CORE_PLUGIN_PATH);
+  const list = await plugins.loadPluginsInPath({
+    path: paths.CORE_PLUGIN_PATH,
+    isCore: true,
+  });
   expect(list.length).toBeGreaterThan(0);
-  expect(list).toContain(path.resolve(paths.CORE_PLUGIN_PATH, 'about'));
+  expect(list).toContainEqual(path.resolve(paths.CORE_PLUGIN_PATH, 'about'));
 });
 
 it('should be a core plugin', () => {
@@ -32,7 +35,9 @@ it('should apply module properties', () => {
 
 it('should load all core plugins', async () => {
   // load core plugins
-  const results = await plugins.loadPlugins([paths.CORE_PLUGIN_PATH]);
+  const results = await plugins.loadPlugins([
+    { path: paths.CORE_PLUGIN_PATH, isCore: true },
+  ]);
   expect(results.length).toBeGreaterThan(0);
   expect(results.filter(p => p.name === 'about')).toBeTruthy();
 });
@@ -54,7 +59,7 @@ it('should apply additional meta data to a items', () => {
     action: 'openurl',
   };
   const connectedItems = plugins.connectItems(items, plugin);
-  expect(connectedItems[0].icon.path).toEqual('/path/to/plugin/icon.png');
+  expect(connectedItems[0].icon.path).toEqual(path.resolve('/', 'path', 'to', 'plugin', 'icon.png'));
   expect(connectedItems[0].plugin.path).toEqual('/path/to/plugin/');
   expect(connectedItems[0].plugin.name).toEqual('foobar');
   expect(connectedItems[0].keyword).toEqual('foo');
