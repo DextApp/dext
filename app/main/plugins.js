@@ -5,11 +5,29 @@ const plist = require('plist');
 const deepAssign = require('deep-assign');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
-const { PLUGIN_PATH } = require('../../utils/paths');
+const {
+  CORE_PLUGIN_PATH,
+  DEXT_PATH,
+} = require('../../utils/paths');
 const { MAX_RESULTS } = require('../constants');
 
 // @TODO: Move to a `constants` file
 const isDev = process.env.NODE_ENV === 'development';
+
+/**
+ * Attempt to read the config.json file in the DEXT_PATH
+ * @return {Promise}
+ */
+exports.readConfig = () => (new Promise((resolve, reject) => {
+  const file = `${DEXT_PATH}/config.json`;
+  fs.readFile(file, (err, data = '{}') => {
+    if (err) {
+      reject(err);
+      return;
+    }
+    resolve(JSON.parse(data));
+  });
+}));
 
 /**
  * Loads plugins in the given path
@@ -17,19 +35,26 @@ const isDev = process.env.NODE_ENV === 'development';
  * @param {String} directory - The directory to read
  * @return {Promise} - An array of plugin paths
  */
-exports.loadPluginsInPath = directory => new Promise((resolve) => {
-  const loaded = [];
-  fs.readdir(directory, (err, plugins) => {
-    if (plugins && plugins.length) {
-      plugins.forEach((plugin) => {
-        if (plugin !== '.DS_Store') {
-          const pluginPath = path.resolve(directory, plugin);
-          loaded.push(pluginPath);
+exports.loadPluginsInPath = directory => new Promise((resolve, reject) => {
+  const loadedPlugin = [];
+  const isCoreDirectory = directory === CORE_PLUGIN_PATH;
+  return exports.readConfig()
+    .then((config) => {
+      fs.readdir(directory, (err, plugins) => {
+        if (plugins && plugins.length) {
+          plugins.forEach((plugin) => {
+            if (plugin !== '.DS_Store') {
+              if (isCoreDirectory || config.plugins.includes(plugin)) {
+                const pluginPath = path.resolve(directory, plugin);
+                loadedPlugin.push(pluginPath);
+              }
+            }
+          });
         }
+        resolve(loadedPlugin);
       });
-    }
-    resolve(loaded);
-  });
+    })
+    .catch(error => reject(error));
 });
 
 /**
@@ -40,10 +65,7 @@ exports.loadPluginsInPath = directory => new Promise((resolve) => {
  */
 exports.isCorePlugin = (directory) => {
   const dirname = path.dirname(directory);
-  if (dirname === PLUGIN_PATH) {
-    return false;
-  }
-  return true;
+  return (dirname === CORE_PLUGIN_PATH);
 };
 
 /**
@@ -150,6 +172,14 @@ exports.loadPlugins = directories => new Promise((resolve) => {
       // if it is an Alfred plugin, set the schema
       const ready = allPlugins.map(exports.applyModuleProperties);
       Promise.all(ready).then(resolve);
+    })
+    .catch(() => {
+      console.error(
+        `
+        There was problem loading installed plugins.
+        Please make sure that there is a config.json found in ${DEXT_PATH}
+        `
+      );
     });
 });
 
