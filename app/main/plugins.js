@@ -37,8 +37,10 @@ exports.loadPluginsInPath = directory => new Promise((resolve) => {
     const enabledPlugins = api.plugins.getAll();
     if (enabledPlugins.length) {
       enabledPlugins.forEach((plugin) => {
-        const pluginPath = path.resolve(directory.path, plugin);
-        loaded.push(pluginPath);
+        if (plugin) {
+          const pluginPath = path.resolve(directory.path, plugin);
+          loaded.push(pluginPath);
+        }
       });
     }
     resolve(loaded);
