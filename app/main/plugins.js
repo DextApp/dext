@@ -3,6 +3,7 @@ const fs = require('fs');
 const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
+const { api } = require('dext-core-utils');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { PLUGIN_PATH } = require('../../utils/paths');
@@ -14,22 +15,34 @@ const isDev = process.env.NODE_ENV === 'development';
 /**
  * Loads plugins in the given path
  *
- * @param {String} directory - The directory to read
+ * // TODO: break into smaller method. this method has too much responsibilities
+ * @param {Object} directory - A plugin directory object to read { path, isCore }
  * @return {Promise} - An array of plugin paths
  */
 exports.loadPluginsInPath = directory => new Promise((resolve) => {
   const loaded = [];
-  fs.readdir(directory, (err, plugins) => {
-    if (plugins && plugins.length) {
-      plugins.forEach((plugin) => {
-        if (plugin !== '.DS_Store') {
-          const pluginPath = path.resolve(directory, plugin);
-          loaded.push(pluginPath);
-        }
+  if (directory.isCore) {
+    fs.readdir(directory.path, (err, plugins) => {
+      if (plugins && plugins.length) {
+        plugins.forEach((plugin) => {
+          if (plugin !== '.DS_Store') {
+            const pluginPath = path.resolve(directory.path, plugin);
+            loaded.push(pluginPath);
+          }
+        });
+      }
+      resolve(loaded);
+    });
+  } else {
+    const enabledPlugins = api.plugins.getAll();
+    if (enabledPlugins.length) {
+      enabledPlugins.forEach((plugin) => {
+        const pluginPath = path.resolve(directory.path, plugin);
+        loaded.push(pluginPath);
       });
     }
     resolve(loaded);
-  });
+  }
 });
 
 /**
@@ -123,10 +136,10 @@ exports.applyModuleProperties = plugin => new Promise((resolve) => {
 });
 
 /**
- * Loads all plugins from the given set of
+ * Loads all enabled plugins from the given set of
  * directories and apply module properties.
  *
- * @param {String[]} directories - An array of directories to load
+ * @param {Object[]} directories - An array of directory objects to load { path, isCore }
  * @return {Promise} - Resolves a list of plugin objects
  */
 exports.loadPlugins = directories => new Promise((resolve) => {
