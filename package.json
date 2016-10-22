@@ -13,7 +13,7 @@
   "main": "app/main/index.js",
   "scripts": {
     "lint": "eslint app scripts utils __mocks__ __tests__",
-    "build": "webpack",
+    "build": "webpack --config webpack.config.dev.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "package": "cross-env NODE_ENV=production node scripts/package.js",
     "archive": "node scripts/archive.js",
@@ -53,7 +53,7 @@
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.11",
-    "webpack": "^1.13.2"
+    "webpack": "v2.1.0-beta.25"
   },
   "dependencies": {
     "browser-bookmarks": "^0.1.0",
