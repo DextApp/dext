@@ -261,6 +261,7 @@ exports.queryResults = (plugin, args) => new Promise((resolve) => {
 
       if (output) {
         if (isDev && isOutdatedPlugin) {
+          // eslint-disable-next-line no-console
           console.log(`
             Plugin is outdated.
             Please update the plugin accordingly to the new API.

@@ -1,3 +1,5 @@
-test('creates a new CacheConf', () => {
-  // TODO
+describe('CacheConf', () => {
+  it('should create a new CacheConf', () => {
+    // TODO
+  });
 });

@@ -24,7 +24,6 @@ const iconImgTextBase = compose(
 );
 
 const Icon = (props) => {
-
   const iconTextStyle = props.icon.bgColor
     ? compose(
       iconImgTextBase,
