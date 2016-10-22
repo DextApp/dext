@@ -1556,9 +1556,9 @@ detect-indent@^3.0.1:
     minimist "^1.1.0"
     repeating "^1.1.0"
 
-dext-core-utils:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/dext-core-utils/-/dext-core-utils-0.3.0.tgz#cf0d07326ce31a2a4650d7ed72b43dc83722e92f"
+dext-core-utils@v0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/dext-core-utils/-/dext-core-utils-0.4.1.tgz#b7b6e2d2c3b882eddd528fe27a682c6c19a8212f"
   dependencies:
     conf "^0.11.2"
     cross-spawn "^4.0.2"
@@ -1638,7 +1638,7 @@ electron-osx-sign@^0.3.0:
     minimist "^1.1.1"
     run-series "^1.1.1"
 
-electron-packager@^8.0.0:
+electron-packager@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-8.1.0.tgz#90979bd870709ec4537a81ed6d6e6922968f878c"
   dependencies:
@@ -1657,9 +1657,9 @@ electron-packager@^8.0.0:
     sanitize-filename "^1.6.0"
     semver "^5.3.0"
 
-electron@^1.3.5:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.3.tgz#b67566bd86b59d89c1172bade27ebd888e0304b7"
+electron@^1.4.3:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.4.tgz#86000bce15e06cadc3566cb7c86122590dee54a5"
   dependencies:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
