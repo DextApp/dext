@@ -13,7 +13,7 @@ const DEFAULT_OPTIONS = {
     '__tests__/',
     'coverage/',
     'dist/',
-    'docs/.*\.md',
+    'docs/.*.md',
     'scripts/',
     '.babelrc',
     '.DS_Store',
