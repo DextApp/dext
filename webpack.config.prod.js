@@ -4,14 +4,11 @@ const baseConfig = require('./webpack.config');
 
 const prodConfig = deepAssign({}, baseConfig);
 
-// no devtool
-prodConfig.devtool = null;
-
 // merge plugins
 prodConfig.plugins = baseConfig.plugins || [];
-prodConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
 prodConfig.plugins.push(new webpack.optimize.DedupePlugin());
 prodConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+  minimize: true,
   compress: {
     warnings: false,
   },

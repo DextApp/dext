@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
   entry: {
     index: [
       'babel-polyfill',
@@ -13,11 +12,11 @@ module.exports = {
     filename: 'bundle.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel'],
+        use: ['babel'],
       },
       {
         test: /\.json$/,
