@@ -21,13 +21,17 @@ keyword   | description
 
 ### Plugin Actions
 
-#### openurl
+#### copy
 
-Opens the item in a new browser window.
+Copies the `arg` of the selected item. (Uses modifiers where necessary)
 
 #### exec
 
-Executes a node script.
+Executes a node script. (Uses modifiers where necessary)
+
+#### openurl
+
+Opens the item in a new browser window. (Uses modifiers where necessary)
 
 ### Examples
 

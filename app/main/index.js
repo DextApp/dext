@@ -1,6 +1,5 @@
 require('string_score');
 const path = require('path');
-const { fork } = require('child_process');
 const electron = require('electron');
 const {
   loadPlugins,
@@ -9,6 +8,7 @@ const {
   retrieveItemDetails,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
+const actions = require('./actions');
 const {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_HIDE,
@@ -29,10 +29,10 @@ const {
 const { MAX_RESULTS } = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
-const { debounce } = require('../../utils/helpers');
+const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
 const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 
-const { app, BrowserWindow, clipboard, globalShortcut, ipcMain, shell } = electron;
+const { app, BrowserWindow, clipboard, globalShortcut, ipcMain } = electron;
 
 // set default window values
 const WINDOW_DEFAULT_WIDTH = 700;
@@ -56,26 +56,23 @@ const toggleMainWindow = () => {
   }
 };
 
+/**
+ * Executes an action for a given message based on modifier priority.
+ *
+ * Priority: SuperKey, AltKey, None
+ */
 const execute = (message) => {
   // apply modifiers if necessary
-  const arg = (message.isSuperMod && message.item.mods && message.item.mods.cmd && message.item.mods.cmd.arg)
-    || (message.isAltMod && message.item.mods && message.item.mods.alt && message.item.mods.alt.arg)
+  const arg = (message.isSuperMod && getOwnProp(message, 'item.mods.cmd.arg'))
+    || (message.isAltMod && getOwnProp(message, 'item.mods.alt.arg'))
     || message.item.arg;
 
-  switch (message.action) {
-    case 'openurl':
-      if (arg) {
-        shell.openExternal(arg);
-      }
-      break;
-    case 'exec':
-      if (arg) {
-        fork(arg, { cwd: message.item.plugin.path });
-      }
-      break;
-    default:
-      // do nothing
-      break;
+  if (hasOwnProp(actions, message.action)) {
+    const actionMod = actions[message.action];
+    actionMod.apply(null, [
+      message,
+      arg,
+    ]);
   }
 };
 
