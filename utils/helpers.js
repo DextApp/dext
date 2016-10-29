@@ -20,23 +20,6 @@ const debounce = (fn, wait) => {
 };
 
 /**
- * Given an object, checks to see if a property is set
- * based on the given path (dot notation).
- *
- * @param {Object} obj - The object
- * @param {String} path - The property path to check
- * @return {Boolean} - Returns true if the property is set
- */
-const hasOwnProp = (obj, path) => {
-  try {
-    const v = path.split('.').reduce((curr, next) => curr[next], obj);
-    return (v !== undefined);
-  } catch (err) {
-    return false;
-  }
-};
-
-/**
  * Given an object, retrieve the value of a property
  * based on the given path (dot notation).
  *
@@ -53,8 +36,21 @@ const getOwnProp = (obj, path) => {
   }
 };
 
+/**
+ * Given an object, checks to see if a property is set
+ * based on the given path (dot notation).
+ *
+ * @param {Object} obj - The object
+ * @param {String} path - The property path to check
+ * @return {Boolean} - Returns true if the property is set
+ */
+const hasOwnProp = (obj, path) => {
+  const v = getOwnProp(obj, path);
+  return (v !== undefined);
+};
+
 module.exports = {
   debounce,
-  hasOwnProp,
   getOwnProp,
+  hasOwnProp,
 };
