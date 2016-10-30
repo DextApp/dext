@@ -51,6 +51,10 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
+almost-equal@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/almost-equal/-/almost-equal-1.1.0.tgz#f851c631138757994276aa2efbe8dfa3066cccdd"
+
 amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
@@ -875,7 +879,7 @@ babel-plugin-transform-regenerator@^6.16.0:
     babel-types "^6.16.0"
     private "~0.1.5"
 
-babel-plugin-transform-runtime@^6.5.0:
+babel-plugin-transform-runtime@^6.7.5:
   version "6.15.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.15.0.tgz#3d75b4d949ad81af157570273846fb59aeb0d57c"
   dependencies:
@@ -1002,9 +1006,16 @@ babel-register@^6.18.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.2.0, babel-runtime@^6.3.13, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
+babel-runtime@^6.0.0, babel-runtime@^6.11.6, babel-runtime@^6.2.0, babel-runtime@^6.9.0, babel-runtime@^6.9.1:
   version "6.11.6"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.11.6.tgz#6db707fef2d49c49bfa3cb64efdb436b518b8222"
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.9.5"
+
+babel-runtime@^6.6.1:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.18.0.tgz#0f4177ffd98492ef13b9f823e9994a02584c9078"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.9.5"
@@ -1435,6 +1446,13 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.0.1.tgz#1104cd34f9b5b45d3eba88f1babc1924e1ce35fb"
   dependencies:
     number-is-nan "^1.0.0"
+
+color-space@^1.14.3:
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/color-space/-/color-space-1.14.6.tgz#a52fd4f083073d3cb335c3b4dc35d5fd59347f25"
+  dependencies:
+    husl ">=5.0"
+    mumath "^3.0.0"
 
 colors@1.0.3:
   version "1.0.3"
@@ -2728,6 +2746,10 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+husl@>=5.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/husl/-/husl-6.0.1.tgz#c6a9f2edea1fc24c00ccb565903bccf37cf3cc58"
+
 iconv-lite@^0.4.13, iconv-lite@~0.4.13, iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
@@ -3501,6 +3523,10 @@ lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
 
+lodash.curry@^4.0.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
+
 lodash.debounce@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-3.1.1.tgz#812211c378a94cc29d5aa4e3346cf0bfce3a7df5"
@@ -3522,6 +3548,10 @@ lodash.find@^4.3.0:
 lodash.findindex@^4.3.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.findindex/-/lodash.findindex-4.6.0.tgz#a3245dee61fb9b6e0624b535125624bb69c11106"
+
+lodash.flow@^3.3.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
 
 lodash.get@^4.0.0:
   version "4.4.2"
@@ -3771,6 +3801,12 @@ multimatch@^2.1.0:
     arrify "^1.0.0"
     minimatch "^3.0.0"
 
+mumath@^3.0.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/mumath/-/mumath-3.3.1.tgz#264b3d610d7a0a4e574ff282424b5427be0b0c96"
+  dependencies:
+    almost-equal "^1.1.0"
+
 mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
@@ -3931,10 +3967,6 @@ oauth-sign@~0.6.0:
 oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
-
-object-assign@^2.0.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-2.1.1.tgz#43c36e5d569ff8e4816c4efa8be02d26967c18aa"
 
 object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.0"
@@ -4206,6 +4238,10 @@ punycode@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.3.2.tgz#9653a036fb7c1ee42342f2325cceefea3926c48d"
 
+pure-color@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/pure-color/-/pure-color-1.2.0.tgz#702d2f2819dd545b1fde5116fca5f0c2dad2d18d"
+
 q@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
@@ -4250,6 +4286,16 @@ rcedit@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/rcedit/-/rcedit-0.7.0.tgz#560b2920165034a135316e6a111f8274b9cec521"
 
+react-base16-styling@^0.4.1:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/react-base16-styling/-/react-base16-styling-0.4.6.tgz#ac23cb19b278974d965003b88f06a038d790bc80"
+  dependencies:
+    base16 "^1.0.0"
+    color-space "^1.14.3"
+    lodash.curry "^4.0.1"
+    lodash.flow "^3.3.0"
+    pure-color "^1.2.0"
+
 react-dock@^0.2.1:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/react-dock/-/react-dock-0.2.3.tgz#a25461564f3cf64ab5b7098e7546036066a9c0e2"
@@ -4261,21 +4307,14 @@ react-dom@^15.3.1:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
 
-react-json-tree@^0.6.6:
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.6.8.tgz#e844f431f759c94c55783556300844fb3b35e623"
+react-json-tree@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-json-tree/-/react-json-tree-0.10.0.tgz#92d5c223fc7718614a906591cd916127ce2b6033"
   dependencies:
-    babel-plugin-transform-runtime "^6.5.0"
-    babel-runtime "^6.3.13"
-    react-mixin "^1.7.0"
+    babel-plugin-transform-runtime "^6.7.5"
+    babel-runtime "^6.6.1"
+    react-base16-styling "^0.4.1"
     react-pure-render "^1.0.2"
-
-react-mixin@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/react-mixin/-/react-mixin-1.7.0.tgz#38c22c3eb02064f08f2c25878a60dac3e956f44c"
-  dependencies:
-    object-assign "^2.0.0"
-    smart-mixin "^1.2.0"
 
 react-pure-render@^1.0.2:
   version "1.0.2"
@@ -4425,12 +4464,12 @@ redux-devtools-instrument@^1.0.1:
     lodash "^4.2.0"
     symbol-observable "^0.2.4"
 
-redux-devtools-log-monitor@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/redux-devtools-log-monitor/-/redux-devtools-log-monitor-1.0.11.tgz#3dd841eed8bdb1733f7cb826557e92c982c5ede8"
+redux-devtools-log-monitor:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/redux-devtools-log-monitor/-/redux-devtools-log-monitor-1.1.1.tgz#6d6c731e239934e4306765c256d9e1c1efd72e3c"
   dependencies:
     lodash.debounce "^4.0.4"
-    react-json-tree "^0.6.6"
+    react-json-tree "^0.10.0"
     react-pure-render "^1.0.2"
     redux-devtools-themes "^1.0.0"
 
@@ -4712,10 +4751,6 @@ slash@^1.0.0:
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
-
-smart-mixin@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/smart-mixin/-/smart-mixin-1.2.1.tgz#11a2b3e4628dfee16ac9cb51edd301be21be1452"
 
 sntp@1.x.x:
   version "1.0.9"
