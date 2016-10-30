@@ -3621,9 +3621,9 @@ marked@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
-mathjs@^3.5.0:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-3.5.3.tgz#feee89b871bdbc3acb2ecfbcfcc3e97a522c095b"
+mathjs:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-3.6.0.tgz#a31bdc117f8cc9c34d6489dfbe08cb96579c325a"
   dependencies:
     complex.js "2.0.1"
     decimal.js "5.0.8"
