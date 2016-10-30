@@ -69,7 +69,7 @@
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-saga": "^0.12.0",
+    "redux-saga": "^0.12.1",
     "screen-saver": "^0.2.1",
     "string_score": "^0.1.22"
   }
