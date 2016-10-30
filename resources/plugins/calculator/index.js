@@ -3,8 +3,8 @@
 const math = require('mathjs');
 
 module.exports = {
-  action: 'openurl',
-  query: query => {
+  action: 'copy',
+  query: (query) => {
     try {
       const ans = math.eval(query);
       const items = [];
