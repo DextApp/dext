@@ -36,10 +36,9 @@ module.exports = {
         });
       });
 
+      // filter out items with 0 score, and sort by score DESC
       const sortedItems = items
-        // filter out 0's
         .filter(i => i.score > 0)
-        // sort by score
         .sort((a, b) => {
           const scoreA = a.title.score(query);
           const scoreB = b.title.score(query);

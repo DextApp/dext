@@ -108,12 +108,12 @@ exports.applyModuleProperties = plugin => new Promise((resolve) => {
       };
       resolve(deepAssign({}, plugin, newOpts));
     } else {
-      // read the plist file
+      // read, parses, and map the plist file options to
+      // the dext plugin object schema
       fs.readFile(plistPath, 'utf8', (err2, data) => {
         if (err2) {
           resolve(plugin);
         } else {
-          // parse the plist
           const plistData = plist.parse(data);
           let keyword = '';
           let action = '';
@@ -149,9 +149,7 @@ exports.loadPlugins = directories => new Promise((resolve) => {
   Promise.all(prom)
     .then((pluginSets) => {
       const allPlugins = pluginSets
-        // merge promise results
         .reduce((a, b) => a.concat(b))
-        // turn into array of objects
         .map(plugin => ({
           path: plugin,
           name: path.basename(plugin),
@@ -183,13 +181,11 @@ exports.connectItems = (items, plugin) => items.map((i) => {
   };
   if (i.icon && i.icon.path) {
     icon.path = i.icon.path;
-    // resolve non-urls
     if (!is.url(i.icon.path)) {
       icon.path = path.resolve(plugin.path, i.icon.path);
     }
   }
   const newObject = deepAssign({}, i);
-  // transfer some plugin metadata
   newObject.plugin = {
     path: plugin.path,
     name: plugin.name,
@@ -217,7 +213,6 @@ exports.connectItems = (items, plugin) => items.map((i) => {
  */
 exports.queryResults = (plugin, args) => new Promise((resolve) => {
   const query = args.join(' ');
-  // process based on the schema
   switch (plugin.schema) {
     case 'alfred': {
       // fork a child process to receive all stdout
@@ -337,7 +332,6 @@ exports.retrieveItemDetails = (item, plugin) => new Promise((resolve) => {
       }
     }
   }
-  // resolve and update the state
   Promise.resolve(content).then((res) => {
     let html = res;
     if (type === 'md') {

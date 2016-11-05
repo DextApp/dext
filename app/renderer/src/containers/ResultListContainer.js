@@ -32,11 +32,9 @@ const ResultListContainer = class extends Component {
     const { updateResults, resetResults, selectNextItem, selectPreviousItem } = this.props;
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
-    // when the window is shown
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
       this.props.resetKeys();
     });
-    // when results are returned from the main process
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
       if (newResults.length) {

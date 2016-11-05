@@ -18,7 +18,6 @@ module.exports = {
       });
       return { items };
     } catch (err) {
-      // do nothing...
       return { items: [] };
     }
   },

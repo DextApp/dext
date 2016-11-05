@@ -8,7 +8,6 @@ let mockFileData = '';
  *
  * @param {String[]} files - An array of files
  */
- // eslint-disable-next-line no-underscore-dangle
 fs.__setFiles = (files) => {
   mockFiles = files;
 };
@@ -18,7 +17,6 @@ fs.__setFiles = (files) => {
  *
  * @param {String} data
  */
-// eslint-disable-next-line no-underscore-dangle
 fs.__setFileData = (data) => {
   mockFileData = data;
 };
