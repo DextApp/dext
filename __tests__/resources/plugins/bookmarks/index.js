@@ -3,7 +3,7 @@ import m from '../../../../resources/plugins/bookmarks';
 jest.mock('browser-bookmarks');
 
 describe('bookmarks', () => {
-  // eslint-disable-next-line global-require, no-underscore-dangle
+  // eslint-disable-next-line global-require
   require('browser-bookmarks').__setBookmarks([
     {
       title: 'GitHub',
@@ -44,8 +44,9 @@ describe('bookmarks', () => {
   });
 
   it('should retrieve no bookmarks', async () => {
-    // eslint-disable-next-line global-require, no-underscore-dangle
+    // eslint-disable-next-line global-require
     require('browser-bookmarks').__setBookmarks([]);
+
     const data = await m.query('abc');
     expect(data.items.length).not.toBeGreaterThan(0);
   });

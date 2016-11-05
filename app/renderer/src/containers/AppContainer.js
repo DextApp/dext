@@ -23,7 +23,6 @@ const AppContainer = class extends Component {
     const { theme } = this.props;
     if (theme && theme.window.width) {
       let width = theme.window.width;
-      // cap the window width at 650
       if (theme.window.width > 650) {
         width = 650;
       }

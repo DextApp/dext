@@ -2,7 +2,9 @@ const browserBookmarks = jest.genMockFromModule('browser-bookmarks');
 
 let mockBookmarks = [];
 
-// eslint-disable-next-line no-underscore-dangle
+/**
+ * Set mocked bookmark entries
+ */
 browserBookmarks.__setBookmarks = (bookmarks) => {
   mockBookmarks = bookmarks;
 };

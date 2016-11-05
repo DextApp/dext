@@ -44,7 +44,6 @@ const ResultList = class extends Component {
         />
       )
     );
-    // get current item
     const currItem = this.props.results[this.props.selectedIndex];
 
     return (
