@@ -79,7 +79,8 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-omdb-plugin](https://github.com/adnasa/dext-omdb-plugin) - Search for imdb movies through the omdb-api.
 
 ### Community Themes
-- [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - A predawn theme for dext
+- [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
+- [dext-nova-theme](https://github.com/vutran/dext-nova-theme) - Nova theme for Dext
 
 ## Developers Documentation
 
