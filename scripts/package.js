@@ -6,6 +6,7 @@ const DEFAULT_OPTIONS = {
   name: 'Dext',
   dir: path.resolve(__dirname, '..'),
   out: './dist/package',
+  icon: path.resolve(__dirname, '..', 'resources', 'icon.icns'),
   overwrite: true,
   prune: true,
   ignore: [

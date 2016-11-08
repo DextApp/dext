@@ -1,18 +1,14 @@
-# Dext
+![](./resources/banner.png?raw=true)
 
 [![Travis](https://img.shields.io/travis/vutran/dext/develop.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/vutran/dext) [![Coveralls branch](https://img.shields.io/coveralls/vutran/dext/develop.svg?maxAge=2592000&style=flat-square)](https://coveralls.io/github/vutran/dext) [![license](https://img.shields.io/github/license/vutran/dext.svg?maxAge=2592000&style=flat-square)](LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/dext-app/Lobby)
-
-> A smart launcher for Mac. Powered by JavaScript.
-
-![](screenshot.gif?raw=true)
-
-Screenshot is using the [dext-github-plugin](https://github.com/vutran/dext-github-plugin) workflow.
 
 ## Overview
 
 **Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of *Alfred*.
 
 Made compatible with *Alfred* workflows that is powered by node (see: [alfy](https://github.com/sindresorhus/alfy)).
+
+![](screenshot.gif?raw=true)
 
 ***Note: Currently available only for Mac OS X platform. Please help contribute for Windows and Linux users.***
 
@@ -101,7 +97,6 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [Feature Requests](CONTRIBUTING.md#feature-requests)
 - [Pull Requests](CONTRIBUTING.md#pull-requests)
 - [Feedback and Suggestions](CONTRIBUTING.md#feedback-and-suggestions)
-
 
 ## LICENSE
 
