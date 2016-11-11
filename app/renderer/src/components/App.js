@@ -13,7 +13,8 @@ const base = style({
   fontFamily: 'Lucida Grande, Arial, sans-serif',
   fontWeight: 'lighter',
   padding: 0,
-  width: '100%',
+  width: '99%',
+  marginLeft: '3px',
   overflow: 'hidden',
 });
 
