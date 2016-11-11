@@ -298,6 +298,7 @@ const createWindow = () => {
     maximizable: false,
     hasShadow: true,
     skipTaskbar: true,
+    transparent: true
   });
 
   // re-position
