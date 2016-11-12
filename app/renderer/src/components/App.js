@@ -7,7 +7,7 @@ import { ThemeSchema } from '../schema';
 const base = style({
   backgroundColor: '#f2f2f2',
   color: '#333',
-  borderRadius: 0,
+  borderRadius: 3,
   borderWidth: 0,
   boxSizing: 'border-box',
   fontFamily: 'Lucida Grande, Arial, sans-serif',
