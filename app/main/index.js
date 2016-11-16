@@ -47,8 +47,27 @@ const config = new Config();
 
 const hideWindow = () => win && win.hide();
 
-// toggles the main window visibility
+/**
+ * Repositions the window based on the mouse's active screen
+ */
+const repositionWindow = () => {
+  const { screen } = electron;
+  const cursorPoint = screen.getCursorScreenPoint();
+  const currScreen = screen.getDisplayNearestPoint(cursorPoint);
+  const resultsHeight = WINDOW_MAX_HEIGHT;
+  const size = win.getSize();
+  const winPosition = [
+    ((currScreen.size.width / 2) - (size[0] / 2)) + currScreen.bounds.x,
+    ((currScreen.size.height / 2) - ((size[1] + resultsHeight) / 2)) + currScreen.bounds.y,
+  ];
+  win.setPosition(winPosition[0], winPosition[1]);
+};
+
+/**
+ * Toggles the main window visibility
+ */
 const toggleMainWindow = () => {
+  repositionWindow();
   if (win.isVisible()) {
     hideWindow();
   } else {
@@ -60,6 +79,8 @@ const toggleMainWindow = () => {
  * Executes an action for a given message based on modifier priority.
  *
  * Priority: SuperKey, AltKey, None
+ *
+ * @param {Object} message
  */
 const execute = (message) => {
   // apply modifiers if necessary
@@ -90,19 +111,6 @@ const executeCurrentItem = () => {
 
 const copyItem = () => {
   win.webContents.send(IPC_COPY_CURRENT_ITEM_KEY);
-};
-
-const repositionWindow = () => {
-  const { screen } = electron;
-  const cursorPoint = screen.getCursorScreenPoint();
-  const currScreen = screen.getDisplayNearestPoint(cursorPoint);
-  const resultsHeight = WINDOW_MAX_HEIGHT;
-  const size = win.getSize();
-  const winPosition = [
-    ((currScreen.size.width / 2) - (size[0] / 2)) + currScreen.bounds.x,
-    ((currScreen.size.height / 2) - ((size[1] + resultsHeight) / 2)) + currScreen.bounds.y,
-  ];
-  win.setPosition(winPosition[0], winPosition[1]);
 };
 
 // free the window object from memory
@@ -284,7 +292,7 @@ const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 500)
 const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 500);
 
 /**
- * Creates a new Browser window and loads the renderer index
+ * Creates a new Browser window and loads the renderer index.
  */
 const createWindow = () => {
   win = new BrowserWindow({
@@ -298,10 +306,9 @@ const createWindow = () => {
     maximizable: false,
     hasShadow: true,
     skipTaskbar: true,
-    transparent: true
+    transparent: true,
   });
 
-  // re-position
   repositionWindow();
 
   const rendererPath = path.resolve(__dirname, '..', 'renderer');
