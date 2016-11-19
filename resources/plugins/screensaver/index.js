@@ -7,7 +7,9 @@ module.exports = {
     items: [
       {
         title: 'Screen Saver',
-        arg: './start.js',
+        arg: {
+          script: './start.js'
+        },
         icon: {
           path: './icon.png',
         },
