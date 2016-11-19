@@ -31,7 +31,7 @@ Executes a the node script `arg.script` of the selected item and is passed the a
 The script can retrieve the arguments like this:
 
 ```js
-var arg = process.argv // Returns an array of arguments:
+const arg = process.argv // Returns an array of arguments:
 											 // The first element is the node enviroment
 											 // The second element is the script being run
 											 // The third element onwards are the arguments passed on by the plugin.
