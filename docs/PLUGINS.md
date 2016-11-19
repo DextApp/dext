@@ -27,7 +27,15 @@ Copies the `arg` of the selected item. (Uses modifiers where necessary)
 
 #### exec
 
-Executes a node script. (Uses modifiers where necessary)
+Executes a the node script `arg.script` of the selected item and is passed the array `arg.arg` as an argument.
+The script can retrieve the arguments like this:
+
+```js
+const arg = process.argv // Returns an array of arguments:
+											 // The first element is the node enviroment
+											 // The second element is the script being run
+											 // The third element onwards are the arguments passed on by the plugin.
+```
 
 #### openurl
 
