@@ -73,12 +73,48 @@ describe('plugin metadata', () => {
 });
 
 describe('plugin results', () => {
-  it('should query for results for the given plugin', () => {
-    // TODO
+  it('should query for results for the given plugin', async () => {
+    // eslint-disable-next-line global-require
+    const mathjs = require('mathjs');
+
+    mathjs.__setReturnValue(2);
+
+    const plugin = {
+      path: path.resolve(__dirname, '..', '..', '..', 'resources', 'plugins', 'calculator'),
+      name: 'calculator',
+      isCore: true,
+      schema: 'dext',
+      action: 'copy',
+      keyword: '',
+    };
+    const items = await plugins.queryResults(plugin, ['1+1']);
+    expect(items.length).toBeGreaterThan(0);
+    expect(items).toContainEqual({
+      title: '2',
+      subtitle: '1+1',
+      arg: '2',
+      icon: {
+        path: path.resolve(plugin.path, 'icon.png'),
+      },
+      plugin: {
+        path: plugin.path,
+        name: plugin.name,
+      },
+      action: 'copy',
+    });
   });
 });
 
 describe('plugin helper', () => {
+  it('should query for helpers for the given plugin (no helper)', async () => {
+    const plugin = {
+      name: 'foobar',
+      keyword: 'foo',
+    };
+    const helperItems = await plugins.queryHelper(plugin, 'foo');
+    expect(helperItems.length).toBe(0);
+  });
+
   it('should query for helpers for the given plugin (Object)', async () => {
     const plugin = {
       name: 'foobar',
