@@ -60,7 +60,7 @@ const repositionWindow = () => {
     (Math.floor((currScreen.size.width / 2) - (size[0] / 2)) + currScreen.bounds.x),
     (Math.floor((currScreen.size.height / 2) - ((size[1] + resultsHeight) / 2)) + currScreen.bounds.y),
   ];
-  console.log(winPosition);
+
   win.setPosition(winPosition[0], winPosition[1]);
 };
 
