@@ -73,6 +73,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
 - [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) - Search for npm packages on npms.io.
 - [dext-omdb-plugin](https://github.com/adnasa/dext-omdb-plugin) - Search for imdb movies through the omdb-api.
+- [dext-base64-encode-plugin](https://github.com/brpaz/dext-base64-encode-plugin) - Dext plugin that allows to encode and decode any text into base64.
 
 ### Community Themes
 - [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
