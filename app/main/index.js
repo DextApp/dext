@@ -158,16 +158,15 @@ const handleWindowCollapse = () => {
 
 /**
  * Loads the theme when the finish has finished loading
+ *
+ * @param {Object} theme
  */
-const handleDidFinishLoad = () => {
-  const t = config.get('theme') || '';
-  loadTheme(t).then((theme) => {
-    if (theme) {
-      win.webContents.send(IPC_LOAD_THEME, theme);
-    }
-    // initial window display
-    win.show();
-  });
+const handleDidFinishLoad = (theme) => {
+  if (theme) {
+    win.webContents.send(IPC_LOAD_THEME, theme);
+  }
+  // initial window display
+  win.show();
 };
 
 /**
@@ -294,9 +293,12 @@ const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 50
 
 /**
  * Creates a new Browser window and loads the renderer index.
+ *
+ * @param {Object} theme
+ * @return {BrowserWindow}
  */
-const createWindow = () => {
-  win = new BrowserWindow({
+const createWindow = (theme) => {
+  const opts = {
     width: WINDOW_DEFAULT_WIDTH,
     height: WINDOW_DEFAULT_HEIGHT,
     maxHeight: WINDOW_MAX_HEIGHT,
@@ -308,70 +310,88 @@ const createWindow = () => {
     hasShadow: true,
     skipTaskbar: true,
     transparent: true,
-  });
-
-  repositionWindow();
-
-  const rendererPath = path.resolve(__dirname, '..', 'renderer');
-  const indexPath = `file://${rendererPath}/index.html`;
-
-  win.loadURL(indexPath);
-
-  win.on('closed', handleWindowClose);
-  win.on('show', handleWindowShow);
-  win.on('hide', handleWindowHide);
-  win.on('blur', handleWindowBlur);
-  win.webContents.on('did-finish-load', handleDidFinishLoad);
-
-  // expand and collapse window based on the results
-  ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
-  ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
-
-  // register global shortcuts
-  globalShortcut.register(config.get('hotKey'), toggleMainWindow);
-
-  /**
-   * Registers the query command listeners for all plugins
-   *
-   * { path, name, isCore, schema, action, keyword }
-   *
-   * @param {Object[]} plugins - An array of plugin objects
-   */
-  const registerIpcListeners = (plugins) => {
-    // listen to query commands and queries
-    // for results and sends it to the renderer
-    ipcMain.on(
-      IPC_QUERY_COMMAND,
-      (evt, message) => debounceHandleQueryCommand(evt, message, plugins)
-    );
-
-    // listen for execution commands
-    ipcMain.on(
-      IPC_EXECUTE_ITEM,
-      (evt, message) => {
-        execute(message);
-      }
-    );
-
-    // listen for item details requests
-    ipcMain.on(
-      IPC_ITEM_DETAILS_REQUEST,
-      (evt, item) => debounceHandleItemDetailsRequest(evt, item)
-    );
-
-    // copies to clipboard
-    ipcMain.on(
-      IPC_COPY_CURRENT_ITEM,
-      (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
-    );
   };
 
-  // load all plugins (core and user) and
-  // then registers the ipc listeners
-  loadPlugins([
-    { path: CORE_PLUGIN_PATH, isCore: true },
-    { path: PLUGIN_PATH, isCore: false },
-  ]).then(registerIpcListeners);
+  // sets the background color
+  if (theme && theme.window.backgroundColor) {
+    opts.backgroundColor = theme.window.backgroundColor;
+  }
+
+  return new BrowserWindow(opts);
 };
 
-app.on('ready', createWindow);
+/**
+ * When the app is ready, creates the window,
+ * register hotkeys, and loading plugins
+ */
+const onAppReady = () => {
+  const t = config.get('theme') || '';
+  loadTheme(t).then((theme) => {
+    win = createWindow(theme);
+
+    repositionWindow();
+
+    const rendererPath = path.resolve(__dirname, '..', 'renderer');
+    const indexPath = `file://${rendererPath}/index.html`;
+
+    win.loadURL(indexPath);
+
+    win.on('closed', handleWindowClose);
+    win.on('show', handleWindowShow);
+    win.on('hide', handleWindowHide);
+    win.on('blur', handleWindowBlur);
+    win.webContents.on('did-finish-load', handleDidFinishLoad.bind(this, theme));
+
+    // expand and collapse window based on the results
+    ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
+    ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
+
+    // register global shortcuts
+    globalShortcut.register(config.get('hotKey'), toggleMainWindow);
+
+    /**
+     * Registers the query command listeners for all plugins
+     *
+     * { path, name, isCore, schema, action, keyword }
+     *
+     * @param {Object[]} plugins - An array of plugin objects
+     */
+    const registerIpcListeners = (plugins) => {
+      // listen to query commands and queries
+      // for results and sends it to the renderer
+      ipcMain.on(
+        IPC_QUERY_COMMAND,
+        (evt, message) => debounceHandleQueryCommand(evt, message, plugins)
+      );
+
+      // listen for execution commands
+      ipcMain.on(
+        IPC_EXECUTE_ITEM,
+        (evt, message) => {
+          execute(message);
+        }
+      );
+
+      // listen for item details requests
+      ipcMain.on(
+        IPC_ITEM_DETAILS_REQUEST,
+        (evt, item) => debounceHandleItemDetailsRequest(evt, item)
+      );
+
+      // copies to clipboard
+      ipcMain.on(
+        IPC_COPY_CURRENT_ITEM,
+        (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
+      );
+    };
+
+    // load all plugins (core and user) and
+    // then registers the ipc listeners
+    loadPlugins([
+      { path: CORE_PLUGIN_PATH, isCore: true },
+      { path: PLUGIN_PATH, isCore: false },
+    ]).then(registerIpcListeners);
+  });
+};
+
+app.on('ready', onAppReady);
