@@ -19,13 +19,13 @@ const ResultDetailsContainer = class extends Component {
 
   render() {
     const { theme, detailsPane, detailsPaneExpanded } = this.props;
-    return (
-      <ResultDetails
-        theme={theme}
-        content={detailsPane}
-        expanded={detailsPaneExpanded}
-      />
-    );
+    return detailsPane
+      ? <ResultDetails
+          theme={theme}
+          content={detailsPane}
+          expanded={detailsPaneExpanded}
+        />
+      : <span></span>;
   }
 };
 
