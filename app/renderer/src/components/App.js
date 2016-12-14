@@ -4,7 +4,8 @@ import QueryFieldContainer from '../containers/QueryFieldContainer';
 import ResultListContainer from '../containers/ResultListContainer';
 import { ThemeSchema } from '../schema';
 
-const outerStyles = style({
+const outerBase = style({
+  backgroundColor: '#f2f2f2',
   boxSizing: 'border-box',
   width: '100%',
   paddingLeft: 3,
@@ -24,6 +25,10 @@ const base = style({
 });
 
 const App = ({ theme }) => {
+
+  const outerStyles = theme.window
+    ? compose(outerBase, { backgroundColor: theme.window.backgroundColor })
+    : outerBase;
 
   const innerStyles = theme.window
     ? compose(base, theme.window)
