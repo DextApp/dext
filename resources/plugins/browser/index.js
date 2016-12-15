@@ -1,4 +1,4 @@
-const IS_URL = /(?:https?:\/\/)?([\w\d-]+(?:\.[\w]+)+$)/;
+const IS_URL = /(?:https?:\/\/)?([\w\d-]+(?:\.[\w]+)+)(\/?.+)?$/;
 
 /**
  * Returns the normalized URL (with protocol scheme)
@@ -7,7 +7,6 @@ const IS_URL = /(?:https?:\/\/)?([\w\d-]+(?:\.[\w]+)+$)/;
  * @return {String}
  */
 const normalize = (url) => {
-  console.log('test', url);
   if (/^https?:\/\//.test(url)) {
     return url;
   }
