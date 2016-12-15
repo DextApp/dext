@@ -1,8 +1,8 @@
 exports[`<QueryField /> component should render a query field component with no value 1`] = `
 <div
-  data-css-1ykjhyy="">
+  data-css-7xr9oy="">
   <input
-    data-css-bj9j4d=""
+    data-css-1np20br=""
     onChange={undefined}
     value={undefined} />
 </div>
@@ -10,9 +10,9 @@ exports[`<QueryField /> component should render a query field component with no 
 
 exports[`<QueryField /> component should render a query field component with some value 1`] = `
 <div
-  data-css-1ykjhyy="">
+  data-css-7xr9oy="">
   <input
-    data-css-bj9j4d=""
+    data-css-1np20br=""
     onChange={undefined}
     value="TEST" />
 </div>

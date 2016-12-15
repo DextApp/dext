@@ -1,13 +1,13 @@
 exports[`<Icon /> component should render a file icon component 1`] = `
 <img
-  data-css-1vehqxh=""
+  data-css-1pj9gkn=""
   role="presentation"
   src={undefined} />
 `;
 
 exports[`<Icon /> component should render a text icon component 1`] = `
 <span
-  data-css-1ezhq81=""
+  data-css-1n4qoom=""
   role="presentation">
   T
 </span>
