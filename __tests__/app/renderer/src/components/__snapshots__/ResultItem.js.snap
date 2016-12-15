@@ -1,22 +1,22 @@
 exports[`<ResultItem /> component should render a result item component in a selected state 1`] = `
 <li
-  data-css-1vhn8oi=""
+  data-css-1j2x6j7=""
   onDoubleClick={undefined}>
   <div
-    data-css-vdo2z2="">
+    data-css-1ch5118="">
     <img
-      data-css-1pj9gkn=""
+      data-css-1vehqxh=""
       role="presentation"
       src="./icon.png" />
   </div>
   <div
-    data-css-1omrcpl="">
+    data-css-d67j44="">
     <h2
-      data-css-hyr375="">
+      data-css-13rh4x1="">
       File Title
     </h2>
     <h3
-      data-css-z7g9id="">
+      data-css-1rd6wq3="">
       File Subtitle
     </h3>
   </div>
@@ -25,23 +25,23 @@ exports[`<ResultItem /> component should render a result item component in a sel
 
 exports[`<ResultItem /> component should render a result item component with a file icon 1`] = `
 <li
-  data-css-1gclqsw=""
+  data-css-wgw6d2=""
   onDoubleClick={undefined}>
   <div
-    data-css-vdo2z2="">
+    data-css-1ch5118="">
     <img
-      data-css-1pj9gkn=""
+      data-css-1vehqxh=""
       role="presentation"
       src="./icon.png" />
   </div>
   <div
-    data-css-1omrcpl="">
+    data-css-d67j44="">
     <h2
-      data-css-hyr375="">
+      data-css-13rh4x1="">
       File Title
     </h2>
     <h3
-      data-css-z7g9id="">
+      data-css-1rd6wq3="">
       File Subtitle
     </h3>
   </div>
@@ -50,24 +50,24 @@ exports[`<ResultItem /> component should render a result item component with a f
 
 exports[`<ResultItem /> component should render a result item component with a text icon 1`] = `
 <li
-  data-css-1gclqsw=""
+  data-css-wgw6d2=""
   onDoubleClick={undefined}>
   <div
-    data-css-vdo2z2="">
+    data-css-1ch5118="">
     <span
-      data-css-1n4qoom=""
+      data-css-1ezhq81=""
       role="presentation">
       T
     </span>
   </div>
   <div
-    data-css-1omrcpl="">
+    data-css-d67j44="">
     <h2
-      data-css-hyr375="">
+      data-css-13rh4x1="">
       Text Item
     </h2>
     <h3
-      data-css-z7g9id="">
+      data-css-1rd6wq3="">
       Text Subtitle
     </h3>
   </div>
