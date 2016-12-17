@@ -1,4 +1,4 @@
-const IS_URL = /(?:https?:\/\/)?([\w\d-]+(?:\.[\w]+)+)(\/?.+)?$/;
+const IS_URL = /(?:https?:\/\/)?(?:[w]{3}\.)?([\w\d-]+(?:\.[\w]+)+)(\/?.+)?$/;
 
 /**
  * Returns the normalized URL (with protocol scheme)
@@ -21,7 +21,7 @@ module.exports = {
     if (urls) {
       items.push({
         title: `Open ${query} in the browser.`,
-        browser: 'Open in browser',
+        subtitle: 'Open in browser',
         arg: normalize(query),
         icon: {
           type: 'text',
