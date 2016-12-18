@@ -156,6 +156,60 @@ describe('plugin helper', () => {
     expect(helperItems[0].title).toEqual('Foo');
     expect(helperItems[0].subtitle).toEqual('Bar');
   });
+
+  it('should query for helpers for the given plugin containing multiple items (Object)', async () => {
+    const plugin = {
+      name: 'foobar',
+      keyword: 'foo',
+      helper: [{
+        title: 'Foo',
+        subtitle: 'Bar',
+      }, {
+        title: 'Foo 2',
+        subtitle: 'Bar 2',
+      }],
+    };
+    const helperItems = await plugins.queryHelper(plugin, 'foo');
+    expect(helperItems.length).toBe(2);
+    expect(helperItems[0].title).toEqual('Foo');
+    expect(helperItems[1].title).toEqual('Foo 2');
+  });
+
+  it('should query for helpers for the given plugin containing multiple items (Function)', async () => {
+    const plugin = {
+      name: 'foobar',
+      keyword: 'foo',
+      helper: () => ([{
+        title: 'Foo',
+        subtitle: 'Bar',
+      }, {
+        title: 'Foo 2',
+        subtitle: 'Bar 2',
+      }]),
+    };
+    const helperItems = await plugins.queryHelper(plugin, 'foo');
+    expect(helperItems.length).toBe(2);
+    expect(helperItems[0].title).toEqual('Foo');
+    expect(helperItems[1].title).toEqual('Foo 2');
+  });
+
+  it('should query for helpers for the given plugin containing multiple items (Promise)', async () => {
+    const plugin = {
+      name: 'foobar',
+      keyword: 'foo',
+      helper: () => new Promise(resolve => resolve([{
+        title: 'Foo',
+        subtitle: 'Bar',
+      }, {
+        title: 'Foo 2',
+        subtitle: 'Bar 2',
+      }])),
+    };
+    const helperItems = await plugins.queryHelper(plugin, 'foo');
+    expect(helperItems.length).toBe(2);
+    expect(helperItems[0].title).toEqual('Foo');
+    expect(helperItems[1].title).toEqual('Foo 2');
+  });
 });
 
 describe('plugin details pane', () => {

@@ -299,8 +299,17 @@ exports.queryHelper = (plugin, keyword) => new Promise((resolve) => {
   if (typeof plugin.helper === 'function') {
     helperItem = plugin.helper(keyword);
   }
+
   Promise.resolve(helperItem).then((item) => {
-    items.push(item);
+    // allows multiple helper items, keeping backwards compatibility.
+    if (Array.isArray(item)) {
+      for (const value of item) {
+        items.push(value);
+      }
+    } else {
+      items.push(item);
+    }
+
     items = exports.connectItems(items, plugin);
     resolve(items);
   });
