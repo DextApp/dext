@@ -63,3 +63,4 @@ const printStatus = ({ err, options }) => {
 
 // start packaging
 pkg('darwin', 'x64').then(printStatus);
+pkg('linux', 'x64').then(printStatus);
