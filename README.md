@@ -61,6 +61,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 ### Core Plugins
 
 - **Bookmarks** - Search your Chrome bookmarks.
+- **Browser** - Quick open your browser to a given URL.
 - **Calculator** - Quickly calculate something.
 - **Screen Saver** - Starts the screen saver.
 
