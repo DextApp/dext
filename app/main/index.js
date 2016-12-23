@@ -32,7 +32,7 @@ const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
 const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
 
-const { app, BrowserWindow, clipboard, globalShortcut, ipcMain } = electron;
+const { app, BrowserWindow, Tray, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
 
 // set default window values
 const WINDOW_DEFAULT_WIDTH = 700;
@@ -41,6 +41,7 @@ const WINDOW_MIN_HEIGHT = 80;
 const WINDOW_MAX_HEIGHT = 710; // results + query + padding
 
 let win = null;
+let tray = null;
 
 // create a user config
 const config = new Config();
@@ -325,6 +326,14 @@ const createWindow = (theme) => {
  * register hotkeys, and loading plugins
  */
 const onAppReady = () => {
+  // loads the tray
+  tray = new Tray(nativeImage.createFromPath(
+    path.resolve(__dirname, '..', '..', 'resources', 'icon-16x16.png')
+  ));
+
+  tray.on('click', () => toggleMainWindow());
+
+  // loads the theme
   const t = config.get('theme') || '';
   loadTheme(t).then((theme) => {
     win = createWindow(theme);
