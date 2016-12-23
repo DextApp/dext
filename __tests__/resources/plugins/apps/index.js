@@ -3,6 +3,13 @@ import m from '../../../../resources/plugins/apps';
 jest.mock('fs');
 
 describe('apps', () => {
+  beforeAll(() => {
+    // mocks the platform
+    Object.defineProperty(process, 'platform', {
+      value: 'darwin',
+    });
+  });
+
   it('should return something', async () => {
     require('fs').__setFiles([
       'Safari.app',
