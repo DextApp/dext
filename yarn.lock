@@ -3994,6 +3994,10 @@ optionator@^0.8.1, optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
+os-apps@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/os-apps/-/os-apps-0.1.0.tgz#f74506ce5d0d72ad8d3ce8424618e55a243fdadd"
+
 os-browserify@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/os-browserify/-/os-browserify-0.2.1.tgz#63fc4ccee5d2d7763d26bbf8601078e6c2e0044f"
