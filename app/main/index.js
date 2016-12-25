@@ -328,7 +328,7 @@ const createWindow = (theme) => {
 const onAppReady = () => {
   // loads the tray
   tray = new Tray(nativeImage.createFromPath(
-    path.resolve(__dirname, '..', '..', 'resources', 'icon-16x16.png')
+    path.resolve(__dirname, '..', '..', 'resources', 'icon.png')
   ));
 
   tray.on('click', () => toggleMainWindow());
