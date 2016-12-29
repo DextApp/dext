@@ -27,29 +27,32 @@ module.exports = {
         return;
       }
 
-      // map to Dext items and apply scores
-      const items = bookmarks.map((bookmark) => {
-        const dextItem = mapDextItem(bookmark);
-        const score = dextItem.title.score(query);
-        return Object.assign({}, dextItem, {
-          score,
-        });
-      });
+      const items = new Array(bookmarks.length);
 
-      // filter out items with 0 score, and sort by score DESC
+      for (let i = 0; i < bookmarks.length; i++) {
+        const dextItem = mapDextItem(bookmarks[i]);
+        dextItem.score = dextItem.title.score(query);
+        if (dextItem.score > 0) {
+          items[i] = dextItem;
+        }
+      }
+
+      /**
+       * Sort function comparing 2 items by score
+       */
+      const sortByScore = (a, b) => {
+        if (a.score === b.score) {
+          return 0;
+        } else if (a.score < b.score) {
+          return 1;
+        }
+        return -1;
+      };
+
       const sortedItems = items
-        .filter(i => i.score > 0)
-        .sort((a, b) => {
-          const scoreA = a.title.score(query);
-          const scoreB = b.title.score(query);
-          if (scoreA === scoreB) {
-            return 0;
-          } else if (scoreA < scoreB) {
-            return 1;
-          }
-          return -1;
-        })
+        .sort(sortByScore)
         .slice(0, size);
+
       resolve({ items: sortedItems });
     });
   }),
