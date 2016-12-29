@@ -1,5 +1,6 @@
 const path = require('path');
 const osApps = require('os-apps');
+const macIcons = require('mac-icons');
 
 /**
  * Returns true if the path matches the query
@@ -17,25 +18,40 @@ const isMatched = (query, filePath) => {
  * Converts an application path to an item
  *
  * @param {String} filePath
- * @return {Object}
+ * @return {Promise} - Resolves to a Dext item schema
  */
-const toItem = (filePath) => {
+const toItem = (filePath) => new Promise(resolve => {
   const fileName = path.basename(filePath, path.extname(filePath));
-  return {
-    title: fileName,
-    subtitle: filePath,
-    arg: filePath,
-    icon: {
-      type: 'text',
-      letter: fileName.substr(0, 1).toUpperCase(),
-    },
-  };
-};
+
+  if (process.platform === 'darwin') {
+    macIcons.getIcon(filePath)
+      .then(iconStr => {
+        resolve({
+          title: fileName,
+          subtitle: filePath,
+          arg: filePath,
+          icon: {
+            path: iconStr,
+          },
+        });
+      });
+  } else {
+      resolve({
+        title: fileName,
+        subtitle: filePath,
+        arg: filePath,
+        icon: {
+          type: 'text',
+          letter: fileName.substr(0, 1).toUpperCase(),
+        },
+      });
+  }
+});
 
 module.exports = {
   action: 'open',
   query: (query) => new Promise(resolve => {
-    let items = [];
+    const items = [];
     if (!query) {
       resolve({ items });
       return;
@@ -43,11 +59,17 @@ module.exports = {
 
     osApps.getAll()
       .then(apps => {
-        const matches = apps
-         .filter(a => isMatched(query, a))
-         .map(toItem);
-        items = items.concat(matches);
-        resolve({ items });
+        const itemPromises = [];
+        for (let i = 0; i < apps.length; i++) {
+          if (isMatched(query, apps[i])) {
+            itemPromises.push(toItem(apps[i]));
+          }
+        }
+
+        Promise.all(itemPromises)
+          .then(itemsResolved => {
+            resolve({ items: itemsResolved });
+          });
       });
   }),
 };

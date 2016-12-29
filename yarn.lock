@@ -1066,6 +1066,10 @@ binary@^0.3.0:
     buffers "~0.1.1"
     chainsaw "~0.1.0"
 
+bindings@~1.2.0, bindings@1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
+
 bl@^1.0.0, bl@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/bl/-/bl-1.1.2.tgz#fdca871a99713aa00d19e3bbba41c44787a65398"
@@ -1632,6 +1636,12 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
+debug@*, debug@2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
+  dependencies:
+    ms "0.7.2"
+
 debug@^2.1.1, debug@^2.1.3, debug@^2.2.0:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.4.4.tgz#c04d17a654e9202464803f096153f70a6f31f4be"
@@ -1895,9 +1905,9 @@ electron-packager@^8.2.0:
     sanitize-filename "^1.6.0"
     semver "^5.3.0"
 
-electron@^1.4.3:
-  version "1.4.12"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.12.tgz#ae6641aa1db01dd04e41c56639ca7b84b888767a"
+electron@^1.4.13:
+  version "1.4.13"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.13.tgz#aecc073484c25d351007d75ad8972b0f2f835ab3"
   dependencies:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
@@ -2255,6 +2265,16 @@ fd-slicer@~1.0.1:
   resolved "https://registry.yarnpkg.com/fd-slicer/-/fd-slicer-1.0.1.tgz#8b5bcbd9ec327c5041bf9ab023fd6750f1177e65"
   dependencies:
     pend "~1.2.0"
+
+ffi@2:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ffi/-/ffi-2.2.0.tgz#bf18b04666a29f71227ed56895d5430af47042fa"
+  dependencies:
+    bindings "~1.2.0"
+    debug "2"
+    nan "2"
+    ref "1"
+    ref-struct "1"
 
 figures@^1.3.5:
   version "1.7.0"
@@ -3590,6 +3610,12 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
 
+mac-icons@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/mac-icons/-/mac-icons-0.1.1.tgz#a2e644ba4239f1822549f7791376f7d85b1551de"
+  dependencies:
+    nodobjc "^2.1.0"
+
 makeerror@1.0.x:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/makeerror/-/makeerror-1.0.11.tgz#e01a5c9109f2af79660e4e8b9587790184f5a96c"
@@ -3792,6 +3818,10 @@ nan@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.4.0.tgz#fb3c59d45fe4effe215f0b890f8adf6eb32d2232"
 
+nan@2:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.0.tgz#aa8f1e34531d807e9e27755b234b4a6ec0c152a8"
+
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
@@ -3874,6 +3904,15 @@ node-status-codes@^2.0.0:
 node-uuid@~1.4.0, node-uuid@~1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.7.tgz#6da5a17668c4b3dd59623bda11cf7fa4c1f60a6f"
+
+nodobjc@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/nodobjc/-/nodobjc-2.1.0.tgz#df13ff30da31fd91b64b75f3175aeed05e8c579d"
+  dependencies:
+    debug "*"
+    ffi "2"
+    ref "~1.1.3"
+    ref-struct "~1.0.2"
 
 nopt@^3.0.1, nopt@~3.0.6:
   version "3.0.6"
@@ -3994,9 +4033,9 @@ optionator@^0.8.1, optionator@^0.8.2:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
-os-apps@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/os-apps/-/os-apps-0.1.0.tgz#f74506ce5d0d72ad8d3ce8424618e55a243fdadd"
+os-apps@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/os-apps/-/os-apps-0.2.0.tgz#c673f730ecf100f377e7b94f395c5b3f4afaa8d0"
 
 os-browserify@^0.2.0:
   version "0.2.1"
@@ -4522,6 +4561,36 @@ redux@^3.5.2:
     lodash-es "^4.2.1"
     loose-envify "^1.1.0"
     symbol-observable "^1.0.2"
+
+ref-struct@~1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ref-struct/-/ref-struct-1.0.2.tgz#6e37cafa2db5f5f2ddaf5ae8bafced3e246cbc90"
+  dependencies:
+    debug "2"
+    ref "1"
+
+ref-struct@1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ref-struct/-/ref-struct-1.1.0.tgz#5d5ee65ad41cefc3a5c5feb40587261e479edc13"
+  dependencies:
+    debug "2"
+    ref "1"
+
+ref@~1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/ref/-/ref-1.1.3.tgz#af499d107127046b7751f2df554ba7852866aee4"
+  dependencies:
+    bindings "1"
+    debug "2"
+    nan "2"
+
+ref@1:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/ref/-/ref-1.3.3.tgz#116d1ef64f2bc56d9e54a648cea7332a36b81932"
+  dependencies:
+    bindings "1"
+    debug "2"
+    nan "2"
 
 regenerate@^1.2.1:
   version "1.3.2"
