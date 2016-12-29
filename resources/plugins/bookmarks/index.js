@@ -16,6 +16,18 @@ const mapDextItem = item => ({
   },
 });
 
+/**
+ * Sort function comparing 2 items by score
+ */
+const sortByScore = (a, b) => {
+  if (a.score === b.score) {
+    return 0;
+  } else if (a.score < b.score) {
+    return 1;
+  }
+  return -1;
+};
+
 module.exports = {
   action: 'openurl',
   query: (query, options = { size: 20 }) => new Promise(resolve => {
@@ -36,18 +48,6 @@ module.exports = {
           items[i] = dextItem;
         }
       }
-
-      /**
-       * Sort function comparing 2 items by score
-       */
-      const sortByScore = (a, b) => {
-        if (a.score === b.score) {
-          return 0;
-        } else if (a.score < b.score) {
-          return 1;
-        }
-        return -1;
-      };
 
       const sortedItems = items
         .sort(sortByScore)
