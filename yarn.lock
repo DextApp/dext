@@ -1121,9 +1121,9 @@ brorand@^1.0.1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.0.6.tgz#4028706b915f91f7b349a2e0bf3c376039d216e5"
 
-browser-bookmarks@^0.1.0:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/browser-bookmarks/-/browser-bookmarks-0.1.2.tgz#64bb8ac9d3b8438f080b52c363998260d53885e8"
+browser-bookmarks@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/browser-bookmarks/-/browser-bookmarks-0.3.0.tgz#b08000e588c552f9b42380da0ff3ab6b8f541d47"
 
 browser-resolve@^1.11.2:
   version "1.11.2"
