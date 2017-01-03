@@ -58,7 +58,7 @@
     "webpack": "v2.1.0-beta.25"
   },
   "dependencies": {
-    "browser-bookmarks": "^0.1.0",
+    "browser-bookmarks": "^0.3.0",
     "conf": "^0.11.2",
     "deep-assign": "^2.0.0",
     "dext-core-utils": "v0.4.1",
