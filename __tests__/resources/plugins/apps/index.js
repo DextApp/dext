@@ -26,8 +26,7 @@ describe('apps', () => {
       subtitle: '/Applications/Safari.app',
       arg: '/Applications/Safari.app',
       icon: {
-        type: 'text',
-        letter: 'S',
+        path: 'FOOBAR',
       },
     });
     expect(results.items).not.toContainEqual({
@@ -35,8 +34,7 @@ describe('apps', () => {
       subtitle: '/Applications/Google Chrome.app',
       arg: '/Applications/Google Chrome.app',
       icon: {
-        type: 'text',
-        letter: 'G',
+        path: 'FOOBAR',
       },
     });
   });

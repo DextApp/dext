@@ -1,4 +1,4 @@
-const macIcons = jest.genMockFromModule('mac-icons');
+const macIcons = {};
 
 let iconValue = '';
 
