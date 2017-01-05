@@ -1,6 +1,7 @@
 import m from '../../../../resources/plugins/apps';
 
 jest.mock('fs');
+jest.mock('mac-icons');
 
 describe('apps', () => {
   beforeAll(() => {
@@ -8,6 +9,8 @@ describe('apps', () => {
     Object.defineProperty(process, 'platform', {
       value: 'darwin',
     });
+    // eslint-disable-next-line global-require
+    require('mac-icons').__setResolvedIconValue('FOOBAR');
   });
 
   it('should return something', async () => {
