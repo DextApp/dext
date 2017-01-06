@@ -12,6 +12,7 @@
   ],
   "main": "app/main/index.js",
   "scripts": {
+    "postinstall": "npm run rebuild",
     "lint": "eslint app scripts utils __mocks__ __tests__",
     "build": "webpack --config webpack.config.dev.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
