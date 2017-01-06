@@ -193,12 +193,8 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
     matchedPlugins.forEach((plugin) => {
       let display = 'results';
       // determine if we should display helper or query items?
-      if (plugin.keyword) {
-        if (!queryString.length) {
-          display = 'helper';
-        } else {
-          display = 'results';
-        }
+      if (plugin.keyword && !queryString.length) {
+        display = 'helper';
       }
       switch (display) {
         case 'helper':
