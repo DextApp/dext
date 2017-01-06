@@ -12,7 +12,6 @@
   ],
   "main": "app/main/index.js",
   "scripts": {
-    "postinstall": "npm run rebuild",
     "lint": "eslint app scripts utils __mocks__ __tests__",
     "build": "webpack --config webpack.config.dev.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
@@ -22,8 +21,7 @@
     "release": "npm run build:prod && npm run package && npm run archive",
     "dev": "cross-env NODE_ENV=development electron . --debug",
     "start": "npm run build && npm run dev",
-    "test": "jest --coverage --verbose",
-    "rebuild": "npm rebuild --runtime=electron --target=1.4.13 --disturl=https://atom.io/download/electron --abi=50"
+    "test": "jest --coverage --verbose"
   },
   "author": "Vu Tran <vu@vu-tran.com>",
   "repository": {
@@ -46,7 +44,6 @@
     "electron": "^1.4.13",
     "electron-installer-debian": "^0.4.0",
     "electron-packager": "^8.2.0",
-    "electron-rebuild": "^1.4.0",
     "eslint": "^3.9.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "1.16.0",
@@ -67,10 +64,8 @@
     "dext-core-utils": "v0.4.1",
     "glamor": "^2.17.14",
     "is_js": "^0.9.0",
-    "mac-icons": "^0.1.1",
     "markdown-it": "^8.0.1",
     "mathjs": "^3.6.0",
-    "os-apps": "^0.2.1",
     "plist": "^2.0.1",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
