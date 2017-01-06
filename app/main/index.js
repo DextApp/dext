@@ -205,8 +205,8 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
           results.push(queryHelper(plugin, keyword));
           break;
         case 'results':
-          if (!args.length) {
-            results.push(queryResults(plugin, [keyword]));
+          if (!plugin.keyword) {
+            results.push(queryResults(plugin, fractions));
           } else {
             results.push(queryResults(plugin, args));
           }
