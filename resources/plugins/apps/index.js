@@ -9,10 +9,7 @@ const macIcons = require('mac-icons');
  * @param {String} filePath
  * @return {Boolean} Returns true if matched
  */
-const isMatched = (query, filePath) => {
-  const patt = new RegExp(query.toLowerCase(), 'i');
-  return patt.test(filePath);
-};
+const isMatched = (query, filePath) => new RegExp(query.toLowerCase(), 'i').test(filePath);
 
 /**
  * Converts an application path to an item
@@ -67,9 +64,7 @@ module.exports = {
         }
 
         Promise.all(itemPromises)
-          .then(itemsResolved => {
-            resolve({ items: itemsResolved });
-          });
+          .then(itemsResolved => resolve({ items: itemsResolved }));
       });
   }),
 };
