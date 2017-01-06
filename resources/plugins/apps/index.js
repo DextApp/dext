@@ -1,6 +1,11 @@
 const path = require('path');
 const osApps = require('os-apps');
-const macIcons = require('mac-icons');
+
+let macIcons = null;
+
+if (process.platform === 'darwin') {
+  macIcons = require('mac-icons');
+}
 
 /**
  * Returns true if the path matches the query
