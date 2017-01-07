@@ -25,7 +25,6 @@ const base = style({
 });
 
 const App = ({ theme }) => {
-
   const outerStyles = theme.window
     ? compose(outerBase, { backgroundColor: theme.window.backgroundColor })
     : outerBase;

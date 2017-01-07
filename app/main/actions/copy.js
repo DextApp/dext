@@ -1,6 +1,4 @@
-const electron = require('electron');
-
-const { clipboard } = electron;
+const { clipboard } = require('electron');
 
 module.exports = (message, arg) => {
   if (arg) {
