@@ -7,10 +7,7 @@ const { api } = require('dext-core-utils');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { PLUGIN_PATH } = require('../../utils/paths');
-const { MAX_RESULTS } = require('../constants');
-
-// @TODO: Move to a `constants` file
-const isDev = process.env.NODE_ENV === 'development';
+const { MAX_RESULTS, IS_DEV } = require('../constants');
 
 /**
  * Loads plugins in the given path
@@ -257,7 +254,7 @@ exports.queryResults = (plugin, args) => new Promise((resolve) => {
         : command;
 
       if (output) {
-        if (isDev && isOutdatedPlugin) {
+        if (IS_DEV && isOutdatedPlugin) {
           // eslint-disable-next-line no-console
           console.log(`
             Plugin is outdated.
