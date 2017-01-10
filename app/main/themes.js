@@ -1,5 +1,6 @@
 const path = require('path');
-const { THEME_PATH } = require('../../utils/paths');
+const { utils } = require('dext-core-utils');
+const { THEME_PATH } = utils.paths;
 
 /**
  * Loads a specified theme
