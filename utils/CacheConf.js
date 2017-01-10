@@ -1,6 +1,7 @@
 const path = require('path');
 const Conf = require('conf');
-const { DEXT_PATH } = require('./paths');
+const { utils } = require('dext-core-utils');
+const { DEXT_PATH } = utils.paths;
 
 // implementation by sindresorhus - https://github.com/sindresorhus/alfy/blob/master/lib/cache-conf.js
 module.exports = class extends Conf {

@@ -1,5 +1,6 @@
 const Conf = require('conf');
-const { DEXT_PATH } = require('./paths');
+const { utils } = require('dext-core-utils');
+const { DEXT_PATH } = utils.paths;
 
 module.exports = class extends Conf {
   constructor(opts) {
