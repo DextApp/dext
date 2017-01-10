@@ -5,7 +5,7 @@ module.exports = {
   action: 'openurl',
   query: (query) => {
     let items = [];
-    if (query === '?') {
+    if (query === '?' || query === 'help' || query === 'about') {
       items = [
         {
           title: 'Dext',
