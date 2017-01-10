@@ -1,6 +1,7 @@
 require('string_score');
 const path = require('path');
 const electron = require('electron');
+const { utils } = require('dext-core-utils');
 const {
   loadPlugins,
   queryResults,
@@ -26,12 +27,11 @@ const {
   IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
 } = require('../ipc');
-const { MAX_RESULTS } = require('../constants');
+const { MAX_RESULTS, CORE_PLUGIN_PATH } = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
-const { CORE_PLUGIN_PATH, PLUGIN_PATH } = require('../../utils/paths');
-
+const { PLUGIN_PATH } = utils.paths;
 const { app, BrowserWindow, Tray, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
 
 // set default window values

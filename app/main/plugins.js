@@ -3,11 +3,12 @@ const fs = require('fs');
 const { fork } = require('child_process');
 const plist = require('plist');
 const deepAssign = require('deep-assign');
-const { api } = require('dext-core-utils');
+const { api, utils } = require('dext-core-utils');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
-const { PLUGIN_PATH } = require('../../utils/paths');
 const { MAX_RESULTS, IS_DEV } = require('../constants');
+
+const { PLUGIN_PATH } = utils.paths;
 
 /**
  * Loads plugins in the given path

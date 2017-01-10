@@ -1,31 +1,32 @@
 import path from 'path';
+import { utils } from 'dext-core-utils';
+import { CORE_PLUGIN_PATH } from '../../../app/constants';
 import plugins from '../../../app/main/plugins';
-import paths from '../../../utils/paths';
 
 describe('core plugins', () => {
   it('should retrieve a list of core plugin paths', async () => {
     const list = await plugins.loadPluginsInPath({
-      path: paths.CORE_PLUGIN_PATH,
+      path: CORE_PLUGIN_PATH,
       isCore: true,
     });
     expect(list.length).toBeGreaterThan(0);
-    expect(list).toContainEqual(path.resolve(paths.CORE_PLUGIN_PATH, 'about'));
+    expect(list).toContainEqual(path.resolve(CORE_PLUGIN_PATH, 'about'));
   });
 
   it('should be a core plugin', () => {
-    const directory = path.resolve(paths.CORE_PLUGIN_PATH, 'core-plugin');
+    const directory = path.resolve(CORE_PLUGIN_PATH, 'core-plugin');
     expect(plugins.isCorePlugin(directory)).toBe(true);
   });
 
   it('should not be a core plugin', () => {
-    const directory = path.resolve(paths.PLUGIN_PATH, 'user-plugin');
+    const directory = path.resolve(utils.paths.PLUGIN_PATH, 'user-plugin');
     expect(plugins.isCorePlugin(directory)).not.toBe(true);
   });
 
   it('should load all core plugins', async () => {
     // load core plugins
     const results = await plugins.loadPlugins([
-      { path: paths.CORE_PLUGIN_PATH, isCore: true },
+      { path: CORE_PLUGIN_PATH, isCore: true },
     ]);
     expect(results.length).toBeGreaterThan(0);
     expect(results.filter(p => p.name === 'about')).toBeTruthy();
