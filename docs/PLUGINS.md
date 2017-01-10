@@ -23,7 +23,7 @@ keyword   | description
 
 #### copy
 
-Copies the `arg` of the selected item. (Uses modifiers where necessary)
+Copies the `arg` of the selected item. (Uses modifiers where necessary).
 
 #### exec
 
@@ -37,9 +37,13 @@ const arg = process.argv // Returns an array of arguments:
 											 // The third element onwards are the arguments passed on by the plugin.
 ```
 
+#### open
+
+Opens a file in the desktop's default banner.
+
 #### openurl
 
-Opens the item in a new browser window. (Uses modifiers where necessary)
+Opens the item in a new browser window. (Uses modifiers where necessary).
 
 ### Examples
 
