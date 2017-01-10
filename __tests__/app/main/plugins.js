@@ -70,6 +70,26 @@ describe('plugin metadata', () => {
     expect(connectedItems[0].keyword).toEqual('foo');
     expect(connectedItems[0].action).toEqual('openurl');
   });
+
+  it('should allow for base64 icons', () => {
+    const items = [
+      {
+        title: 'Foo',
+        subtitle: 'Bar',
+        icon: {
+          path: 'data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890==',
+        },
+      },
+    ];
+    const plugin = {
+      path: '/path/to/plugin',
+      name: 'foobar',
+      keyword: 'foo',
+      action: 'openurl',
+    };
+    const connectedItems = plugins.connectItems(items, plugin);
+    expect(connectedItems[0].icon.path).toEqual('data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890==');
+  });
 });
 
 describe('plugin results', () => {
