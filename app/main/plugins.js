@@ -178,7 +178,8 @@ exports.connectItems = (items, plugin) => items.map((i) => {
   };
   if (i.icon && i.icon.path) {
     icon.path = i.icon.path;
-    if (!is.url(i.icon.path)) {
+    const isBase64 = /data\:image\/.*\;base64/.test(i.icon.path);
+    if (!is.url(i.icon.path) && !isBase64) {
       icon.path = path.resolve(plugin.path, i.icon.path);
     }
   }
