@@ -67,6 +67,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 
 ### Community Plugins
 
+- [dext-darwin-applications-plugin](https://github.com/vutran/dext-darwin-applications-plugin) - Dext plugin to search for applications (Darwin only).
 - [dext-docker-registry-plugin](https://github.com/vutran/dext-docker-registry-plugin) - Search the Docker Registry for images.
 - [dext-emoji-plugin](https://github.com/vutran/dext-emoji-plugin) - Search for emojis.
 - [dext-giphy-plugin](https://github.com/adnasa/dext-giphy-plugin) - Search for giphy images.
