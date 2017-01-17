@@ -334,6 +334,8 @@ const createWindow = (theme) => {
 
 // create the Context Menu for the Tray
 const contextMenu = Menu.buildFromTemplate([
+  { label: 'Toggle Dext', type: 'normal', click: () => { toggleMainWindow(); } },
+  { type: 'separator' },
   { label: 'Quit', type: 'normal', click: () => { app.quit(); } }
 ]);
 
