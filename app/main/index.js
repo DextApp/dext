@@ -414,4 +414,7 @@ const onAppReady = () => {
   });
 };
 
+// hide the app from the dock and applications switcher
+app.dock.hide();
+
 app.on('ready', onAppReady);
