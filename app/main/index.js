@@ -32,7 +32,7 @@ const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
 const { PLUGIN_PATH } = utils.paths;
-const { app, BrowserWindow, Tray, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
+const { app, BrowserWindow, Tray, Menu, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
 
 // set default window values
 const WINDOW_DEFAULT_WIDTH = 700;
@@ -332,6 +332,13 @@ const createWindow = (theme) => {
   return new BrowserWindow(opts);
 };
 
+// create the Context Menu for the Tray
+const contextMenu = Menu.buildFromTemplate([
+  { label: 'Toggle Dext', type: 'normal', click: () => { toggleMainWindow(); } },
+  { type: 'separator' },
+  { label: 'Quit', type: 'normal', click: () => { app.quit(); } }
+]);
+
 /**
  * When the app is ready, creates the window,
  * register hotkeys, and loading plugins
@@ -342,7 +349,7 @@ const onAppReady = () => {
     path.resolve(__dirname, '..', '..', 'resources', 'icon.png')
   ));
 
-  tray.on('click', () => toggleMainWindow());
+  tray.setContextMenu(contextMenu)
 
   // loads the theme
   const t = config.get('theme') || '';
@@ -413,5 +420,8 @@ const onAppReady = () => {
     ]).then(registerIpcListeners);
   });
 };
+
+// hide the app from the dock and applications switcher
+app.dock.hide();
 
 app.on('ready', onAppReady);
