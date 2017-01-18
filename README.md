@@ -14,7 +14,14 @@ Made compatible with *Alfred* workflows that is powered by node (see: [alfy](htt
 
 ## Install
 
+
 Download the latest zip file [here](https://github.com/vutran/dext/releases/) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
+
+You can also use Homebrew Cask to download the app by running these commands:
+```
+brew update
+brew cask install dext
+```
 
 **NOTE: Release version may not be stable as Dext is still in it's early stage of development. Please help [contribute](CONTRIBUTING.md) towards a stable build.**
 
