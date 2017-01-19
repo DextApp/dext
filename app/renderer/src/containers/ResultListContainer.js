@@ -1,4 +1,4 @@
-/* global window, Notification */
+/* global window */
 
 import { ipcRenderer } from 'electron';
 import React, { Component, PropTypes } from 'react';
@@ -63,8 +63,7 @@ const ResultListContainer = class extends Component {
       }
     });
     ipcRenderer.on(IPC_COPY_CURRENT_ITEM_KEY, () => {
-      const item = self.copyItem();
-      ResultListContainer.registerNotification('Dext', `${item.arg} was copied into your clipboard :)`);
+      self.copyItem();
     });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
       self.execute();
@@ -101,8 +100,6 @@ const ResultListContainer = class extends Component {
     const { results, selectedIndex } = this.props;
     const item = results[selectedIndex];
     ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
-
-    return item;
   }
 
   isAltMod() {
@@ -139,20 +136,6 @@ const ResultListContainer = class extends Component {
       : 0;
 
     this.c.c.scrollTop = scrollY;
-  }
-
-  /**
-   * Register a new native Notification
-   * and pops it up onto the user's screen.
-   *
-   * @param {String} title
-   * @param {String} body
-   */
-  static registerNotification(title, body) {
-    return new Notification(title, {
-      body,
-      silent: true,
-    });
   }
 
   render() {
