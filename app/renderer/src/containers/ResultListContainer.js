@@ -95,11 +95,13 @@ const ResultListContainer = class extends Component {
 
   /**
    * Copies the selected item to the clipboard
+   * and update the state for other component to listen to.
    */
   copyItem() {
-    const { results, selectedIndex } = this.props;
+    const { results, selectedIndex, copyToClipboard } = this.props;
     const item = results[selectedIndex];
     ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
+    copyToClipboard();
   }
 
   isAltMod() {
@@ -181,6 +183,7 @@ ResultListContainer.propTypes = {
   setActiveKey: PropTypes.func,
   clearActiveKey: PropTypes.func,
   resetKeys: PropTypes.func,
+  copyToClipboard: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

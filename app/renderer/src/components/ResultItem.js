@@ -56,7 +56,7 @@ const subtitle = style({
   WebkitLineClamp: 1,
 });
 
-const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick }) => {
+const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick, copiedToClipboard }) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
 
@@ -81,6 +81,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
         <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{itemSubtitle}</h3>
       </div>
+      {copiedToClipboard && 'COPIED DUDE'}
     </li>
   );
 };
@@ -94,6 +95,7 @@ ResultItem.propTypes = {
   isAltMod: PropTypes.bool,
   isSuperMod: PropTypes.bool,
   onDoubleClick: PropTypes.func,
+  copiedToClipboard: PropTypes.bool,
 };
 
 export default ResultItem;

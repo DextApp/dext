@@ -15,6 +15,7 @@ import {
   SET_ACTIVE_KEY,
   CLEAR_ACTIVE_KEY,
   RESET_KEYS,
+  COPY_ITEM,
 } from './types';
 
 /**
@@ -168,4 +169,13 @@ export function clearActiveKey(key) {
  */
 export function resetKeys() {
   return { type: RESET_KEYS };
+}
+
+/**
+ * Copy an item into the clipboard.
+ *
+ * @return {Object}
+ */
+export function copyToClipboard() {
+  return { type: COPY_ITEM };
 }
