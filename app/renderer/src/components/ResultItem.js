@@ -32,6 +32,7 @@ const icon = style({
 const details = style({
   flex: 'flex-grow',
   boxSizing: 'border-box',
+  flexGrow: 2,
 });
 
 const title = style({
@@ -54,6 +55,34 @@ const subtitle = style({
   margin: 0,
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: 1,
+});
+
+const checkAnimation = style.keyframes('check', {
+  '0%': { height: 0, width: 0, opacity: 1 },
+  '20%': { height: 0, width: '6px', opacity: 1 },
+  '40%': { height: '12px', width: '6px', opacity: 1 },
+  '100%': { height: '12px', width: '6px', opacity: 1 },
+});
+
+const checkmarkWrapper = style({
+  width: '20px',
+  height: '100%',
+  position: 'relative',
+});
+
+const checkmark = style({
+  animationDuration: '.3s',
+  animationTimingFunction: 'ease',
+  animationName: `${checkAnimation}`,
+  transform: 'scaleX(-1) rotate(135deg)',
+  height: '12px',
+  width: '6px',
+  transformOrigin: 'left top',
+  borderRight: '2px solid white',
+  borderTop: '2px solid white',
+  content: '""',
+  position: 'absolute',
+  top: '50%',
 });
 
 const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick, copiedToClipboard }) => {
@@ -81,7 +110,11 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
         <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{itemSubtitle}</h3>
       </div>
-      {copiedToClipboard && 'COPIED DUDE'}
+      {copiedToClipboard &&
+        <div {...checkmarkWrapper}>
+          <div {...checkmark} />
+        </div>
+      }
     </li>
   );
 };
