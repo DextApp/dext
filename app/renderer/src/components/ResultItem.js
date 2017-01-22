@@ -19,6 +19,7 @@ const base = compose(
     margin: 0,
     padding: 10,
     width: '100%',
+    position: 'relative',
   }),
   baseHover
 );
@@ -65,9 +66,14 @@ const checkAnimation = style.keyframes('check', {
 });
 
 const checkmarkWrapper = style({
-  width: '20px',
-  height: '100%',
-  position: 'relative',
+  width: '80px',
+  display: 'flex',
+  flexDirection: 'row',
+  position: 'absolute',
+  top: '50%',
+  right: 0,
+  transform: 'translateY(-50%)',
+  paddingRight: '20px',
 });
 
 const checkmark = style({
@@ -81,8 +87,9 @@ const checkmark = style({
   borderRight: '2px solid white',
   borderTop: '2px solid white',
   content: '""',
-  position: 'absolute',
-  top: '50%',
+  position: 'relative',
+  top: '7px',
+  marginLeft: '7px',
 });
 
 const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick, copiedToClipboard }) => {
@@ -112,6 +119,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
       </div>
       {copiedToClipboard &&
         <div {...checkmarkWrapper}>
+          <span>Copied</span>
           <div {...checkmark} />
         </div>
       }
