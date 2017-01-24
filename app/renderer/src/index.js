@@ -5,12 +5,13 @@ import { Provider } from 'react-redux';
 import DevTools from './components/DevTools';
 import AppContainer from './containers/AppContainer';
 import configureStore from './store';
+import { IS_DEV } from '../../constants';
 
 const store = configureStore();
 
 // load the dev tools if necessary
 let devTools = '';
-if (process.env.NODE_ENV === 'development') {
+if (IS_DEV) {
   devTools = <DevTools />;
 }
 
