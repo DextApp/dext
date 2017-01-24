@@ -27,7 +27,7 @@ const {
   IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
 } = require('../ipc');
-const { MAX_RESULTS, CORE_PLUGIN_PATH } = require('../constants');
+const { MAX_RESULTS, CORE_PLUGIN_PATH, DEBOUNCE_TIME } = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
@@ -297,11 +297,11 @@ const handleCopyItemToClipboard = (evt, item) => {
 /**
  * Create a debounced function for handling the query command
  */
-const debounceHandleQueryCommand = debounce(handleQueryCommand, 150);
+const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
 
-const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 150);
+const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, DEBOUNCE_TIME);
 
-const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 150);
+const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, DEBOUNCE_TIME);
 
 /**
  * Creates a new Browser window and loads the renderer index.
