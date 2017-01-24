@@ -1,7 +1,7 @@
 import * as types from '../../../../../app/renderer/src/actions/types';
 import copiedToClipboard from '../../../../../app/renderer/src/reducers/copiedToClipboard';
 
-const { COPY_ITEM, ...allTypes } = types;
+const { COPY_ITEM, SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY, ...allTypes } = types;
 
 describe('copiedToClipboard reducer', () => {
   it('should return the initial state', () => {
@@ -16,6 +16,20 @@ describe('copiedToClipboard reducer', () => {
     const action = { type: COPY_ITEM };
 
     expect(copiedToClipboard(state, action)).toBe(true);
+  });
+
+  it('should handle SET_ACTIVE_KEY action', () => {
+    const state = 'value';
+    const action = { type: SET_ACTIVE_KEY };
+
+    expect(copiedToClipboard(state, action)).toBe('value');
+  });
+
+  it('should handle CLEAR_ACTIVE_KEY action', () => {
+    const state = 'value';
+    const action = { type: CLEAR_ACTIVE_KEY };
+
+    expect(copiedToClipboard(state, action)).toBe('value');
   });
 
   it('should handle the rest of the actions', () => {
