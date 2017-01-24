@@ -6,6 +6,7 @@ import selectedIndex from './selectedIndex';
 import keys from './keys';
 import detailsPane from './detailsPane';
 import detailsPaneExpanded from './detailsPaneExpanded';
+import copiedToClipboard from './copiedToClipboard';
 
 export default combineReducers({
   theme,
@@ -15,4 +16,5 @@ export default combineReducers({
   keys,
   detailsPane,
   detailsPaneExpanded,
+  copiedToClipboard,
 });

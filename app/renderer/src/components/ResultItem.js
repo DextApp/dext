@@ -19,6 +19,7 @@ const base = compose(
     margin: 0,
     padding: 10,
     width: '100%',
+    position: 'relative',
   }),
   baseHover
 );
@@ -32,6 +33,7 @@ const icon = style({
 const details = style({
   flex: 'flex-grow',
   boxSizing: 'border-box',
+  flexGrow: 2,
 });
 
 const title = style({
@@ -56,7 +58,41 @@ const subtitle = style({
   WebkitLineClamp: 1,
 });
 
-const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick }) => {
+const checkAnimation = style.keyframes('check', {
+  '0%': { height: 0, width: 0, opacity: 1 },
+  '20%': { height: 0, width: '6px', opacity: 1 },
+  '40%': { height: '12px', width: '6px', opacity: 1 },
+  '100%': { height: '12px', width: '6px', opacity: 1 },
+});
+
+const checkmarkWrapper = style({
+  width: '80px',
+  display: 'flex',
+  flexDirection: 'row',
+  position: 'absolute',
+  top: '50%',
+  right: 0,
+  transform: 'translateY(-50%)',
+  paddingRight: '20px',
+});
+
+const checkmark = style({
+  animationDuration: '.3s',
+  animationTimingFunction: 'ease',
+  animationName: `${checkAnimation}`,
+  transform: 'scaleX(-1) rotate(135deg)',
+  height: '12px',
+  width: '6px',
+  transformOrigin: 'left top',
+  borderRight: '2px solid white',
+  borderTop: '2px solid white',
+  content: '""',
+  position: 'relative',
+  top: '7px',
+  marginLeft: '7px',
+});
+
+const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick, copiedToClipboard }) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
 
@@ -81,6 +117,12 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
         <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{itemSubtitle}</h3>
       </div>
+      {copiedToClipboard &&
+        <div {...checkmarkWrapper}>
+          <span>Copied</span>
+          <div {...checkmark} />
+        </div>
+      }
     </li>
   );
 };
@@ -94,6 +136,7 @@ ResultItem.propTypes = {
   isAltMod: PropTypes.bool,
   isSuperMod: PropTypes.bool,
   onDoubleClick: PropTypes.func,
+  copiedToClipboard: PropTypes.bool,
 };
 
 export default ResultItem;

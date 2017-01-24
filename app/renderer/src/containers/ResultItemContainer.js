@@ -39,7 +39,7 @@ const ResultItemContainer = class extends Component {
   }
 
   render() {
-    const { theme, item, selected } = this.props;
+    const { theme, item, selected, copiedToClipboard } = this.props;
     return (
       <ResultItem
         theme={theme}
@@ -48,6 +48,7 @@ const ResultItemContainer = class extends Component {
         onDoubleClick={this.handleDoubleClick}
         isAltMod={this.isAltMod()}
         isSuperMod={this.isSuperMod()}
+        copiedToClipboard={copiedToClipboard && selected}
       />
     );
   }
@@ -64,9 +65,10 @@ ResultItemContainer.propTypes = {
   item: ResultItemSchema,
   selected: PropTypes.bool,
   keys: PropTypes.arrayOf(PropTypes.string),
+  copiedToClipboard: PropTypes.bool,
 };
 
-const mapStateToProps = ({ keys }) => ({ keys });
+const mapStateToProps = ({ keys, copiedToClipboard }) => ({ keys, copiedToClipboard });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
 

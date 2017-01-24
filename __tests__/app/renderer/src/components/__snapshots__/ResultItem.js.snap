@@ -1,6 +1,6 @@
 exports[`<ResultItem /> component should render a result item component in a selected state 1`] = `
 <li
-  data-css-1j2x6j7=""
+  data-css-fsydme=""
   onDoubleClick={undefined}>
   <div
     data-css-1ch5118="">
@@ -10,7 +10,7 @@ exports[`<ResultItem /> component should render a result item component in a sel
       src="./icon.png" />
   </div>
   <div
-    data-css-d67j44="">
+    data-css-15y2pmq="">
     <h2
       data-css-13rh4x1="">
       File Title
@@ -25,7 +25,7 @@ exports[`<ResultItem /> component should render a result item component in a sel
 
 exports[`<ResultItem /> component should render a result item component with a file icon 1`] = `
 <li
-  data-css-wgw6d2=""
+  data-css-1gdhlsu=""
   onDoubleClick={undefined}>
   <div
     data-css-1ch5118="">
@@ -35,7 +35,7 @@ exports[`<ResultItem /> component should render a result item component with a f
       src="./icon.png" />
   </div>
   <div
-    data-css-d67j44="">
+    data-css-15y2pmq="">
     <h2
       data-css-13rh4x1="">
       File Title
@@ -50,7 +50,7 @@ exports[`<ResultItem /> component should render a result item component with a f
 
 exports[`<ResultItem /> component should render a result item component with a text icon 1`] = `
 <li
-  data-css-wgw6d2=""
+  data-css-1gdhlsu=""
   onDoubleClick={undefined}>
   <div
     data-css-1ch5118="">
@@ -61,7 +61,7 @@ exports[`<ResultItem /> component should render a result item component with a t
     </span>
   </div>
   <div
-    data-css-d67j44="">
+    data-css-15y2pmq="">
     <h2
       data-css-13rh4x1="">
       Text Item
