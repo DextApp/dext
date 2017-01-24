@@ -297,11 +297,11 @@ const handleCopyItemToClipboard = (evt, item) => {
 /**
  * Create a debounced function for handling the query command
  */
-const debounceHandleQueryCommand = debounce(handleQueryCommand, 500);
+const debounceHandleQueryCommand = debounce(handleQueryCommand, 150);
 
-const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 500);
+const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, 150);
 
-const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 500);
+const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, 150);
 
 /**
  * Creates a new Browser window and loads the renderer index.
