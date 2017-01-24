@@ -18,7 +18,7 @@ describe('copiedToClipboard reducer', () => {
     expect(copiedToClipboard(state, action)).toBe(true);
   });
 
-  it('Should handle the rest of the actions', () => {
+  it('should handle the rest of the actions', () => {
     const state = undefined;
     Object.values(allTypes).map(type => (
       expect(copiedToClipboard(state, { type })).toBe(false)
