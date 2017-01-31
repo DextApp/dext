@@ -66,6 +66,7 @@ const ResultListContainer = class extends Component {
       self.copyItem();
     });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
+      if(this.props.results.length)
       self.execute();
     });
   }
