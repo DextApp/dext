@@ -184,6 +184,10 @@ exports.connectItems = (items, plugin) => items.map((i) => {
       icon.path = path.resolve(plugin.path, i.icon.path);
     }
   }
+  // if an icon isn't set, fallback to the icon.png file in the plugin's directory
+  if (!icon.path) {
+    icon.path = path.resolve(plugin.path, 'icon.png');
+  }
   const newObject = deepAssign({}, i);
   newObject.plugin = {
     path: plugin.path,
@@ -196,6 +200,9 @@ exports.connectItems = (items, plugin) => items.map((i) => {
     newObject.action = plugin.action;
   }
   if (icon.path) {
+    if (!newObject.icon) {
+      newObject.icon = {};
+    }
     newObject.icon.path = icon.path;
   }
   return newObject;
