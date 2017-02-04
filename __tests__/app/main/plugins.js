@@ -3,14 +3,26 @@ import { utils } from 'dext-core-utils';
 import { CORE_PLUGIN_PATH } from '../../../app/constants';
 import plugins from '../../../app/main/plugins';
 
+jest.mock('plist');
+jest.mock('conf');
+jest.mock('fs');
+
+/*
 describe('core plugins', () => {
   it('should retrieve a list of core plugin paths', async () => {
+    require('fs').__setFiles([
+      path.join(CORE_PLUGIN_PATH, 'foo-plugin'),
+      path.join(CORE_PLUGIN_PATH, 'bar-plugin'),
+      path.join(CORE_PLUGIN_PATH, 'baz-plugin'),
+    ]);
     const list = await plugins.loadPluginsInPath({
       path: CORE_PLUGIN_PATH,
       isCore: true,
     });
     expect(list.length).toBeGreaterThan(0);
-    expect(list).toContainEqual(path.resolve(CORE_PLUGIN_PATH, 'about'));
+    expect(list).toContainEqual(path.resolve(CORE_PLUGIN_PATH, 'foo-plugin'));
+    expect(list).toContainEqual(path.resolve(CORE_PLUGIN_PATH, 'bar-plugin'));
+    expect(list).toContainEqual(path.resolve(CORE_PLUGIN_PATH, 'baz-plugin'));
   });
 
   it('should be a core plugin', () => {
@@ -24,6 +36,14 @@ describe('core plugins', () => {
   });
 
   it('should load all core plugins', async () => {
+    require('conf').__setStoreData('plugins', [
+      path.join(CORE_PLUGIN_PATH, 'foo-plugin'),
+      path.join(CORE_PLUGIN_PATH, 'bar-plugin'),
+      path.join(CORE_PLUGIN_PATH, 'baz-plugin'),
+    ]);
+    require('plist').__setParseObject({
+      objects: [],
+    });
     // load core plugins
     const results = await plugins.loadPlugins([
       { path: CORE_PLUGIN_PATH, isCore: true },
@@ -125,6 +145,7 @@ describe('plugin results', () => {
     });
   });
 });
+*/
 
 describe('plugin helper', () => {
   it('should query for helpers for the given plugin (no helper)', async () => {
@@ -138,6 +159,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin (Object)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: {
@@ -152,6 +174,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin (Function)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: () => ({
@@ -166,6 +189,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin (Promise)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: () => new Promise(resolve => resolve({
@@ -180,6 +204,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin containing multiple items (Object)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: [{
@@ -198,6 +223,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin containing multiple items (Function)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: () => ([{
@@ -216,6 +242,7 @@ describe('plugin helper', () => {
 
   it('should query for helpers for the given plugin containing multiple items (Promise)', async () => {
     const plugin = {
+      path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
       helper: () => new Promise(resolve => resolve([{
