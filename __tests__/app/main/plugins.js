@@ -7,7 +7,6 @@ jest.mock('plist');
 jest.mock('conf');
 jest.mock('fs');
 
-/*
 describe('core plugins', () => {
   it('should retrieve a list of core plugin paths', async () => {
     require('fs').__setFiles([
@@ -145,7 +144,6 @@ describe('plugin results', () => {
     });
   });
 });
-*/
 
 describe('plugin helper', () => {
   it('should query for helpers for the given plugin (no helper)', async () => {
