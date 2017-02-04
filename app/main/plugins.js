@@ -142,7 +142,7 @@ exports.applyModuleProperties = plugin => new Promise((resolve) => {
  * @param {Object[]} directories - An array of directory objects to load { path, isCore }
  * @return {Promise} - Resolves a list of plugin objects
  */
-exports.loadPlugins = directories => new Promise((resolve) => {
+exports.loadPlugins = directories => new Promise((resolve, reject) => {
   const prom = directories.map(exports.loadPluginsInPath);
   Promise.all(prom)
     .then((pluginSets) => {
@@ -160,7 +160,7 @@ exports.loadPlugins = directories => new Promise((resolve) => {
       // check for Alfred plugins in the user
       // if it is an Alfred plugin, set the schema
       const ready = allPlugins.map(exports.applyModuleProperties);
-      Promise.all(ready).then(resolve);
+      Promise.all(ready).then(resolve).catch(reject);
     });
 });
 
