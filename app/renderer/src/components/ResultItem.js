@@ -21,7 +21,7 @@ const base = compose(
     width: '100%',
     position: 'relative',
   }),
-  baseHover
+  baseHover,
 );
 
 const icon = style({
@@ -99,7 +99,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
   const themeSelected = selected
     ? compose(
       style(activeStyle),
-      style(theme.resultActive || {})
+      style(theme.resultActive || {}),
     )
     : {};
 
@@ -125,6 +125,16 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
       }
     </li>
   );
+};
+
+ResultItem.defaultProps = {
+  theme: {},
+  item: {},
+  selected: false,
+  isAltMod: false,
+  isSuperMod: false,
+  onDoubleClick: () => {},
+  copiedToClipboard: false,
 };
 
 ResultItem.propTypes = {

@@ -11,7 +11,7 @@ describe('<QueryField /> component', () => {
 
   it('should render a query field component with no value', () => {
     const component = renderer.create(
-      <QueryField theme={theme} />
+      <QueryField theme={theme} />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -19,7 +19,7 @@ describe('<QueryField /> component', () => {
 
   it('should render a query field component with some value', () => {
     const component = renderer.create(
-      <QueryField theme={theme} value={'TEST'} />
+      <QueryField theme={theme} value={'TEST'} />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

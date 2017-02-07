@@ -169,6 +169,7 @@ ResultListContainer.defaultProps = {
   setActiveKey: () => {},
   clearActiveKey: () => {},
   resetKeys: () => {},
+  copyToClipboard: () => {},
 };
 
 ResultListContainer.propTypes = {

@@ -1,5 +1,6 @@
 const path = require('path');
 const { utils } = require('dext-core-utils');
+
 const { THEME_PATH } = utils.paths;
 
 /**

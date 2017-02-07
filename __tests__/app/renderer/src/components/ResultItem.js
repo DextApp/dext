@@ -19,7 +19,7 @@ describe('<ResultItem /> component', () => {
       },
     };
     const component = renderer.create(
-      <ResultItem theme={theme} item={item} />
+      <ResultItem theme={theme} item={item} />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -35,7 +35,7 @@ describe('<ResultItem /> component', () => {
       },
     };
     const component = renderer.create(
-      <ResultItem theme={theme} item={item} />
+      <ResultItem theme={theme} item={item} />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -51,7 +51,7 @@ describe('<ResultItem /> component', () => {
       },
     };
     const component = renderer.create(
-      <ResultItem theme={theme} item={item} selected />
+      <ResultItem theme={theme} item={item} selected />,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

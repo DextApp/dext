@@ -179,7 +179,7 @@ exports.connectItems = (items, plugin) => items.map((i) => {
   };
   if (i.icon && i.icon.path) {
     icon.path = i.icon.path;
-    const isBase64 = /data\:image\/.*\;base64/.test(i.icon.path);
+    const isBase64 = /data:image\/.*;base64/.test(i.icon.path);
     if (!is.url(i.icon.path) && !isBase64) {
       icon.path = path.resolve(plugin.path, i.icon.path);
     }
@@ -309,8 +309,9 @@ exports.queryHelper = (plugin, keyword) => new Promise((resolve) => {
   Promise.resolve(helperItem).then((item) => {
     // allows multiple helper items, keeping backwards compatibility.
     if (Array.isArray(item)) {
-      for (const value of item) {
-        items.push(value);
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < item.length; i++) {
+        items.push(item[i]);
       }
     } else {
       items.push(item);

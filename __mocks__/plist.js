@@ -17,8 +17,7 @@ plist.__setParseObject = (data) => {
  * @param {String} dataStr - The plist contents
  * @return {Object} - The plist data
  */
-plist.parse = (dataStr) => {
-  return mockParsedObject;
-};
+// eslint-disable-next-line no-unused-vars
+plist.parse = dataStr => mockParsedObject;
 
 module.exports = plist;

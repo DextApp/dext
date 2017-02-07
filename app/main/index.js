@@ -31,6 +31,7 @@ const { MAX_RESULTS, CORE_PLUGIN_PATH, DEBOUNCE_TIME } = require('../constants')
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
+
 const { PLUGIN_PATH } = utils.paths;
 const { app, BrowserWindow, Tray, Menu, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
 
@@ -209,6 +210,9 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
             results.push(queryResults(plugin, args));
           }
           break;
+        default:
+          // do nothing
+          break;
       }
     });
   } else {
@@ -336,7 +340,7 @@ const createWindow = (theme) => {
 const contextMenu = Menu.buildFromTemplate([
   { label: 'Toggle Dext', type: 'normal', click: () => { toggleMainWindow(); } },
   { type: 'separator' },
-  { label: 'Quit', type: 'normal', click: () => { app.quit(); } }
+  { label: 'Quit', type: 'normal', click: () => { app.quit(); } },
 ]);
 
 /**
@@ -346,10 +350,10 @@ const contextMenu = Menu.buildFromTemplate([
 const onAppReady = () => {
   // loads the tray
   tray = new Tray(nativeImage.createFromPath(
-    path.resolve(__dirname, '..', '..', 'resources', 'icon.png')
+    path.resolve(__dirname, '..', '..', 'resources', 'icon.png'),
   ));
 
-  tray.setContextMenu(contextMenu)
+  tray.setContextMenu(contextMenu);
 
   // loads the theme
   const t = config.get('theme') || '';
@@ -388,7 +392,7 @@ const onAppReady = () => {
       // for results and sends it to the renderer
       ipcMain.on(
         IPC_QUERY_COMMAND,
-        (evt, message) => debounceHandleQueryCommand(evt, message, plugins)
+        (evt, message) => debounceHandleQueryCommand(evt, message, plugins),
       );
 
       // listen for execution commands
@@ -396,19 +400,19 @@ const onAppReady = () => {
         IPC_EXECUTE_ITEM,
         (evt, message) => {
           execute(message);
-        }
+        },
       );
 
       // listen for item details requests
       ipcMain.on(
         IPC_ITEM_DETAILS_REQUEST,
-        (evt, item) => debounceHandleItemDetailsRequest(evt, item)
+        (evt, item) => debounceHandleItemDetailsRequest(evt, item),
       );
 
       // copies to clipboard
       ipcMain.on(
         IPC_COPY_CURRENT_ITEM,
-        (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
+        (evt, item) => debounceHandleCopyItemToClipboard(evt, item),
       );
     };
 

@@ -1,5 +1,6 @@
 exports[`<Icon /> component should render a file icon component 1`] = `
 <img
+  alt=""
   data-css-1vehqxh=""
   role="presentation"
   src={undefined} />

@@ -48,6 +48,7 @@ const ResultDetails = ({ theme, content, expanded }) => {
 ResultDetails.defaultProps = {
   content: '',
   expanded: false,
+  theme: {},
 };
 
 ResultDetails.propTypes = {
