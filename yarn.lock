@@ -1722,9 +1722,9 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-dext-core-utils@v0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/dext-core-utils/-/dext-core-utils-0.4.1.tgz#b7b6e2d2c3b882eddd528fe27a682c6c19a8212f"
+dext-core-utils@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/dext-core-utils/-/dext-core-utils-0.5.1.tgz#99034c0b80e44813a8cc6ba8039775fdbabb4fa4"
   dependencies:
     conf "^0.11.2"
     cross-spawn "^4.0.2"
