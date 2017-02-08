@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import React, { Component, PropTypes } from 'react';
 import { compose, pseudo, style } from 'glamor';
 import ResultItemContainer from '../containers/ResultItemContainer';
@@ -42,7 +44,7 @@ const ResultList = class extends Component {
           item={item}
           selected={selectedIndex === key}
         />
-      )
+      ),
     );
     const currItem = this.props.results[this.props.selectedIndex];
 
@@ -55,6 +57,12 @@ const ResultList = class extends Component {
       </div>
     );
   }
+};
+
+ResultList.defaultProps = {
+  theme: {},
+  results: [],
+  selectedIndex: 0,
 };
 
 ResultList.propTypes = {

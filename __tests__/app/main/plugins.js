@@ -9,6 +9,7 @@ jest.mock('fs');
 
 describe('core plugins', () => {
   it('should retrieve a list of core plugin paths', async () => {
+    // eslint-disable-next-line global-require
     require('fs').__setFiles([
       path.join(CORE_PLUGIN_PATH, 'foo-plugin'),
       path.join(CORE_PLUGIN_PATH, 'bar-plugin'),
@@ -35,11 +36,13 @@ describe('core plugins', () => {
   });
 
   it('should load all core plugins', async () => {
+    // eslint-disable-next-line global-require
     require('conf').__setStoreData('plugins', [
       path.join(CORE_PLUGIN_PATH, 'foo-plugin'),
       path.join(CORE_PLUGIN_PATH, 'bar-plugin'),
       path.join(CORE_PLUGIN_PATH, 'baz-plugin'),
     ]);
+    // eslint-disable-next-line global-require
     require('plist').__setParseObject({
       objects: [],
     });

@@ -1,10 +1,11 @@
 exports[`<ResultItem /> component should render a result item component in a selected state 1`] = `
 <li
   data-css-fsydme=""
-  onDoubleClick={undefined}>
+  onDoubleClick={[Function]}>
   <div
     data-css-1ch5118="">
     <img
+      alt=""
       data-css-1vehqxh=""
       role="presentation"
       src="./icon.png" />
@@ -26,10 +27,11 @@ exports[`<ResultItem /> component should render a result item component in a sel
 exports[`<ResultItem /> component should render a result item component with a file icon 1`] = `
 <li
   data-css-1gdhlsu=""
-  onDoubleClick={undefined}>
+  onDoubleClick={[Function]}>
   <div
     data-css-1ch5118="">
     <img
+      alt=""
       data-css-1vehqxh=""
       role="presentation"
       src="./icon.png" />
@@ -51,7 +53,7 @@ exports[`<ResultItem /> component should render a result item component with a f
 exports[`<ResultItem /> component should render a result item component with a text icon 1`] = `
 <li
   data-css-1gdhlsu=""
-  onDoubleClick={undefined}>
+  onDoubleClick={[Function]}>
   <div
     data-css-1ch5118="">
     <span

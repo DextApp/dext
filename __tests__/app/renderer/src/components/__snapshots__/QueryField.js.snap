@@ -3,8 +3,8 @@ exports[`<QueryField /> component should render a query field component with no 
   data-css-1ykjhyy="">
   <input
     data-css-bj9j4d=""
-    onChange={undefined}
-    value={undefined} />
+    onChange={[Function]}
+    value="" />
 </div>
 `;
 
@@ -13,7 +13,7 @@ exports[`<QueryField /> component should render a query field component with som
   data-css-1ykjhyy="">
   <input
     data-css-bj9j4d=""
-    onChange={undefined}
+    onChange={[Function]}
     value="TEST" />
 </div>
 `;

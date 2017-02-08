@@ -51,6 +51,12 @@ const QueryField = class extends Component {
   }
 };
 
+QueryField.defaultProps = {
+  onChange: () => {},
+  theme: {},
+  value: '',
+};
+
 QueryField.propTypes = {
   onChange: PropTypes.func,
   theme: ThemeSchema,

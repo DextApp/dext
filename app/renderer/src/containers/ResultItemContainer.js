@@ -56,6 +56,10 @@ const ResultItemContainer = class extends Component {
 
 ResultItemContainer.defaultProps = {
   theme: {},
+  item: {},
+  selected: false,
+  keys: [],
+  copiedToClipboard: false,
 };
 
 ResultItemContainer.propTypes = {

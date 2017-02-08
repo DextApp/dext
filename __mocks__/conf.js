@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+
 /**
  * The mock store data object
  */

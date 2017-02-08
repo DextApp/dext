@@ -39,7 +39,7 @@ const Icon = (props) => {
     case 'file':
       // no break
     default: // eslint-disable-line no-fallthrough
-      return <img {...iconImg} src={props.icon.path} role="presentation" />;
+      return <img {...iconImg} src={props.icon.path} role="presentation" alt="" />;
   }
 };
 
