@@ -61,7 +61,7 @@
     "browser-bookmarks": "^0.3.0",
     "conf": "^0.11.2",
     "deep-assign": "^2.0.0",
-    "dext-core-utils": "v0.4.1",
+    "dext-core-utils": "^0.5.1",
     "glamor": "^2.17.14",
     "is_js": "^0.9.0",
     "markdown-it": "^8.0.1",
