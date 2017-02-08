@@ -69,9 +69,9 @@
     "plist": "^2.0.1",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-redux": "^4.4.5",
+    "react-redux": "^5.0.2",
     "redux": "^3.5.2",
-    "redux-saga": "^0.12.1",
+    "redux-saga": "^0.14.3",
     "screen-saver": "^0.2.1",
     "string_score": "^0.1.22"
   }
