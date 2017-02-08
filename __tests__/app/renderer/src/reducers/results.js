@@ -19,7 +19,7 @@ describe('theme reducer', () => {
       ],
     };
     expect(
-      results(state, action),
+      results(state, action)
     ).toEqual([
       { item: { title: 'Foo' } },
     ]);

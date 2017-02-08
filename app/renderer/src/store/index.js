@@ -22,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 const enhancer = compose(
   applyMiddleware(sagaMiddleware),
   DevTools.instrument(),
-  persistState(getDebugSessionKey()),
+  persistState(getDebugSessionKey())
 );
 
 export default function (initialState) {

@@ -20,7 +20,7 @@ const iconImgTextBase = compose(
     fontSize: 20,
     fontWeight: 'bold',
     borderRadius: 20,
-  }),
+  })
 );
 
 const Icon = (props) => {
@@ -29,7 +29,7 @@ const Icon = (props) => {
       iconImgTextBase,
       props.icon.bgColor && style({
         backgroundColor: props.icon.bgColor,
-      }),
+      })
     )
     : iconImgTextBase;
 

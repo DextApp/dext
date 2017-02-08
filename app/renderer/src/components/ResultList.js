@@ -26,7 +26,7 @@ const base = compose(
   }),
   pseudo('::-webkit-scrollbar-thumb', {
     backgroundColor: '#bbb',
-  }),
+  })
 );
 
 const shown = style({
@@ -44,7 +44,7 @@ const ResultList = class extends Component {
           item={item}
           selected={selectedIndex === key}
         />
-      ),
+      )
     );
     const currItem = this.props.results[this.props.selectedIndex];
 

@@ -23,7 +23,7 @@ describe('app/main/actions', () => {
       null,
       {
         cwd: '/foo/bar',
-      },
+      }
     );
   });
 
@@ -43,7 +43,7 @@ describe('app/main/actions', () => {
       null,
       {
         cwd: './foo/bar',
-      },
+      }
     );
   });
 });
