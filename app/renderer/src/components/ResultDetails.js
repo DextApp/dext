@@ -31,7 +31,7 @@ const ResultDetails = ({ theme, content, expanded }) => {
     // apply expanded style if necessary
     expanded ? style({
       right: '0%',
-    }) : {},
+    }) : {}
   );
 
   // apply theme styles

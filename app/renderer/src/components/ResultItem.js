@@ -21,7 +21,7 @@ const base = compose(
     width: '100%',
     position: 'relative',
   }),
-  baseHover,
+  baseHover
 );
 
 const icon = style({
@@ -99,7 +99,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
   const themeSelected = selected
     ? compose(
       style(activeStyle),
-      style(theme.resultActive || {}),
+      style(theme.resultActive || {})
     )
     : {};
 
