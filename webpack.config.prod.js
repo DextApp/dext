@@ -6,7 +6,6 @@ const prodConfig = deepAssign({}, baseConfig);
 
 // merge plugins
 prodConfig.plugins = baseConfig.plugins || [];
-prodConfig.plugins.push(new webpack.optimize.DedupePlugin());
 prodConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
   minimize: true,
   compress: {
