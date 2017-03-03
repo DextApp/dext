@@ -1858,9 +1858,9 @@ electron-packager@^8.2.0:
     sanitize-filename "^1.6.0"
     semver "^5.3.0"
 
-electron@^1.4.3:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.6.0.tgz#d1d12024fe4e8d14128eb9c73b8a5253324ced06"
+electron@^1.6.1:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.6.2.tgz#b0ccd7703f86d09c4d2a7273455c3f993f158994"
   dependencies:
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
