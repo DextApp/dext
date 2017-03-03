@@ -7,6 +7,7 @@ const {
   queryResults,
   queryHelper,
   retrieveItemDetails,
+  getFileIcon,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
 const actions = require('./actions');
@@ -26,6 +27,8 @@ const {
   IPC_ITEM_DETAILS_REQUEST,
   IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
+  IPC_FETCH_ICON,
+  IPC_RETRIEVE_ICON,
 } = require('../ipc');
 const { MAX_RESULTS, CORE_PLUGIN_PATH, DEBOUNCE_TIME } = require('../constants');
 const Config = require('../../utils/conf');
@@ -299,6 +302,18 @@ const handleCopyItemToClipboard = (evt, item) => {
 };
 
 /**
+ * Fetches the file icon for the given item
+ *
+ * @param {Event} evt
+ * @param {Object} item
+ */
+const fetchFileIcon = (evt, item) => {
+  getFileIcon(item).then((path) => {
+    evt.sender.send(IPC_RETRIEVE_ICON, path);
+  });
+};
+
+/**
  * Create a debounced function for handling the query command
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
@@ -413,6 +428,12 @@ const onAppReady = () => {
       ipcMain.on(
         IPC_COPY_CURRENT_ITEM,
         (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
+      );
+
+      // fetches the file icon
+      ipcMain.on(
+        IPC_FETCH_ICON,
+        (evt, item) => fetchFileIcon(evt, item)
       );
     };
 

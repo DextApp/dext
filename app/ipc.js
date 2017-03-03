@@ -14,6 +14,8 @@ const IPC_EXECUTE_ITEM = 'execute-item';
 const IPC_ITEM_DETAILS_REQUEST = 'item-details-request';
 const IPC_ITEM_DETAILS_RESPONSE = 'item-details-response';
 const IPC_LOAD_THEME = 'load-theme';
+const IPC_FETCH_ICON = 'fetch-icon';
+const IPC_RETRIEVE_ICON = 'retrieve-icon';
 
 module.exports = {
   IPC_WINDOW_SHOW,
@@ -32,4 +34,6 @@ module.exports = {
   IPC_ITEM_DETAILS_REQUEST,
   IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
+  IPC_FETCH_ICON,
+  IPC_RETRIEVE_ICON,
 };
