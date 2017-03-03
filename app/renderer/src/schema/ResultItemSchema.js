@@ -14,7 +14,7 @@ export default PropTypes.shape({
 
   icon: PropTypes.shape({
     // The icon type
-    type: PropTypes.oneOf(['file', 'text', '']),
+    type: PropTypes.oneOf(['file', 'text', 'fileicon', '']),
     // The URL path to the icon.
     path: PropTypes.string,
     // If the type is "text", it will display this letter
