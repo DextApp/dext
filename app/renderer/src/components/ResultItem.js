@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { style, compose, hover } from 'glamor';
-import Icon from './Icon';
+import IconContainer from '../containers/IconContainer';
 import { ResultItemSchema, ThemeSchema } from '../schema';
 
 const activeStyle = {
@@ -111,7 +111,7 @@ const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick
   return (
     <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
       <div {...icon}>
-        <Icon icon={item.icon} />
+        <IconContainer icon={item.icon} />
       </div>
       <div {...details}>
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>

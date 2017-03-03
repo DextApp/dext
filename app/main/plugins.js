@@ -1,3 +1,4 @@
+const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { fork } = require('child_process');
@@ -8,6 +9,7 @@ const is = require('is_js');
 const MarkdownIt = require('markdown-it');
 const { MAX_RESULTS, IS_DEV } = require('../constants');
 
+const { app } = electron;
 const { PLUGIN_PATH } = utils.paths;
 
 /**
@@ -165,6 +167,26 @@ exports.loadPlugins = directories => new Promise((resolve, reject) => {
 });
 
 /**
+ * Retrieve the native file icon as a base64 encoded string
+ *
+ * @param {String} path - The file path
+ * @return {Promise<String>} - A base64 string representation of the file icon image
+ */
+exports.getFileIcon = (path) => new Promise((resolve, reject) => {
+  app.getFileIcon(path, (err, icon) => {
+    if (err) {
+      reject(err);
+      return;
+    }
+    if (!icon) {
+      reject('');
+      return;
+    }
+    resolve(icon.toDataURL());
+  });
+});
+
+/**
  * Connects the item sets with the given plugin
  *
  * plugin { path, name, isCore, schema, keyword, action, helper }
@@ -175,6 +197,7 @@ exports.loadPlugins = directories => new Promise((resolve, reject) => {
  */
 exports.connectItems = (items, plugin) => items.map((i) => {
   const icon = {
+    type: i.icon.type,
     path: '',
   };
   if (i.icon && i.icon.path) {
