@@ -3,6 +3,7 @@ import { utils } from 'dext-core-utils';
 import { CORE_PLUGIN_PATH } from '../../../app/constants';
 import plugins from '../../../app/main/plugins';
 
+jest.dontMock('electron');
 jest.mock('plist');
 jest.mock('conf');
 jest.mock('fs');

@@ -197,7 +197,7 @@ exports.getFileIcon = (path) => new Promise((resolve, reject) => {
  */
 exports.connectItems = (items, plugin) => items.map((i) => {
   const icon = {
-    type: i.icon.type,
+    type: i && i.icon && i.icon.type,
     path: '',
   };
   if (i.icon && i.icon.path) {
