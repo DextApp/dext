@@ -12,6 +12,7 @@ module.exports = class extends Conf {
         // @link http://electron.atom.io/docs/api/accelerator/
         hotKey: 'alt+space',
         plugins: [],
+        enabledPlugins: [],
       },
     };
     const o = Object.assign({}, opts, defaultOpts);

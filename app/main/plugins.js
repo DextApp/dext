@@ -34,7 +34,7 @@ exports.loadPluginsInPath = directory => new Promise((resolve) => {
       resolve(loaded);
     });
   } else {
-    const enabledPlugins = api.plugins.getAll();
+    const enabledPlugins = api.plugins.getAllEnabled();
     if (enabledPlugins.length) {
       enabledPlugins.forEach((plugin) => {
         if (plugin) {
@@ -146,6 +146,7 @@ exports.applyModuleProperties = plugin => new Promise((resolve) => {
  */
 exports.loadPlugins = directories => new Promise((resolve, reject) => {
   const prom = directories.map(exports.loadPluginsInPath);
+
   Promise.all(prom)
     .then((pluginSets) => {
       const allPlugins = pluginSets
