@@ -7,6 +7,13 @@ module.exports = {
       path.resolve(__dirname, 'app', 'renderer', 'src', 'index'),
     ],
   },
+  resolve: {
+    alias: {
+      app: path.resolve(__dirname, 'app'),
+      'dext-main': path.resolve(__dirname, 'app', 'main'),
+      'dext-renderer': path.resolve(__dirname, 'app', 'renderer', 'src'),
+    },
+  },
   output: {
     path: path.resolve(__dirname, 'app', 'renderer', 'lib'),
     filename: 'bundle.js',
