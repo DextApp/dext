@@ -16,6 +16,9 @@ module.exports = {
           path: './icon.png',
         },
       });
+      if(typeof ans === 'function') {
+          throw 'function returned';
+      }
       return { items };
     } catch (err) {
       return { items: [] };
