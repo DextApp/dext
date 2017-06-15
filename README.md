@@ -84,6 +84,7 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-omdb-plugin](https://github.com/adnasa/dext-omdb-plugin) - Search for imdb movies through the omdb-api.
 - [dext-base64-encode-plugin](https://github.com/brpaz/dext-base64-encode-plugin) - Dext plugin that allows to encode and decode any text into base64.
 - [dext-rubygems-plugin](https://github.com/akz92/dext-rubygems-plugin) - Search for ruby gems on rubygems.org.
+- [dext-search-plugin](https://github.com/justinpchang/dext-search-plugin) - Search Google and open results in web browser.
 
 ### Community Themes
 - [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
