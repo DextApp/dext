@@ -7,6 +7,9 @@ module.exports = {
   query: (query) => {
     try {
       const ans = math.eval(query);
+      if(typeof ans === 'function') {
+          throw 'function returned';
+      }
       const items = [];
       items.push({
         title: ans.toString(),
@@ -16,9 +19,6 @@ module.exports = {
           path: './icon.png',
         },
       });
-      if(typeof ans === 'function') {
-          throw 'function returned';
-      }
       return { items };
     } catch (err) {
       return { items: [] };
