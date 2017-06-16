@@ -85,6 +85,8 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 - [dext-base64-encode-plugin](https://github.com/brpaz/dext-base64-encode-plugin) - Dext plugin that allows to encode and decode any text into base64.
 - [dext-rubygems-plugin](https://github.com/akz92/dext-rubygems-plugin) - Search for ruby gems on rubygems.org.
 - [dext-search-plugin](https://github.com/justinpchang/dext-search-plugin) - Search Google and open results in web browser.
+- [dext-plugin-list-plugin](https://github.com/justinpchang/dext-plugin-list-plugin) - Display list of all active plugins.
+- [dext-system-plugin](https://github.com/justinpchang/dext-system-plugin) - Display system and battery information.
 
 ### Community Themes
 - [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
