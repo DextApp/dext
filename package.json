@@ -62,7 +62,7 @@
     "conf": "^0.12.0",
     "deep-assign": "^2.0.0",
     "dext-core-utils": "^0.5.1",
-    "electron": "^1.6.1",
+    "electron": "^1.6.11",
     "glamor": "^2.17.14",
     "is_js": "^0.9.0",
     "markdown-it": "^8.0.1",
