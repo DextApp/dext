@@ -61,6 +61,8 @@ const repositionWindow = () => {
   const currScreen = screen.getDisplayNearestPoint(cursorPoint);
   const resultsHeight = WINDOW_MAX_HEIGHT;
   const size = win.getSize();
+
+  // @TODO: Move this into a testable utility.
   const winPosition = [
     (Math.floor((currScreen.size.width / 2) - (size[0] / 2)) + currScreen.bounds.x),
     (Math.floor((currScreen.size.height / 2) - ((size[1] + resultsHeight) / 2)) + currScreen.bounds.y),
@@ -150,10 +152,10 @@ const handleWindowBlur = hideWindow;
 
 const handleWindowResize = (evt, { width, height }) => {
   // re-size
-  const size = win.getContentSize();
-  const newWidth = width || size[0];
-  const newHeight = (WINDOW_MIN_HEIGHT + height) || size[1];
-  win.setContentSize(newWidth, newHeight);
+  const [windowWidth, windowHeight] = win.getContentSize()
+  const nextWidth = width || windowWidth;
+  const nextHeight = (WINDOW_MIN_HEIGHT + height) || windowHeight;
+  win.setContentSize(nextWidth, nextHeight);
 };
 
 const handleWindowCollapse = () => {
@@ -186,6 +188,8 @@ const handleDidFinishLoad = (theme) => {
 const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   const results = []; // the end result of promises
   const fractions = queryPhrase.split(' ');
+
+  // @TODO: read a matcher API from plugins
   const [keyword, ...args] = fractions;
   const queryString = args.join(' ').trim();
 
