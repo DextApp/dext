@@ -8,22 +8,14 @@ import configureStore from './store';
 import { IS_DEV } from '../../constants';
 
 const store = configureStore();
-
-// load the dev tools if necessary
-let devTools = '';
-if (IS_DEV) {
-  devTools = <DevTools />;
-}
-
 const DextApp = () => (
   <Provider store={store}>
     <div>
       <AppContainer />
-      {devTools}
+      {IS_DEV && <DevTools />}
     </div>
   </Provider>
 );
 
 const rootNode = document.getElementById('app');
-
 ReactDOM.render(<DextApp />, rootNode);
