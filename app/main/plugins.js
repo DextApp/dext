@@ -169,11 +169,11 @@ exports.loadPlugins = directories => new Promise((resolve, reject) => {
 /**
  * Retrieve the native file icon as a base64 encoded string
  *
- * @param {String} path - The file path
+ * @param {String} iconPath - The file path
  * @return {Promise<String>} - A base64 string representation of the file icon image
  */
-exports.getFileIcon = (path) => new Promise((resolve, reject) => {
-  app.getFileIcon(path, (err, icon) => {
+exports.getFileIcon = iconPath => new Promise((resolve, reject) => {
+  app.getFileIcon(iconPath, (err, icon) => {
     if (err) {
       reject(err);
       return;

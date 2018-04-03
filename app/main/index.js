@@ -152,7 +152,7 @@ const handleWindowBlur = hideWindow;
 
 const handleWindowResize = (evt, { width, height }) => {
   // re-size
-  const [windowWidth, windowHeight] = win.getContentSize()
+  const [windowWidth, windowHeight] = win.getContentSize();
   const nextWidth = width || windowWidth;
   const nextHeight = (WINDOW_MIN_HEIGHT + height) || windowHeight;
   win.setContentSize(nextWidth, nextHeight);
@@ -312,8 +312,8 @@ const handleCopyItemToClipboard = (evt, item) => {
  * @param {Object} item
  */
 const fetchFileIcon = (evt, item) => {
-  getFileIcon(item).then((path) => {
-    evt.sender.send(IPC_RETRIEVE_ICON, path);
+  getFileIcon(item).then((iconPath) => {
+    evt.sender.send(IPC_RETRIEVE_ICON, iconPath);
   });
 };
 

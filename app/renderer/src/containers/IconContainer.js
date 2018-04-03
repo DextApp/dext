@@ -15,26 +15,27 @@ export default class IconContainer extends Component {
     },
   };
 
-  fetchIcon = (evt, icon) => {
-    this.setState({
-      icon: {
-        type: 'file',
-        path: icon,
-      },
-    });
-  }
-
   componentDidMount() {
     if (this.props.icon.type === 'fileicon') {
       ipcRenderer.send(IPC_FETCH_ICON, this.props.icon.path);
       ipcRenderer.on(IPC_RETRIEVE_ICON, this.fetchIcon);
     } else {
+      // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ icon: this.props.icon });
     }
   }
 
   componentWillUnmount() {
     ipcRenderer.removeListener(IPC_RETRIEVE_ICON, this.fetchIcon);
+  }
+
+  fetchIcon = (evt, iconPath) => {
+    this.setState({
+      icon: {
+        type: 'file',
+        path: iconPath,
+      },
+    });
   }
 
   render() {
