@@ -91,12 +91,8 @@ fs.readFile = (file, options, callback) => {
 
 /**
  * Checks for a file existance
- *
- * @param {String} file
  * @return {Boolean}
  */
-fs.existsSync = (file) => {
-  return false;
-};
+fs.existsSync = () => false;
 
 module.exports = fs;
