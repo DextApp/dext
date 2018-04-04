@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { compose, style } from 'glamor';
 import { ThemeSchema } from '../schema';
 
@@ -30,18 +31,18 @@ const QueryField = class extends Component {
   render() {
     const { theme, onChange, value } = this.props;
 
-    const baseStyle = theme && theme.searchBase
-      ? compose(base, theme.searchBase)
-      : base;
+    const baseStyle =
+      theme && theme.searchBase ? compose(base, theme.searchBase) : base;
 
-    const styles = theme && theme.search
-      ? compose(search, theme.search)
-      : search;
+    const styles =
+      theme && theme.search ? compose(search, theme.search) : search;
 
     return (
       <div {...baseStyle}>
         <input
-          ref={(c) => { this.input = c && c; }}
+          ref={c => {
+            this.input = c && c;
+          }}
           onChange={onChange}
           value={value}
           {...styles}

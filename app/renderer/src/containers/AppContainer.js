@@ -1,16 +1,15 @@
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import App from '../components/App';
 import * as actionCreators from '../actions/creators';
 import { ThemeSchema } from '../schema';
-import {
-  IPC_WINDOW_RESIZE,
-  IPC_LOAD_THEME,
-} from '../../../ipc';
+import { IPC_WINDOW_RESIZE, IPC_LOAD_THEME } from '../../../ipc';
 
 const AppContainer = class extends Component {
+  static displayName = 'AppContainer';
   componentDidMount() {
     const { setTheme } = this.props;
     // focus the query input field when the window is shown
@@ -32,15 +31,13 @@ const AppContainer = class extends Component {
 
   render() {
     const { theme } = this.props;
-    return (
-      <App theme={theme} />
-    );
+    return <App theme={theme} />;
   }
 };
 
 AppContainer.defaultProps = {
   theme: {},
-  setTheme: () => { },
+  setTheme: () => {},
 };
 
 AppContainer.propTypes = {
@@ -52,6 +49,7 @@ const mapStateToProps = state => ({
   theme: state.theme,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

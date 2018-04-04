@@ -11,7 +11,7 @@ fs.constants = require.requireActual('fs').constants;
  *
  * @param {String} error
  */
-fs.__setError = (error) => {
+fs.__setError = error => {
   mockError = error;
 };
 
@@ -20,7 +20,7 @@ fs.__setError = (error) => {
  *
  * @param {String[]} files - An array of files
  */
-fs.__setFiles = (files) => {
+fs.__setFiles = files => {
   mockFiles = files;
 };
 
@@ -29,7 +29,7 @@ fs.__setFiles = (files) => {
  *
  * @param {String} data
  */
-fs.__setFileData = (data) => {
+fs.__setFileData = data => {
   mockFileData = data;
 };
 

@@ -18,9 +18,7 @@ describe('<ResultItem /> component', () => {
         letter: 'T',
       },
     };
-    const component = renderer.create(
-      <ResultItem theme={theme} item={item} />
-    );
+    const component = renderer.create(<ResultItem theme={theme} item={item} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -34,9 +32,7 @@ describe('<ResultItem /> component', () => {
         path: './icon.png',
       },
     };
-    const component = renderer.create(
-      <ResultItem theme={theme} item={item} />
-    );
+    const component = renderer.create(<ResultItem theme={theme} item={item} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

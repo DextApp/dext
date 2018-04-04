@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
@@ -8,6 +9,7 @@ import { IPC_ITEM_DETAILS_RESPONSE } from '../../../ipc';
 import { ThemeSchema } from '../schema';
 
 const ResultDetailsContainer = class extends Component {
+  static displayName = 'ResultDetailsContainer';
   componentDidMount() {
     const { setDetails } = this.props;
     ipcRenderer.on(IPC_ITEM_DETAILS_RESPONSE, (evt, html) => {
@@ -19,13 +21,15 @@ const ResultDetailsContainer = class extends Component {
 
   render() {
     const { theme, detailsPane, detailsPaneExpanded } = this.props;
-    return detailsPane
-      ? <ResultDetails
+    return detailsPane ? (
+      <ResultDetails
         theme={theme}
         content={detailsPane}
         expanded={detailsPaneExpanded}
       />
-      : <span />;
+    ) : (
+      <span />
+    );
   }
 };
 
@@ -49,6 +53,9 @@ const mapStateToProps = state => ({
   detailsPaneExpanded: state.detailsPaneExpanded,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResultDetailsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ResultDetailsContainer
+);

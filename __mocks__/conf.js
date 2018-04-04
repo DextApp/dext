@@ -24,7 +24,7 @@ const Conf = class {
  *
  * @param {Object} data
  */
-Conf.__setStoreData = (data) => {
+Conf.__setStoreData = data => {
   _store = data;
 };
 

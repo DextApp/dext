@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 // This should follow the Alfred workflow script filter JSON format
 // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/

@@ -8,7 +8,4 @@ export default {
 };
 
 // named export
-export {
-  ResultItemSchema,
-  ThemeSchema,
-};
+export { ResultItemSchema, ThemeSchema };

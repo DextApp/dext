@@ -1,16 +1,15 @@
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import QueryField from '../components/QueryField';
 import * as actionCreators from '../actions/creators';
 import { ThemeSchema } from '../schema';
-import {
-  IPC_WINDOW_SHOW,
-  IPC_WINDOW_HIDE,
-} from '../../../ipc';
+import { IPC_WINDOW_SHOW, IPC_WINDOW_HIDE } from '../../../ipc';
 
 const QueryFieldContainer = class extends Component {
+  static displayName = 'QueryFieldContainer';
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
@@ -51,7 +50,9 @@ const QueryFieldContainer = class extends Component {
     const { theme, q } = this.props;
     return (
       <QueryField
-        ref={(c) => { this.queryField = c; }}
+        ref={c => {
+          this.queryField = c;
+        }}
         value={q}
         onChange={this.handleChange}
         theme={theme}
@@ -63,8 +64,8 @@ const QueryFieldContainer = class extends Component {
 QueryFieldContainer.defaultProps = {
   theme: {},
   q: '',
-  updateQuery: () => { },
-  resetQuery: () => { },
+  updateQuery: () => {},
+  resetQuery: () => {},
 };
 
 QueryFieldContainer.propTypes = {
@@ -78,6 +79,9 @@ const mapStateToProps = state => ({
   q: state.q,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(QueryFieldContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  QueryFieldContainer
+);

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { compose, pseudo, style } from 'glamor';
 import { ThemeSchema } from '../schema';
 
@@ -29,15 +30,16 @@ const ResultDetails = ({ theme, content, expanded }) => {
       backgroundColor: '#bbb',
     }),
     // apply expanded style if necessary
-    expanded ? style({
-      right: '0%',
-    }) : {}
+    expanded
+      ? style({
+          right: '0%',
+        })
+      : {}
   );
 
   // apply theme styles
-  const styles = theme && theme.resultDetails
-    ? compose(base, theme.resultDetails)
-    : base;
+  const styles =
+    theme && theme.resultDetails ? compose(base, theme.resultDetails) : base;
 
   return (
     // eslint-disable-next-line react/no-danger

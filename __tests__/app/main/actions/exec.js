@@ -8,16 +8,19 @@ describe('app/main/actions', () => {
   const cp = require('child_process');
 
   it('should fork an absolute script', () => {
-    exec({
-      item: {
-        plugin: {
-          path: '/foo/bar',
+    exec(
+      {
+        item: {
+          plugin: {
+            path: '/foo/bar',
+          },
         },
       },
-    }, {
-      script: '/some/absolute/path/to/start.js',
-      arg: null,
-    });
+      {
+        script: '/some/absolute/path/to/start.js',
+        arg: null,
+      }
+    );
     expect(cp.fork).toHaveBeenCalledWith(
       path.resolve('/some/absolute/path/to/start.js'),
       null,
@@ -28,16 +31,19 @@ describe('app/main/actions', () => {
   });
 
   it('should fork a relative URL', () => {
-    exec({
-      item: {
-        plugin: {
-          path: './foo/bar',
+    exec(
+      {
+        item: {
+          plugin: {
+            path: './foo/bar',
+          },
         },
       },
-    }, {
-      script: './start.js',
-      arg: null,
-    });
+      {
+        script: './start.js',
+        arg: null,
+      }
+    );
     expect(cp.fork).toHaveBeenCalledWith(
       path.resolve('./foo/bar/start.js'),
       null,

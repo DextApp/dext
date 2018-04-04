@@ -7,7 +7,7 @@ let mockParsedObject = null;
  *
  * @param {Object} data
  */
-plist.__setParseObject = (data) => {
+plist.__setParseObject = data => {
   mockParsedObject = data;
 };
 
