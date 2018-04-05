@@ -1,6 +1,6 @@
 ![](./resources/banner.png?raw=true)
 
-[![Travis](https://img.shields.io/travis/vutran/dext/develop.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/vutran/dext) [![Coveralls branch](https://img.shields.io/coveralls/vutran/dext/develop.svg?maxAge=2592000&style=flat-square)](https://coveralls.io/github/vutran/dext) [![license](https://img.shields.io/github/license/vutran/dext.svg?maxAge=2592000&style=flat-square)](LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/dext-app/Lobby)
+[![Travis](https://img.shields.io/travis/DextApp/dext/develop.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/DextApp/dext) [![Coveralls branch](https://img.shields.io/coveralls/DextApp/dext/develop.svg?maxAge=2592000&style=flat-square)](https://coveralls.io/github/DextApp/dext) [![license](https://img.shields.io/github/license/DextApp/dext.svg?maxAge=2592000&style=flat-square)](LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/dext-app/Lobby)
 
 ## Overview
 
@@ -14,7 +14,7 @@ Made compatible with _Alfred_ workflows that is powered by node (see: [alfy](htt
 
 ## Install
 
-Download the latest zip file [here](https://github.com/vutran/dext/releases/) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
+Download the latest zip file [here](https://github.com/DextApp/dext/releases/) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
 
 You can also use Homebrew Cask to download the app by running these commands:
 
@@ -45,7 +45,7 @@ Type `?`
 
 ## Dext Package Manager
 
-[Dext Package Manager (`dpm`)](https://github.com/vutran/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your **_Dext_** instance. Please refer to the docs over at the [`dpm`](https://github.com/vutran/dext-cli) repository for more information.
+[Dext Package Manager (`dpm`)](https://github.com/DextApp/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your ***Dext*** instance. Please refer to the docs over at the [`dpm`](https://github.com/DextApp/dext-cli) repository for more information.
 
 ```bash
 $ npm install -g dext-cli
@@ -55,7 +55,7 @@ $ npm install -g dext-cli
 
 The **_Dext_** configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
 
-_Hint: Use [`dpm`](https://github.com/vutran/dext-cli) to easily manage plugins._
+_Hint: Use [`dpm`](https://github.com/DextApp/dext-cli) to easily manage plugins._
 
 ```
 .dext/

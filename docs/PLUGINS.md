@@ -4,7 +4,7 @@ Plugin follows a simple API for producing results.
 
 Tag your theme modules with the keywords: `dext`, and `dext-plugin`.
 
-For an example, please refer to the [dext-demo-plugin](https://github.com/vutran/dext-demo-plugin).
+For an example, please refer to the [dext-demo-plugin](https://github.com/DextApp/dext-demo-plugin).
 
 ## Creating Your Plugin
 

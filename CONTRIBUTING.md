@@ -13,7 +13,7 @@
 1.  [Fork](https://help.github.com/articles/fork-a-repo/) and [clone](https://help.github.com/articles/cloning-a-repository/) this repository.
 
 ```bash
-$ git clone git@github.com:vutran/dext.git
+$ git clone git@github.com:DextApp/dext.git
 ```
 
 2.  Switch to the new `dext` directory that was created in step 1.
@@ -34,15 +34,15 @@ $ npm install
 $ npm start
 ```
 
-5.  Submit a [Pull Request](https://github.com/vutran/dext/pulls) to the `develop` branch if you have something great to contribute and a review will proceed.
+5.  Submit a [Pull Request](https://github.com/DextApp/dext/pulls) to the `develop` branch if you have something great to contribute and a review will proceed.
 
 ## Bug Reports
 
-Found a bug? Submit it to the [issue tracker](https://github.com/vutran/dext/issues) and/or send a [Pull Request](#pull-requests) so we can get it squashed.
+Found a bug? Submit it to the [issue tracker](https://github.com/DextApp/dext/issues) and/or send a [Pull Request](#pull-requests) so we can get it squashed.
 
 ## Feature Requests
 
-If you have an idea for a feature, please post them to the [issues tracker](https://github.com/vutran/dext/issues) and we can discuss. Not all features will be implemented.
+If you have an idea for a feature, please post them to the [issues tracker](https://github.com/DextApp/dext/issues) and we can discuss. Not all features will be implemented.
 
 ## Pull Requests
 

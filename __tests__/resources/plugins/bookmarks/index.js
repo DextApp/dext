@@ -13,13 +13,13 @@ describe('bookmarks', () => {
     },
     {
       title: 'GitHub - Foo',
-      url: 'https://github.com/vutran/foo',
+      url: 'https://github.com/DextApp/foo',
       favicon: '',
       folder: '',
     },
     {
       title: 'GitHub - Bar',
-      url: 'https://github.com/vutran/bar',
+      url: 'https://github.com/DextApp/bar',
       favicon: '',
       folder: '',
     },
