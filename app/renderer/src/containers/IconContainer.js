@@ -1,10 +1,8 @@
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Icon from '../components/Icon';
-import {
-  IPC_FETCH_ICON,
-  IPC_RETRIEVE_ICON,
-} from '../../../ipc';
+import { IPC_FETCH_ICON, IPC_RETRIEVE_ICON } from '../../../ipc';
 
 export default class IconContainer extends Component {
   state = {
@@ -36,7 +34,7 @@ export default class IconContainer extends Component {
         path: iconPath,
       },
     });
-  }
+  };
 
   render() {
     return <Icon icon={this.state.icon} />;

@@ -9,22 +9,19 @@ const buildDeb = () => {
     arch: 'amd64',
     productName: 'Dext',
     icon: path.resolve(__dirname, '..', 'resources', 'icon.png'),
-    categories: [
-      'Utility',
-    ],
+    categories: ['Utility'],
     bin: 'Dext',
   };
 
-  installer(opts, (err) => {
+  installer(opts, err => {
     if (err) {
       // eslint-disable-next-line no-console
       console.log(chalk.red(err));
     } else {
-       // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.log(chalk.green('Debian Package creation complete!'));
     }
   });
 };
-
 
 buildDeb();

@@ -88,7 +88,9 @@ describe('plugin metadata', () => {
       action: 'openurl',
     };
     const connectedItems = plugins.connectItems(items, plugin);
-    expect(connectedItems[0].icon.path).toEqual(path.resolve('/', 'path', 'to', 'plugin', 'icon.png'));
+    expect(connectedItems[0].icon.path).toEqual(
+      path.resolve('/', 'path', 'to', 'plugin', 'icon.png')
+    );
     expect(connectedItems[0].plugin.path).toEqual('/path/to/plugin/');
     expect(connectedItems[0].plugin.name).toEqual('foobar');
     expect(connectedItems[0].keyword).toEqual('foo');
@@ -101,7 +103,8 @@ describe('plugin metadata', () => {
         title: 'Foo',
         subtitle: 'Bar',
         icon: {
-          path: 'data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890==',
+          path:
+            'data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890==',
         },
       },
     ];
@@ -112,7 +115,9 @@ describe('plugin metadata', () => {
       action: 'openurl',
     };
     const connectedItems = plugins.connectItems(items, plugin);
-    expect(connectedItems[0].icon.path).toEqual('data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890==');
+    expect(connectedItems[0].icon.path).toEqual(
+      'data:image/jpeg;base64,ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890=='
+    );
   });
 });
 
@@ -124,7 +129,15 @@ describe('plugin results', () => {
     mathjs.__setReturnValue(2);
 
     const plugin = {
-      path: path.resolve(__dirname, '..', '..', '..', 'resources', 'plugins', 'calculator'),
+      path: path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'resources',
+        'plugins',
+        'calculator'
+      ),
       name: 'calculator',
       isCore: true,
       schema: 'dext',
@@ -156,7 +169,7 @@ describe('plugin helper', () => {
       keyword: 'foo',
     };
     const helperItems = await plugins.queryHelper(plugin, 'foo');
-    expect(helperItems.length).toBe(0);
+    expect(helperItems).toHaveLength(0);
   });
 
   it('should query for helpers for the given plugin (Object)', async () => {
@@ -194,10 +207,13 @@ describe('plugin helper', () => {
       path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
-      helper: () => new Promise(resolve => resolve({
-        title: 'Foo',
-        subtitle: 'Bar',
-      })),
+      helper: () =>
+        new Promise(resolve =>
+          resolve({
+            title: 'Foo',
+            subtitle: 'Bar',
+          })
+        ),
     };
     const helperItems = await plugins.queryHelper(plugin, 'foo');
     expect(helperItems[0].title).toEqual('Foo');
@@ -209,16 +225,19 @@ describe('plugin helper', () => {
       path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
-      helper: [{
-        title: 'Foo',
-        subtitle: 'Bar',
-      }, {
-        title: 'Foo 2',
-        subtitle: 'Bar 2',
-      }],
+      helper: [
+        {
+          title: 'Foo',
+          subtitle: 'Bar',
+        },
+        {
+          title: 'Foo 2',
+          subtitle: 'Bar 2',
+        },
+      ],
     };
     const helperItems = await plugins.queryHelper(plugin, 'foo');
-    expect(helperItems.length).toBe(2);
+    expect(helperItems).toHaveLength(2);
     expect(helperItems[0].title).toEqual('Foo');
     expect(helperItems[1].title).toEqual('Foo 2');
   });
@@ -228,16 +247,19 @@ describe('plugin helper', () => {
       path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
-      helper: () => ([{
-        title: 'Foo',
-        subtitle: 'Bar',
-      }, {
-        title: 'Foo 2',
-        subtitle: 'Bar 2',
-      }]),
+      helper: () => [
+        {
+          title: 'Foo',
+          subtitle: 'Bar',
+        },
+        {
+          title: 'Foo 2',
+          subtitle: 'Bar 2',
+        },
+      ],
     };
     const helperItems = await plugins.queryHelper(plugin, 'foo');
-    expect(helperItems.length).toBe(2);
+    expect(helperItems).toHaveLength(2);
     expect(helperItems[0].title).toEqual('Foo');
     expect(helperItems[1].title).toEqual('Foo 2');
   });
@@ -247,23 +269,29 @@ describe('plugin helper', () => {
       path: '/dext/plugins/foobar-plugin',
       name: 'foobar',
       keyword: 'foo',
-      helper: () => new Promise(resolve => resolve([{
-        title: 'Foo',
-        subtitle: 'Bar',
-      }, {
-        title: 'Foo 2',
-        subtitle: 'Bar 2',
-      }])),
+      helper: () =>
+        new Promise(resolve =>
+          resolve([
+            {
+              title: 'Foo',
+              subtitle: 'Bar',
+            },
+            {
+              title: 'Foo 2',
+              subtitle: 'Bar 2',
+            },
+          ])
+        ),
     };
     const helperItems = await plugins.queryHelper(plugin, 'foo');
-    expect(helperItems.length).toBe(2);
+    expect(helperItems).toHaveLength(2);
     expect(helperItems[0].title).toEqual('Foo');
     expect(helperItems[1].title).toEqual('Foo 2');
   });
 });
 
 describe('plugin details pane', () => {
-  it('should retrieve the item\'s detail pane content (String)', async () => {
+  it("should retrieve the item's detail pane content (String)", async () => {
     const plugin = {
       details: {
         render: 'Hello, world.',
@@ -280,7 +308,7 @@ describe('plugin details pane', () => {
     expect(details).toEqual('Hello, world.');
   });
 
-  it('should retrieve the item\'s detail pane content (Function)', async () => {
+  it("should retrieve the item's detail pane content (Function)", async () => {
     const plugin = {
       details: {
         render: item => `Hello, ${item.title}.`,
@@ -297,10 +325,11 @@ describe('plugin details pane', () => {
     expect(details).toEqual('Hello, Foo.');
   });
 
-  it('should retrieve the item\'s detail pane content (Promise)', async () => {
+  it("should retrieve the item's detail pane content (Promise)", async () => {
     const plugin = {
       details: {
-        render: item => new Promise(resolve => resolve(`Hello, ${item.title}.`)),
+        render: item =>
+          new Promise(resolve => resolve(`Hello, ${item.title}.`)),
       },
     };
     const item = {
@@ -314,7 +343,7 @@ describe('plugin details pane', () => {
     expect(details).toEqual('Hello, Foo.');
   });
 
-  it('should retrieve the item\'s details pane content as markdown', async () => {
+  it("should retrieve the item's details pane content as markdown", async () => {
     const plugin = {
       details: {
         type: 'md',

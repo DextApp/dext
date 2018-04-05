@@ -1,7 +1,7 @@
 /* global window */
-
+import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
@@ -21,6 +21,7 @@ import {
 } from '../../../ipc';
 
 const ResultListContainer = class extends Component {
+  static displayName = 'ResultListContainer';
   constructor() {
     super();
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -29,7 +30,12 @@ const ResultListContainer = class extends Component {
 
   componentDidMount() {
     const self = this;
-    const { updateResults, resetResults, selectNextItem, selectPreviousItem } = this.props;
+    const {
+      updateResults,
+      resetResults,
+      selectNextItem,
+      selectPreviousItem,
+    } = this.props;
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
@@ -39,7 +45,7 @@ const ResultListContainer = class extends Component {
       // update the height
       if (newResults.length) {
         // TODO: compute the height + added padding
-        const height = (newResults.length * 60) + 30;
+        const height = newResults.length * 60 + 30;
         ipcRenderer.send(IPC_WINDOW_RESIZE, { height });
       }
       if (newResults.length) {
@@ -133,9 +139,7 @@ const ResultListContainer = class extends Component {
    * @param {Number} index
    */
   scrollToItem(index) {
-    const scrollY = (index >= 10)
-      ? ((index - 10) * 60) + 60
-      : 0;
+    const scrollY = index >= 10 ? (index - 10) * 60 + 60 : 0;
 
     this.c.c.scrollTop = scrollY;
   }
@@ -145,7 +149,9 @@ const ResultListContainer = class extends Component {
     if (results.length) {
       return (
         <ResultList
-          ref={(c) => { this.c = c; }}
+          ref={c => {
+            this.c = c;
+          }}
           theme={theme}
           results={results}
           selectedIndex={selectedIndex}
@@ -161,11 +167,11 @@ ResultListContainer.defaultProps = {
   keys: [],
   results: [],
   selectedIndex: 0,
-  selectItem: () => { },
-  selectNextItem: () => { },
-  selectPreviousItem: () => { },
-  updateResults: () => { },
-  resetResults: () => { },
+  selectItem: () => {},
+  selectNextItem: () => {},
+  selectPreviousItem: () => {},
+  updateResults: () => {},
+  resetResults: () => {},
   setActiveKey: () => {},
   clearActiveKey: () => {},
   resetKeys: () => {},
@@ -193,6 +199,9 @@ const mapStateToProps = state => ({
   keys: state.keys,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResultListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ResultListContainer
+);

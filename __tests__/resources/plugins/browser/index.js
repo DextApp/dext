@@ -40,7 +40,7 @@ describe('browser', () => {
     });
   });
 
-  it('should support URL\'s with paths', () => {
+  it("should support URL's with paths", () => {
     const results = m.query('https://github.com/DextApp/dext/');
     expect(results.items).toContainEqual({
       title: 'Open https://github.com/DextApp/dext/ in the browser.',

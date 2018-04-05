@@ -29,9 +29,7 @@ const App = ({ theme }) => {
     ? compose(outerBase, { backgroundColor: theme.window.backgroundColor })
     : outerBase;
 
-  const innerStyles = theme.window
-    ? compose(base, theme.window)
-    : base;
+  const innerStyles = theme.window ? compose(base, theme.window) : base;
 
   return (
     <div {...outerStyles}>

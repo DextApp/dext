@@ -5,7 +5,7 @@ let mockBookmarks = [];
 /**
  * Set mocked bookmark entries
  */
-browserBookmarks.__setBookmarks = (bookmarks) => {
+browserBookmarks.__setBookmarks = bookmarks => {
   mockBookmarks = bookmarks;
 };
 
@@ -14,6 +14,7 @@ browserBookmarks.__setBookmarks = (bookmarks) => {
  *
  * @return {Promise}
  */
-browserBookmarks.getChrome = () => new Promise(resolve => resolve(mockBookmarks));
+browserBookmarks.getChrome = () =>
+  new Promise(resolve => resolve(mockBookmarks));
 
 module.exports = browserBookmarks;

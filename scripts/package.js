@@ -38,15 +38,16 @@ const DEFAULT_OPTIONS = {
  * @param {String} platform
  * @param {String} arch
  */
-const pkg = (platform, arch) => new Promise((resolve) => {
-  const opts = Object.assign({}, DEFAULT_OPTIONS, {
-    platform,
-    arch,
+const pkg = (platform, arch) =>
+  new Promise(resolve => {
+    const opts = Object.assign({}, DEFAULT_OPTIONS, {
+      platform,
+      arch,
+    });
+    packager(opts, err => {
+      resolve({ err, options: { platform, arch } });
+    });
   });
-  packager(opts, (err) => {
-    resolve({ err, options: { platform, arch } });
-  });
-});
 
 /**
  * Print the status of the package
@@ -54,10 +55,14 @@ const pkg = (platform, arch) => new Promise((resolve) => {
 const printStatus = ({ err, options }) => {
   if (err) {
     // eslint-disable-next-line no-console
-    console.log(chalk.red(`${options.platform}-${options.arch} packaging error.`));
+    console.log(
+      chalk.red(`${options.platform}-${options.arch} packaging error.`)
+    );
   } else {
     // eslint-disable-next-line no-console
-    console.log(chalk.green(`${options.platform}-${options.arch} package complete.`));
+    console.log(
+      chalk.green(`${options.platform}-${options.arch} package complete.`)
+    );
   }
 };
 

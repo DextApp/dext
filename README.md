@@ -4,20 +4,20 @@
 
 ## Overview
 
-**Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of *Alfred*.
+**Dext** is a JavaScript powered smart launcher. Built with JavaScript behind the influences of _Alfred_.
 
-Made compatible with *Alfred* workflows that is powered by node (see: [alfy](https://github.com/sindresorhus/alfy)).
+Made compatible with _Alfred_ workflows that is powered by node (see: [alfy](https://github.com/sindresorhus/alfy)).
 
 ![](screenshot.gif?raw=true)
 
-***Note: Currently available only for Mac OS X platform. Please help contribute for Windows and Linux users.***
+**_Note: Currently available only for Mac OS X platform. Please help contribute for Windows and Linux users._**
 
 ## Install
-
 
 Download the latest zip file [here](https://github.com/DextApp/dext/releases/) and unzip the archive. Open `Dext.app` and follow the instructions below for usage.
 
 You can also use Homebrew Cask to download the app by running these commands:
+
 ```
 brew update
 brew cask install dext
@@ -53,9 +53,9 @@ $ npm install -g dext-cli
 
 ## Configuring
 
-The ***Dext*** configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
+The **_Dext_** configuration file is located in the `.dext` folder in your home directory (`~/.dext/`). This directory should contain a `config.json` file as well as a `plugins` folder. In here, you can drop any plugins.
 
-*Hint: Use [`dpm`](https://github.com/DextApp/dext-cli) to easily manage plugins.*
+_Hint: Use [`dpm`](https://github.com/DextApp/dext-cli) to easily manage plugins._
 
 ```
 .dext/
@@ -67,50 +67,51 @@ The ***Dext*** configuration file is located in the `.dext` folder in your home 
 
 ### Core Plugins
 
-- **Bookmarks** - Search your Chrome bookmarks.
-- **Browser** - Quick open your browser to a given URL.
-- **Calculator** - Quickly calculate something.
-- **Screen Saver** - Starts the screen saver.
+* **Bookmarks** - Search your Chrome bookmarks.
+* **Browser** - Quick open your browser to a given URL.
+* **Calculator** - Quickly calculate something.
+* **Screen Saver** - Starts the screen saver.
 
 ### Community Plugins
 
-- [dext-darwin-applications-plugin](https://github.com/vutran/dext-darwin-applications-plugin) - Dext plugin to search for applications (Darwin only).
-- [dext-docker-registry-plugin](https://github.com/vutran/dext-docker-registry-plugin) - Search the Docker Registry for images.
-- [dext-emoji-plugin](https://github.com/vutran/dext-emoji-plugin) - Search for emojis.
-- [dext-giphy-plugin](https://github.com/adnasa/dext-giphy-plugin) - Search for giphy images.
-- [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
-- [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
-- [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) - Search for npm packages on npms.io.
-- [dext-omdb-plugin](https://github.com/adnasa/dext-omdb-plugin) - Search for imdb movies through the omdb-api.
-- [dext-base64-encode-plugin](https://github.com/brpaz/dext-base64-encode-plugin) - Dext plugin that allows to encode and decode any text into base64.
-- [dext-rubygems-plugin](https://github.com/akz92/dext-rubygems-plugin) - Search for ruby gems on rubygems.org.
-- [dext-search-plugin](https://github.com/justinpchang/dext-search-plugin) - Search Google and open results in web browser.
-- [dext-plugin-list-plugin](https://github.com/justinpchang/dext-plugin-list-plugin) - Display list of all active plugins.
-- [dext-system-plugin](https://github.com/justinpchang/dext-system-plugin) - Display system and battery information.
+* [dext-darwin-applications-plugin](https://github.com/vutran/dext-darwin-applications-plugin) - Dext plugin to search for applications (Darwin only).
+* [dext-docker-registry-plugin](https://github.com/vutran/dext-docker-registry-plugin) - Search the Docker Registry for images.
+* [dext-emoji-plugin](https://github.com/vutran/dext-emoji-plugin) - Search for emojis.
+* [dext-giphy-plugin](https://github.com/adnasa/dext-giphy-plugin) - Search for giphy images.
+* [dext-github-plugin](https://github.com/vutran/dext-github-plugin) - Search for repositories by name on GitHub.
+* [dext-hackernews-plugin](https://github.com/vutran/dext-hackernews-plugin) - Search for best, top, or newest stories on Hacker News.
+* [dext-npms-plugin](https://github.com/hypebeast/dext-npms-plugin) - Search for npm packages on npms.io.
+* [dext-omdb-plugin](https://github.com/adnasa/dext-omdb-plugin) - Search for imdb movies through the omdb-api.
+* [dext-base64-encode-plugin](https://github.com/brpaz/dext-base64-encode-plugin) - Dext plugin that allows to encode and decode any text into base64.
+* [dext-rubygems-plugin](https://github.com/akz92/dext-rubygems-plugin) - Search for ruby gems on rubygems.org.
+* [dext-search-plugin](https://github.com/justinpchang/dext-search-plugin) - Search Google and open results in web browser.
+* [dext-plugin-list-plugin](https://github.com/justinpchang/dext-plugin-list-plugin) - Display list of all active plugins.
+* [dext-system-plugin](https://github.com/justinpchang/dext-system-plugin) - Display system and battery information.
 
 ### Community Themes
-- [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
-- [dext-nova-theme](https://github.com/vutran/dext-nova-theme) - Nova theme for Dext
+
+* [dext-predawn-theme](https://github.com/adnasa/dext-predawn-theme) - Predawn theme for Dext
+* [dext-nova-theme](https://github.com/vutran/dext-nova-theme) - Nova theme for Dext
 
 ## Developers Documentation
 
-- [Plugins](docs/PLUGINS.md)
-- [Themes](docs/THEMES.md)
+* [Plugins](docs/PLUGINS.md)
+* [Themes](docs/THEMES.md)
 
 ## Goals
 
-- To provide a free/open-source alternative to *Spotlight*, and *Alfred*.
-- Preserve compatibility with existing *Alfred* workflows.
-- Allow customization and extending via plugins and themes.
+* To provide a free/open-source alternative to _Spotlight_, and _Alfred_.
+* Preserve compatibility with existing _Alfred_ workflows.
+* Allow customization and extending via plugins and themes.
 
 ## Contributing
 
-♥ ***Dext*** and want to contribute? I am seeking contributors of any levels to help grow the application. You can help contribute to the growth of this application in many ways.
+♥ **_Dext_** and want to contribute? I am seeking contributors of any levels to help grow the application. You can help contribute to the growth of this application in many ways.
 
-- [Bug Reports](CONTRIBUTING.md#bug-reports)
-- [Feature Requests](CONTRIBUTING.md#feature-requests)
-- [Pull Requests](CONTRIBUTING.md#pull-requests)
-- [Feedback and Suggestions](CONTRIBUTING.md#feedback-and-suggestions)
+* [Bug Reports](CONTRIBUTING.md#bug-reports)
+* [Feature Requests](CONTRIBUTING.md#feature-requests)
+* [Pull Requests](CONTRIBUTING.md#pull-requests)
+* [Feedback and Suggestions](CONTRIBUTING.md#feedback-and-suggestions)
 
 ## Support
 

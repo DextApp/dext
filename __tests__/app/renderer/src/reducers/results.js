@@ -18,11 +18,7 @@ describe('theme reducer', () => {
         },
       ],
     };
-    expect(
-      results(state, action)
-    ).toEqual([
-      { item: { title: 'Foo' } },
-    ]);
+    expect(results(state, action)).toEqual([{ item: { title: 'Foo' } }]);
   });
 
   it('should handle RESET_RESULTS', () => {

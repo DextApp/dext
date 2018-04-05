@@ -7,7 +7,7 @@ import {
 
 const initialState = 0;
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SELECT_ITEM:
       return action.index;

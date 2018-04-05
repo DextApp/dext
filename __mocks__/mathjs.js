@@ -8,7 +8,7 @@ let mockSetThrowError = false;
  *
  * @param {String} value
  */
-math.__setReturnValue = (value) => {
+math.__setReturnValue = value => {
   mockReturnValue = value;
 };
 
@@ -17,7 +17,7 @@ math.__setReturnValue = (value) => {
  *
  * @param {Boolean} flag
  */
-math.__setThrowError = (flag) => {
+math.__setThrowError = flag => {
   mockSetThrowError = flag;
 };
 

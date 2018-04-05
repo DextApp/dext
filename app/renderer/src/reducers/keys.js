@@ -2,7 +2,7 @@ import { SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY, RESET_KEYS } from '../actions/types';
 
 const initialState = [];
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SET_ACTIVE_KEY:
       return state.concat([action.key]);

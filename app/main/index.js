@@ -30,13 +30,26 @@ const {
   IPC_FETCH_ICON,
   IPC_RETRIEVE_ICON,
 } = require('../ipc');
-const { MAX_RESULTS, CORE_PLUGIN_PATH, DEBOUNCE_TIME } = require('../constants');
+const {
+  MAX_RESULTS,
+  CORE_PLUGIN_PATH,
+  DEBOUNCE_TIME,
+} = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
 
 const { PLUGIN_PATH } = utils.paths;
-const { app, BrowserWindow, Tray, Menu, nativeImage, clipboard, globalShortcut, ipcMain } = electron;
+const {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  nativeImage,
+  clipboard,
+  globalShortcut,
+  ipcMain,
+} = electron;
 
 // set default window values
 const WINDOW_DEFAULT_WIDTH = 700;
@@ -64,8 +77,9 @@ const repositionWindow = () => {
 
   // @TODO: Move this into a testable utility.
   const winPosition = [
-    (Math.floor((currScreen.size.width / 2) - (size[0] / 2)) + currScreen.bounds.x),
-    (Math.floor((currScreen.size.height / 2) - ((size[1] + resultsHeight) / 2)) + currScreen.bounds.y),
+    Math.floor(currScreen.size.width / 2 - size[0] / 2) + currScreen.bounds.x,
+    Math.floor(currScreen.size.height / 2 - (size[1] + resultsHeight) / 2) +
+      currScreen.bounds.y,
   ];
 
   win.setPosition(winPosition[0], winPosition[1]);
@@ -90,18 +104,16 @@ const toggleMainWindow = () => {
  *
  * @param {Object} message
  */
-const execute = (message) => {
+const execute = message => {
   // apply modifiers if necessary
-  const arg = (message.isSuperMod && getOwnProp(message, 'item.mods.cmd.arg'))
-    || (message.isAltMod && getOwnProp(message, 'item.mods.alt.arg'))
-    || message.item.arg;
+  const arg =
+    (message.isSuperMod && getOwnProp(message, 'item.mods.cmd.arg')) ||
+    (message.isAltMod && getOwnProp(message, 'item.mods.alt.arg')) ||
+    message.item.arg;
 
   if (hasOwnProp(actions, message.action)) {
     const actionMod = actions[message.action];
-    actionMod.apply(null, [
-      message,
-      arg,
-    ]);
+    actionMod.apply(null, [message, arg]);
   }
 };
 
@@ -154,7 +166,7 @@ const handleWindowResize = (evt, { width, height }) => {
   // re-size
   const [windowWidth, windowHeight] = win.getContentSize();
   const nextWidth = width || windowWidth;
-  const nextHeight = (WINDOW_MIN_HEIGHT + height) || windowHeight;
+  const nextHeight = WINDOW_MIN_HEIGHT + height || windowHeight;
   win.setContentSize(nextWidth, nextHeight);
 };
 
@@ -168,7 +180,7 @@ const handleWindowCollapse = () => {
  *
  * @param {Object} theme
  */
-const handleDidFinishLoad = (theme) => {
+const handleDidFinishLoad = theme => {
   if (theme) {
     win.webContents.send(IPC_LOAD_THEME, theme);
   }
@@ -193,12 +205,14 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
   const [keyword, ...args] = fractions;
   const queryString = args.join(' ').trim();
 
-  const matchedPlugins = plugins.filter(p => !p.keyword || keyword === p.keyword);
+  const matchedPlugins = plugins.filter(
+    p => !p.keyword || keyword === p.keyword
+  );
 
   // if plugins are found with the current keyword
   // only make queries to those plugins
   if (matchedPlugins.length) {
-    matchedPlugins.forEach((plugin) => {
+    matchedPlugins.forEach(plugin => {
       let display = 'results';
       // determine if we should display helper or query items?
       if (plugin.isCore && (!plugin.keyword || keyword === plugin.keyword)) {
@@ -224,7 +238,7 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
     });
   } else {
     // otherwise, do a regular query to core plugins
-    plugins.forEach((plugin) => {
+    plugins.forEach(plugin => {
       // if core, then query the results
       if (plugin.isCore && (!plugin.keyword || keyword === plugin.keyword)) {
         results.push(queryResults(plugin, fractions));
@@ -232,7 +246,7 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
     });
   }
 
-  Promise.all(results).then((resultSet) => {
+  Promise.all(results).then(resultSet => {
     const retval = resultSet
       // flatten and merge items
       .reduce((prev, next) => prev.concat(next))
@@ -247,12 +261,10 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
         }
         return -1;
       })
-      .filter((i) => {
+      .filter(i => {
         const score = i.title.toLowerCase().score(keyword);
         // eslint-disable-next-line no-extra-boolean-cast
-        return Boolean(score)
-          ? score > 0.25
-          : true; // return by default if there is no score in the first place.
+        return Boolean(score) ? score > 0.25 : true; // return by default if there is no score in the first place.
       })
       // filter max results
       .slice(0, MAX_RESULTS);
@@ -285,7 +297,7 @@ const handleItemDetailsRequest = (evt, item) => {
     content = retrieveItemDetails(item, plugin);
   }
   // resolve and update the state
-  Promise.resolve(content).then((html) => {
+  Promise.resolve(content).then(html => {
     cacheConf.set(cacheKey, html);
     evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
   });
@@ -312,8 +324,8 @@ const handleCopyItemToClipboard = (evt, item) => {
  * @param {Object} item
  */
 const fetchFileIcon = (evt, item) => {
-  getFileIcon(item).then((iconPath) => {
-    evt.sender.send(IPC_RETRIEVE_ICON, iconPath);
+  getFileIcon(item).then(fileIconPath => {
+    evt.sender.send(IPC_RETRIEVE_ICON, fileIconPath);
   });
 };
 
@@ -322,9 +334,15 @@ const fetchFileIcon = (evt, item) => {
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
 
-const debounceHandleItemDetailsRequest = debounce(handleItemDetailsRequest, DEBOUNCE_TIME);
+const debounceHandleItemDetailsRequest = debounce(
+  handleItemDetailsRequest,
+  DEBOUNCE_TIME
+);
 
-const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, DEBOUNCE_TIME);
+const debounceHandleCopyItemToClipboard = debounce(
+  handleCopyItemToClipboard,
+  DEBOUNCE_TIME
+);
 
 /**
  * Creates a new Browser window and loads the renderer index.
@@ -332,7 +350,7 @@ const debounceHandleCopyItemToClipboard = debounce(handleCopyItemToClipboard, DE
  * @param {Object} theme
  * @return {BrowserWindow}
  */
-const createWindow = (theme) => {
+const createWindow = theme => {
   const opts = {
     width: WINDOW_DEFAULT_WIDTH,
     height: WINDOW_DEFAULT_HEIGHT,
@@ -357,9 +375,21 @@ const createWindow = (theme) => {
 
 // create the Context Menu for the Tray
 const contextMenu = Menu.buildFromTemplate([
-  { label: 'Toggle Dext', type: 'normal', click: () => { toggleMainWindow(); } },
+  {
+    label: 'Toggle Dext',
+    type: 'normal',
+    click: () => {
+      toggleMainWindow();
+    },
+  },
   { type: 'separator' },
-  { label: 'Quit', type: 'normal', click: () => { app.quit(); } },
+  {
+    label: 'Quit',
+    type: 'normal',
+    click: () => {
+      app.quit();
+    },
+  },
 ]);
 
 /**
@@ -368,15 +398,17 @@ const contextMenu = Menu.buildFromTemplate([
  */
 const onAppReady = () => {
   // loads the tray
-  tray = new Tray(nativeImage.createFromPath(
-    path.resolve(__dirname, '..', '..', 'resources', 'icon.png')
-  ));
+  tray = new Tray(
+    nativeImage.createFromPath(
+      path.resolve(__dirname, '..', '..', 'resources', 'icon.png')
+    )
+  );
 
   tray.setContextMenu(contextMenu);
 
   // loads the theme
   const t = config.get('theme') || '';
-  loadTheme(t).then((theme) => {
+  loadTheme(t).then(theme => {
     win = createWindow(theme);
 
     repositionWindow();
@@ -390,7 +422,10 @@ const onAppReady = () => {
     win.on('show', handleWindowShow);
     win.on('hide', handleWindowHide);
     win.on('blur', handleWindowBlur);
-    win.webContents.on('did-finish-load', handleDidFinishLoad.bind(this, theme));
+    win.webContents.on(
+      'did-finish-load',
+      handleDidFinishLoad.bind(this, theme)
+    );
 
     // expand and collapse window based on the results
     ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
@@ -406,39 +441,30 @@ const onAppReady = () => {
      *
      * @param {Object[]} plugins - An array of plugin objects
      */
-    const registerIpcListeners = (plugins) => {
+    const registerIpcListeners = plugins => {
       // listen to query commands and queries
       // for results and sends it to the renderer
-      ipcMain.on(
-        IPC_QUERY_COMMAND,
-        (evt, message) => debounceHandleQueryCommand(evt, message, plugins)
+      ipcMain.on(IPC_QUERY_COMMAND, (evt, message) =>
+        debounceHandleQueryCommand(evt, message, plugins)
       );
 
       // listen for execution commands
-      ipcMain.on(
-        IPC_EXECUTE_ITEM,
-        (evt, message) => {
-          execute(message);
-        }
-      );
+      ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
+        execute(message);
+      });
 
       // listen for item details requests
-      ipcMain.on(
-        IPC_ITEM_DETAILS_REQUEST,
-        (evt, item) => debounceHandleItemDetailsRequest(evt, item)
+      ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
+        debounceHandleItemDetailsRequest(evt, item)
       );
 
       // copies to clipboard
-      ipcMain.on(
-        IPC_COPY_CURRENT_ITEM,
-        (evt, item) => debounceHandleCopyItemToClipboard(evt, item)
+      ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) =>
+        debounceHandleCopyItemToClipboard(evt, item)
       );
 
       // fetches the file icon
-      ipcMain.on(
-        IPC_FETCH_ICON,
-        (evt, item) => fetchFileIcon(evt, item)
-      );
+      ipcMain.on(IPC_FETCH_ICON, (evt, item) => fetchFileIcon(evt, item));
     };
 
     // load all plugins (core and user) and
