@@ -34,8 +34,8 @@ describe('copiedToClipboard reducer', () => {
 
   it('should handle the rest of the actions', () => {
     const state = undefined;
-    Object.values(allTypes).map(type =>
-      expect(copiedToClipboard(state, { type })).toBe(false)
+    Object.keys(allTypes).map(typeKey =>
+      expect(copiedToClipboard(state, { type: allTypes[typeKey] })).toBe(false)
     );
   });
 });

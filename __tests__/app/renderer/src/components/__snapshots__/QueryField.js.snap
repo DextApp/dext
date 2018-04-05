@@ -1,19 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`<QueryField /> component should render a query field component with no value 1`] = `
 <div
-  data-css-1ykjhyy="">
+  data-css-1ykjhyy=""
+>
   <input
     data-css-bj9j4d=""
     onChange={[Function]}
-    value="" />
+    value=""
+  />
 </div>
 `;
 
 exports[`<QueryField /> component should render a query field component with some value 1`] = `
 <div
-  data-css-1ykjhyy="">
+  data-css-1ykjhyy=""
+>
   <input
     data-css-bj9j4d=""
     onChange={[Function]}
-    value="TEST" />
+    value="TEST"
+  />
 </div>
 `;
