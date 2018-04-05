@@ -19,7 +19,7 @@ prodConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
 // add banner
 prodConfig.plugins.push(new webpack.BannerPlugin(`
 (c) Copyright 2016. Vu Tran
-Website: https://github.com/vutran/dext/
+Website: https://github.com/DextApp/dext/
 Developer: Vu Tran <vu@vu-tran.com>
 `));
 

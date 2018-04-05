@@ -10,7 +10,7 @@ module.exports = {
         {
           title: 'Dext',
           subtitle: 'A smart launcher for Mac. Powered by JavaScript.',
-          arg: 'https://github.com/vutran/dext',
+          arg: 'https://github.com/DextApp/dext',
           icon: {
             path: './github.png',
           },

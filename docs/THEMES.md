@@ -4,7 +4,7 @@ Create a JSON module for your theme with your custom "CSS in JS" and place it in
 
 Tag your theme modules with the keywords: `dext`, and `dext-theme`.
 
-For an example, please refer to the [dext-default-theme](https://github.com/vutran/dext-default-theme).
+For an example, please refer to the [dext-default-theme](https://github.com/DextApp/dext-default-theme).
 
 ## Options
 

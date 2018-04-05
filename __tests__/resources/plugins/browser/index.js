@@ -41,11 +41,11 @@ describe('browser', () => {
   });
 
   it('should support URL\'s with paths', () => {
-    const results = m.query('https://github.com/vutran/dext/');
+    const results = m.query('https://github.com/DextApp/dext/');
     expect(results.items).toContainEqual({
-      title: 'Open https://github.com/vutran/dext/ in the browser.',
+      title: 'Open https://github.com/DextApp/dext/ in the browser.',
       subtitle: 'Open in browser',
-      arg: 'https://github.com/vutran/dext/',
+      arg: 'https://github.com/DextApp/dext/',
       icon: {
         type: 'text',
         letter: 'G',
@@ -54,11 +54,11 @@ describe('browser', () => {
   });
 
   it('should use the top-level domain for the letter icon in subdomains', () => {
-    const results = m.query('https://www.github.com/vutran/dext/');
+    const results = m.query('https://www.github.com/DextApp/dext/');
     expect(results.items).toContainEqual({
-      title: 'Open https://www.github.com/vutran/dext/ in the browser.',
+      title: 'Open https://www.github.com/DextApp/dext/ in the browser.',
       subtitle: 'Open in browser',
-      arg: 'https://www.github.com/vutran/dext/',
+      arg: 'https://www.github.com/DextApp/dext/',
       icon: {
         type: 'text',
         letter: 'G',

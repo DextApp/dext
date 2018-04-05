@@ -291,7 +291,7 @@ exports.queryResults = (plugin, args) => new Promise((resolve) => {
           console.log(`
             Plugin is outdated.
             Please update the plugin accordingly to the new API.
-            @see https://github.com/vutran/dext/issues/52 for reference.
+            @see https://github.com/DextApp/dext/issues/52 for reference.
           `);
         }
 
