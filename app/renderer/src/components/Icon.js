@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { compose, style } from 'glamor';
 
 const iconImg = style({
@@ -23,23 +24,29 @@ const iconImgTextBase = compose(
   })
 );
 
-const Icon = (props) => {
+const Icon = props => {
   const iconTextStyle = props.icon.bgColor
     ? compose(
-      iconImgTextBase,
-      props.icon.bgColor && style({
-        backgroundColor: props.icon.bgColor,
-      })
-    )
+        iconImgTextBase,
+        props.icon.bgColor &&
+          style({
+            backgroundColor: props.icon.bgColor,
+          })
+      )
     : iconImgTextBase;
 
   switch (props.icon.type) {
     case 'text':
-      return <span {...iconTextStyle} role="presentation">{props.icon.letter}</span>;
-    case 'file':
-      // no break
-    default: // eslint-disable-line no-fallthrough
-      return <img {...iconImg} src={props.icon.path} role="presentation" alt="" />;
+      return (
+        <span {...iconTextStyle} role="presentation">
+          {props.icon.letter}
+        </span>
+      );
+    default:
+      // eslint-disable-line no-fallthrough
+      return (
+        <img {...iconImg} src={props.icon.path} role="presentation" alt="" />
+      );
   }
 };
 

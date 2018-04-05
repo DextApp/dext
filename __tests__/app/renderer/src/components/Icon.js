@@ -8,9 +8,7 @@ describe('<Icon /> component', () => {
       type: 'text',
       letter: 'T',
     };
-    const component = renderer.create(
-      <Icon icon={icon} />
-    );
+    const component = renderer.create(<Icon icon={icon} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -20,9 +18,7 @@ describe('<Icon /> component', () => {
       type: 'file',
       letter: './icon.png',
     };
-    const component = renderer.create(
-      <Icon icon={icon} />
-    );
+    const component = renderer.create(<Icon icon={icon} />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

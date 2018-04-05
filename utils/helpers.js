@@ -46,7 +46,7 @@ const getOwnProp = (obj, path) => {
  */
 const hasOwnProp = (obj, path) => {
   const v = getOwnProp(obj, path);
-  return (v !== undefined);
+  return v !== undefined;
 };
 
 module.exports = {

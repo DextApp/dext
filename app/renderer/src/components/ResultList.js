@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { compose, pseudo, style } from 'glamor';
 import ResultItemContainer from '../containers/ResultItemContainer';
 import ResultDetailsContainer from '../containers/ResultDetailsContainer';
@@ -36,24 +36,36 @@ const shown = style({
 const ResultList = class extends Component {
   render() {
     // Retrieve an array of <ResultItemContainer /> containers
-    const getResultItems = (results, selectedIndex, theme) => results.map(
-      (item, key) => (
+    const getResultItems = (results, selectedIndex, theme) =>
+      results.map((item, key) => (
         <ResultItemContainer
           key={key}
           theme={theme}
           item={item}
           selected={selectedIndex === key}
         />
-      )
-    );
+      ));
     const currItem = this.props.results[this.props.selectedIndex];
 
     return (
-      <div {...style({ position: 'relative', paddingTop: 15, paddingBottom: 15 })}>
-        <ol {...compose(base, this.props.results.length && shown)} ref={(c) => { this.c = c; }}>
-          {getResultItems(this.props.results, this.props.selectedIndex, this.props.theme)}
+      <div
+        {...style({ position: 'relative', paddingTop: 15, paddingBottom: 15 })}
+      >
+        <ol
+          {...compose(base, this.props.results.length && shown)}
+          ref={c => {
+            this.c = c;
+          }}
+        >
+          {getResultItems(
+            this.props.results,
+            this.props.selectedIndex,
+            this.props.theme
+          )}
         </ol>
-        {currItem && <ResultDetailsContainer theme={this.props.theme} item={currItem} />}
+        {currItem && (
+          <ResultDetailsContainer theme={this.props.theme} item={currItem} />
+        )}
       </div>
     );
   }

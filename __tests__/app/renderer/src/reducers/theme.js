@@ -10,7 +10,12 @@ describe('theme reducer', () => {
 
   it('should handle SET_THEME', () => {
     const state = '';
-    const action = { type: types.SET_THEME, theme: { window: { backgroundColor: '#fff' } } };
-    expect(theme(state, action)).toEqual({ window: { backgroundColor: '#fff' } });
+    const action = {
+      type: types.SET_THEME,
+      theme: { window: { backgroundColor: '#fff' } },
+    };
+    expect(theme(state, action)).toEqual({
+      window: { backgroundColor: '#fff' },
+    });
   });
 });

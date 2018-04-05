@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { style, compose, hover } from 'glamor';
 import IconContainer from '../containers/IconContainer';
 import { ResultItemSchema, ThemeSchema } from '../schema';
@@ -92,37 +93,48 @@ const checkmark = style({
   marginLeft: '7px',
 });
 
-const ResultItem = ({ theme, selected, item, isAltMod, isSuperMod, onDoubleClick, copiedToClipboard }) => {
+const ResultItem = ({
+  theme,
+  selected,
+  item,
+  isAltMod,
+  isSuperMod,
+  onDoubleClick,
+  copiedToClipboard,
+}) => {
   const themeBase = style(theme.result || {});
   const themeHover = hover(theme.resultActive || {});
 
   const themeSelected = selected
-    ? compose(
-      style(activeStyle),
-      style(theme.resultActive || {})
-    )
+    ? compose(style(activeStyle), style(theme.resultActive || {}))
     : {};
 
   // apply modifiers if necessary
-  const itemSubtitle = (isSuperMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle)
-    || (isAltMod && item.mods && item.mods.alt && item.mods.alt.subtitle)
-    || item.subtitle;
+  const itemSubtitle =
+    (isSuperMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle) ||
+    (isAltMod && item.mods && item.mods.alt && item.mods.alt.subtitle) ||
+    item.subtitle;
 
   return (
-    <li {...compose(base, themeBase, themeHover, themeSelected)} onDoubleClick={onDoubleClick}>
+    <li
+      {...compose(base, themeBase, themeHover, themeSelected)}
+      onDoubleClick={onDoubleClick}
+    >
       <div {...icon}>
         <IconContainer icon={item.icon} />
       </div>
       <div {...details}>
         <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
-        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>{itemSubtitle}</h3>
+        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>
+          {itemSubtitle}
+        </h3>
       </div>
-      {copiedToClipboard &&
+      {copiedToClipboard && (
         <div {...checkmarkWrapper}>
           <span>Copied</span>
           <div {...checkmark} />
         </div>
-      }
+      )}
     </li>
   );
 };

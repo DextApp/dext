@@ -1,15 +1,15 @@
 import { ipcRenderer } from 'electron';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
 import ResultItem from '../components/ResultItem';
 import { ThemeSchema, ResultItemSchema } from '../schema';
-import {
-  IPC_EXECUTE_ITEM,
-} from '../../../ipc';
+import { IPC_EXECUTE_ITEM } from '../../../ipc';
 
 const ResultItemContainer = class extends Component {
+  static displayName = 'ResultItemContainer';
   constructor() {
     super();
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
@@ -20,11 +20,19 @@ const ResultItemContainer = class extends Component {
   }
 
   isAltMod() {
-    return this.props.selected && this.props.keys && this.props.keys.indexOf('alt') > -1;
+    return (
+      this.props.selected &&
+      this.props.keys &&
+      this.props.keys.indexOf('alt') > -1
+    );
   }
 
   isSuperMod() {
-    return this.props.selected && this.props.keys && this.props.keys.indexOf('meta') > -1;
+    return (
+      this.props.selected &&
+      this.props.keys &&
+      this.props.keys.indexOf('meta') > -1
+    );
   }
 
   execute() {
@@ -72,8 +80,14 @@ ResultItemContainer.propTypes = {
   copiedToClipboard: PropTypes.bool,
 };
 
-const mapStateToProps = ({ keys, copiedToClipboard }) => ({ keys, copiedToClipboard });
+const mapStateToProps = ({ keys, copiedToClipboard }) => ({
+  keys,
+  copiedToClipboard,
+});
 
-const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ResultItemContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ResultItemContainer
+);

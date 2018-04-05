@@ -9,7 +9,7 @@ jest.mock('electron', () => ({
 }));
 
 describe('app/main/actions/open', () => {
-  it('should open the application in the desktop\' default manner', () => {
+  it("should open the application in the desktop' default manner", () => {
     open(null, '/Applications/Safari.app');
     expect(shell.openItem).toHaveBeenCalled();
   });

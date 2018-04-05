@@ -92,7 +92,7 @@ export function* handleSetDetails() {
 /**
  * Makes a query for each action dispatched
  */
-export default function* () {
+export default function*() {
   yield [
     takeEvery(SELECT_ITEM, handleSelectItem),
     takeEvery(SELECT_PREVIOUS_ITEM, handleSelectPreviousItem),
