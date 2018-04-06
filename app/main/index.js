@@ -34,6 +34,7 @@ const {
   MAX_RESULTS,
   CORE_PLUGIN_PATH,
   DEBOUNCE_TIME,
+  IS_DEV,
 } = require('../constants');
 const Config = require('../../utils/conf');
 const CacheConf = require('../../utils/CacheConf');
@@ -408,72 +409,81 @@ const onAppReady = () => {
 
   // loads the theme
   const t = config.get('theme') || '';
-  loadTheme(t).then(theme => {
-    win = createWindow(theme);
+  loadTheme(t)
+    .then(theme => {
+      win = createWindow(theme);
 
-    repositionWindow();
+      repositionWindow();
 
-    const rendererPath = path.resolve(__dirname, '..', 'renderer');
-    const indexPath = `file://${rendererPath}/index.html`;
+      const rendererPath = path.resolve(__dirname, '..', 'renderer');
+      const indexPath = `file://${rendererPath}/index.html`;
 
-    win.loadURL(indexPath);
+      win.loadURL(indexPath);
 
-    win.on('closed', handleWindowClose);
-    win.on('show', handleWindowShow);
-    win.on('hide', handleWindowHide);
-    win.on('blur', handleWindowBlur);
-    win.webContents.on(
-      'did-finish-load',
-      handleDidFinishLoad.bind(this, theme)
-    );
-
-    // expand and collapse window based on the results
-    ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
-    ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
-
-    // register global shortcuts
-    globalShortcut.register(config.get('hotKey'), toggleMainWindow);
-
-    /**
-     * Registers the query command listeners for all plugins
-     *
-     * { path, name, isCore, schema, action, keyword }
-     *
-     * @param {Object[]} plugins - An array of plugin objects
-     */
-    const registerIpcListeners = plugins => {
-      // listen to query commands and queries
-      // for results and sends it to the renderer
-      ipcMain.on(IPC_QUERY_COMMAND, (evt, message) =>
-        debounceHandleQueryCommand(evt, message, plugins)
+      win.on('closed', handleWindowClose);
+      win.on('show', handleWindowShow);
+      win.on('hide', handleWindowHide);
+      win.on('blur', handleWindowBlur);
+      win.webContents.on(
+        'did-finish-load',
+        handleDidFinishLoad.bind(this, theme)
       );
 
-      // listen for execution commands
-      ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
-        execute(message);
-      });
+      // expand and collapse window based on the results
+      ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
+      ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
 
-      // listen for item details requests
-      ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
-        debounceHandleItemDetailsRequest(evt, item)
-      );
+      // register global shortcuts
+      globalShortcut.register(config.get('hotKey'), toggleMainWindow);
 
-      // copies to clipboard
-      ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) =>
-        debounceHandleCopyItemToClipboard(evt, item)
-      );
+      /**
+       * Registers the query command listeners for all plugins
+       *
+       * { path, name, isCore, schema, action, keyword }
+       *
+       * @param {Object[]} plugins - An array of plugin objects
+       */
+      const registerIpcListeners = plugins => {
+        // listen to query commands and queries
+        // for results and sends it to the renderer
+        ipcMain.on(IPC_QUERY_COMMAND, (evt, message) =>
+          debounceHandleQueryCommand(evt, message, plugins)
+        );
 
-      // fetches the file icon
-      ipcMain.on(IPC_FETCH_ICON, (evt, item) => fetchFileIcon(evt, item));
-    };
+        // listen for execution commands
+        ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
+          execute(message);
+        });
 
-    // load all plugins (core and user) and
-    // then registers the ipc listeners
-    loadPlugins([
-      { path: CORE_PLUGIN_PATH, isCore: true },
-      { path: PLUGIN_PATH, isCore: false },
-    ]).then(registerIpcListeners);
-  });
+        // listen for item details requests
+        ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
+          debounceHandleItemDetailsRequest(evt, item)
+        );
+
+        // copies to clipboard
+        ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) =>
+          debounceHandleCopyItemToClipboard(evt, item)
+        );
+
+        // fetches the file icon
+        ipcMain.on(IPC_FETCH_ICON, (evt, item) => fetchFileIcon(evt, item));
+      };
+
+      // load all plugins (core and user) and
+      // then registers the ipc listeners
+      return loadPlugins([
+        { path: CORE_PLUGIN_PATH, isCore: true },
+        { path: PLUGIN_PATH, isCore: false },
+      ])
+        .then(registerIpcListeners)
+        .then(() => win);
+    })
+    .then(win => {
+      if (IS_DEV)
+        win.webContents.openDevTools({
+          detach: true,
+        });
+    });
 };
 
 // hide the app from the dock and applications switcher
