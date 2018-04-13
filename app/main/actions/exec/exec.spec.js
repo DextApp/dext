@@ -1,12 +1,12 @@
 import path from 'path';
-import { exec } from '../../../../app/main/actions';
+import exec from './exec';
+import childProcess from 'child_process';
 
-jest.mock('child_process');
+jest.mock('child_process', () => ({
+  fork: jest.fn(),
+}));
 
 describe('app/main/actions', () => {
-  // eslint-disable-next-line global-require
-  const cp = require('child_process');
-
   it('should fork an absolute script', () => {
     exec(
       {
@@ -21,7 +21,7 @@ describe('app/main/actions', () => {
         arg: null,
       }
     );
-    expect(cp.fork).toHaveBeenCalledWith(
+    expect(childProcess.fork).toHaveBeenCalledWith(
       path.resolve('/some/absolute/path/to/start.js'),
       null,
       {
@@ -44,7 +44,7 @@ describe('app/main/actions', () => {
         arg: null,
       }
     );
-    expect(cp.fork).toHaveBeenCalledWith(
+    expect(childProcess.fork).toHaveBeenCalledWith(
       path.resolve('./foo/bar/start.js'),
       null,
       {
