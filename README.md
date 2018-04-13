@@ -1,4 +1,13 @@
-![](./resources/banner.png?raw=true)
+## 🚧 Notice 🚧
+
+`dext` is, at the moment, subject to heavy development. From `0.9.0`, we won't add any feature unless small with backwards compability in mind.
+
+Currently, the roadmap for [`dext` 2.0](https://github.com/DextApp/dext/projects/5) is to move to the direction of having the following accomplished:
+
+1.  [having a hook system for external plugins](https://gist.github.com/adnasa/fec7c66d39f700371262437bb22732ad#hooking-system)
+2.  consolidating all packages of dext into a monorepo
+
+[...among other features](https://github.com/DextApp/dext/projects/5).
 
 [![Travis](https://img.shields.io/travis/DextApp/dext/develop.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/DextApp/dext) [![Coveralls branch](https://img.shields.io/coveralls/DextApp/dext/develop.svg?maxAge=2592000&style=flat-square)](https://coveralls.io/github/DextApp/dext) [![license](https://img.shields.io/github/license/DextApp/dext.svg?maxAge=2592000&style=flat-square)](LICENSE) [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/dext-app/Lobby)
 
@@ -45,7 +54,7 @@ Type `?`
 
 ## Dext Package Manager
 
-[Dext Package Manager (`dpm`)](https://github.com/DextApp/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your ***Dext*** instance. Please refer to the docs over at the [`dpm`](https://github.com/DextApp/dext-cli) repository for more information.
+[Dext Package Manager (`dpm`)](https://github.com/DextApp/dext-cli) is available to download separately. `dpm` can be used to easily install and configure your **_Dext_** instance. Please refer to the docs over at the [`dpm`](https://github.com/DextApp/dext-cli) repository for more information.
 
 ```bash
 $ npm install -g dext-cli
