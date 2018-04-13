@@ -30,30 +30,29 @@ const sortByScore = (a, b) => {
 
 module.exports = {
   action: 'openurl',
-  query: (query, options = { size: 20 }) => new Promise(resolve => {
-    const { size } = options;
-    browserBookmarks.getChrome().then(bookmarks => {
-      // resolve and exist if there's no bookmarks
-      if (!bookmarks.length) {
-        resolve({ items: [] });
-        return;
-      }
-
-      const items = new Array(bookmarks.length);
-
-      for (let i = 0; i < bookmarks.length; i++) {
-        const dextItem = mapDextItem(bookmarks[i]);
-        dextItem.score = dextItem.title.score(query);
-        if (dextItem.score > 0) {
-          items[i] = dextItem;
+  query: (query, options = { size: 20 }) =>
+    new Promise(resolve => {
+      const { size } = options;
+      browserBookmarks.getChrome().then(bookmarks => {
+        // resolve and exist if there's no bookmarks
+        if (!bookmarks.length) {
+          resolve({ items: [] });
+          return;
         }
-      }
 
-      const sortedItems = items
-        .sort(sortByScore)
-        .slice(0, size);
+        const items = new Array(bookmarks.length);
 
-      resolve({ items: sortedItems });
-    });
-  }),
+        for (let i = 0; i < bookmarks.length; i++) {
+          const dextItem = mapDextItem(bookmarks[i]);
+          dextItem.score = dextItem.title.score(query);
+          if (dextItem.score > 0) {
+            items[i] = dextItem;
+          }
+        }
+
+        const sortedItems = items.sort(sortByScore).slice(0, size);
+
+        resolve({ items: sortedItems });
+      });
+    }),
 };

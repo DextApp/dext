@@ -23,7 +23,7 @@
     "start": "npm run build && npm run dev",
     "test": "jest --coverage --verbose",
     "format": "npm run format:js && npm run format:md",
-    "format:js": "prettier --write '{*.json,{app,__test__,__mocks__,utils,scripts}/**/*.js{,x}}'",
+    "format:js": "prettier --write '{*.json,{resources,app,__test__,__mocks__,utils,scripts}/**/*.js{,x}}'",
     "format:md": "prettier --parser markdown --write '*.md'"
   },
   "author": "Vu Tran <vu@vu-tran.com>",
