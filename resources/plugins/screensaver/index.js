@@ -8,7 +8,7 @@ module.exports = {
       {
         title: 'Screen Saver',
         arg: {
-          script: './start.js'
+          script: './start.js',
         },
         icon: {
           path: './icon.png',

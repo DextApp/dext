@@ -4,11 +4,11 @@ const math = require('mathjs');
 
 module.exports = {
   action: 'copy',
-  query: (query) => {
+  query: query => {
     try {
       const ans = math.eval(query);
-      if(typeof ans === 'function') {
-          throw 'function returned';
+      if (typeof ans === 'function') {
+        throw 'function returned';
       }
       const items = [];
       items.push({

@@ -6,7 +6,7 @@ const IS_URL = /(?:https?:\/\/)?(?:[w]{3}\.)?([\w\d-]+(?:\.[\w]+)+)(\/?.+)?$/;
  * @param {String} url
  * @return {String}
  */
-const normalize = (url) => {
+const normalize = url => {
   if (/^https?:\/\//.test(url)) {
     return url;
   }
@@ -15,7 +15,7 @@ const normalize = (url) => {
 
 module.exports = {
   action: 'openurl',
-  query: (query) => {
+  query: query => {
     const items = [];
     const urls = IS_URL.exec(query);
     if (urls) {
