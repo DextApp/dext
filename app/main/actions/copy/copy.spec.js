@@ -1,6 +1,5 @@
 import copy from './copy';
 import { clipboard } from 'electron';
-// const { clipboard } = require('electron');
 
 jest.mock('electron', () => ({
   clipboard: {
