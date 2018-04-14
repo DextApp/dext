@@ -1,5 +1,5 @@
-import detailsPaneExpanded from '../../../../../app/renderer/src/reducers/detailsPaneExpanded';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import detailsPaneExpanded from './details-pane-expanded';
 
 describe('detailsPaneExpanded reducer', () => {
   it('should return the intial state', () => {
