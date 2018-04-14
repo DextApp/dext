@@ -5,3 +5,4 @@ pigments-report.json
 app/renderer/lib/
 dist/
 coverage/
+yarn-error.log
