@@ -1,4 +1,8 @@
-import { SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY, RESET_KEYS } from '../actions/types';
+import {
+  SET_ACTIVE_KEY,
+  CLEAR_ACTIVE_KEY,
+  RESET_KEYS,
+} from '../../actions/types';
 
 const initialState = [];
 

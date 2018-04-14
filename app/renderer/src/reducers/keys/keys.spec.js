@@ -1,5 +1,5 @@
-import keys from '../../../../../app/renderer/src/reducers/keys';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import keys from './keys';
 
 describe('keys reducer', () => {
   it('should return the intial state', () => {
