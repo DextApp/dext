@@ -1,13 +1,13 @@
-const electron = require('electron');
-const path = require('path');
-const fs = require('fs');
-const { fork } = require('child_process');
-const plist = require('plist');
-const deepAssign = require('deep-assign');
 const { api, utils } = require('dext-core-utils');
+const { fork } = require('child_process');
+const deepAssign = require('deep-assign');
+const electron = require('electron');
+const fs = require('fs');
 const is = require('is_js');
 const MarkdownIt = require('markdown-it');
-const { MAX_RESULTS, IS_DEV } = require('../constants');
+const path = require('path');
+const plist = require('plist');
+const { MAX_RESULTS, IS_DEV } = require('../../constants');
 
 const { app } = electron;
 const { PLUGIN_PATH } = utils.paths;
