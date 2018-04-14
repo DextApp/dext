@@ -1,4 +1,4 @@
-import helpers from '../../utils/helpers';
+import helpers from './helpers';
 
 describe('debounce', () => {
   it('should debounce a function', async () => {
