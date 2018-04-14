@@ -16,7 +16,7 @@ import {
   CLEAR_ACTIVE_KEY,
   RESET_KEYS,
   COPY_ITEM,
-} from './types';
+} from '../types';
 
 /**
  * Updates the query value
