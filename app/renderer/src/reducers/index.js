@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import copiedToClipboard from './copied-to-clipboard';
 import detailsPane from './details-pane';
-import detailsPaneExpanded from './detailsPaneExpanded';
+import detailsPaneExpanded from './details-pane-expanded';
 import keys from './keys';
 import q from './q';
 import results from './results';
