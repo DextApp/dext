@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import QueryField from '../components/QueryField';
+import QueryField from '../components/query-field';
 import * as actionCreators from '../actions/creators';
 import { ThemeSchema } from '../schema';
 import { IPC_WINDOW_SHOW, IPC_WINDOW_HIDE } from '../../../ipc';

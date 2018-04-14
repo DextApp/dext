@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { compose, style } from 'glamor';
-import { ThemeSchema } from '../schema';
+import { ThemeSchema } from '../../schema';
 
 const base = style({
   paddingTop: 15,
