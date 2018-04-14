@@ -1,4 +1,4 @@
-import { SET_DETAILS, RESET_DETAILS } from '../actions/types';
+import { SET_DETAILS, RESET_DETAILS } from '../../actions/types';
 
 const initialState = '';
 
