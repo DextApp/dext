@@ -1,4 +1,4 @@
-import { UPDATE_QUERY, RESET_QUERY } from '../actions/types';
+import { UPDATE_QUERY, RESET_QUERY } from '../../actions/types';
 
 const initialState = '';
 
