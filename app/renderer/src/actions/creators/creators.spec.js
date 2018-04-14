@@ -1,5 +1,5 @@
-import * as types from '../../../../../app/renderer/src/actions/types';
-import * as actions from '../../../../../app/renderer/src/actions/creators';
+import * as types from '../types';
+import * as actions from './creators';
 
 describe('action creators', () => {
   it('should create an action to reset the query', () => {
