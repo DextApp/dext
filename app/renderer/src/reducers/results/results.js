@@ -1,4 +1,4 @@
-import { UPDATE_RESULTS, RESET_RESULTS } from '../actions/types';
+import { UPDATE_RESULTS, RESET_RESULTS } from '../../actions/types';
 
 const initialState = [];
 
