@@ -1,5 +1,5 @@
-import * as types from '../../../../../app/renderer/src/actions/types';
-import copiedToClipboard from '../../../../../app/renderer/src/reducers/copiedToClipboard';
+import * as types from '../../actions/types';
+import copiedToClipboard from './copied-to-clipboard';
 
 const { COPY_ITEM, SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY, ...allTypes } = types;
 
