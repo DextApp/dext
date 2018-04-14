@@ -5,7 +5,7 @@ import detailsPaneExpanded from './details-pane-expanded';
 import keys from './keys';
 import q from './q';
 import results from './results';
-import selectedIndex from './selectedIndex';
+import selectedIndex from './selected-index';
 import theme from './theme';
 
 export default combineReducers({

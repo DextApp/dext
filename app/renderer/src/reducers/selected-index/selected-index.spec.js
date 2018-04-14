@@ -1,5 +1,5 @@
-import selectedIndex from '../../../../../app/renderer/src/reducers/selectedIndex';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import selectedIndex from './selected-index';
 
 describe('theme reducer', () => {
   it('should return the intial state', () => {
