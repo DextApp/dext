@@ -1,5 +1,3 @@
-jest.dontMock('electron');
-
 import path from 'path';
 import { utils } from 'dext-core-utils';
 import { CORE_PLUGIN_PATH } from '../../constants';
