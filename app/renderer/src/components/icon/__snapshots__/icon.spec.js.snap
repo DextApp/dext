@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rendering should render a file icon component 1`] = `
+<img
+  alt=""
+  data-css-1vehqxh=""
+  role="presentation"
+  src={undefined}
+/>
+`;
+
+exports[`rendering should render a text icon component 1`] = `
+<span
+  data-css-1ezhq81=""
+  role="presentation"
+>
+  T
+</span>
+`;
