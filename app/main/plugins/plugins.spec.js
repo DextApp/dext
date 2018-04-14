@@ -1,9 +1,8 @@
 import path from 'path';
 import { utils } from 'dext-core-utils';
-import { CORE_PLUGIN_PATH } from '../../../app/constants';
-import plugins from '../../../app/main/plugins';
+import { CORE_PLUGIN_PATH } from '../../constants';
+import plugins from './plugins';
 
-jest.dontMock('electron');
 jest.mock('plist');
 jest.mock('conf');
 jest.mock('fs');
@@ -56,21 +55,7 @@ describe('core plugins', () => {
   });
 });
 
-describe('theme plugins', () => {
-  it('should be a theme plugin', () => {
-    // TODO
-  });
-
-  it('should not be a theme plugin', () => {
-    // TODO
-  });
-});
-
 describe('plugin metadata', () => {
-  it('should apply module properties', () => {
-    // TODO
-  });
-
   it('should apply additional meta data to a items', () => {
     const items = [
       {
