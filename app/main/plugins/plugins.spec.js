@@ -57,21 +57,7 @@ describe('core plugins', () => {
   });
 });
 
-describe('theme plugins', () => {
-  it('should be a theme plugin', () => {
-    // TODO
-  });
-
-  it('should not be a theme plugin', () => {
-    // TODO
-  });
-});
-
 describe('plugin metadata', () => {
-  it('should apply module properties', () => {
-    // TODO
-  });
-
   it('should apply additional meta data to a items', () => {
     const items = [
       {
