@@ -1,4 +1,4 @@
-import { SET_THEME } from '../actions/types';
+import { SET_THEME } from '../../actions/types';
 
 const initialState = {};
 
