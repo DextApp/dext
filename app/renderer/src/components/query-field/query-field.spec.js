@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import QueryField from '../../../../../app/renderer/src/components/QueryField';
+import QueryField from './query-field';
 
 describe('<QueryField /> component', () => {
   let theme = {};
