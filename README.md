@@ -1,6 +1,6 @@
 ## 🚧 Notice 🚧
 
-`dext` is, at the moment, subject to heavy development. From `0.9.0`, we won't add any feature unless small with backwards compability in mind.
+`dext` is, at the moment, subject to heavy development. From [`v0.9.0`](https://github.com/DextApp/dext/releases/tag/v0.9.0), we won't add any feature unless small with backwards compability in mind.
 
 Currently, the roadmap for [`dext` 2.0](https://github.com/DextApp/dext/projects/5) is to move to the direction of having the following accomplished:
 
