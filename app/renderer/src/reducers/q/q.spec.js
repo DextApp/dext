@@ -1,5 +1,5 @@
-import q from '../../../../../app/renderer/src/reducers/q';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import q from './q';
 
 describe('q reducer', () => {
   it('should return the intial state', () => {

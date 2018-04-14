@@ -1,12 +1,12 @@
-import { UPDATE_QUERY, RESET_QUERY } from '../actions/types';
+import { SET_DETAILS, RESET_DETAILS } from '../../actions/types';
 
 const initialState = '';
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case UPDATE_QUERY:
-      return action.q;
-    case RESET_QUERY:
+    case SET_DETAILS:
+      return action.value;
+    case RESET_DETAILS:
       return '';
     default:
       return state;

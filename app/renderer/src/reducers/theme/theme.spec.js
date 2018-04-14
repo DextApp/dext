@@ -1,5 +1,5 @@
-import theme from '../../../../../app/renderer/src/reducers/theme';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import theme from './theme';
 
 describe('theme reducer', () => {
   it('should return the intial state', () => {

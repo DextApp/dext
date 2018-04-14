@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux';
-import theme from './theme';
+import copiedToClipboard from './copied-to-clipboard';
+import detailsPane from './details-pane';
+import detailsPaneExpanded from './details-pane-expanded';
+import keys from './keys';
 import q from './q';
 import results from './results';
-import selectedIndex from './selectedIndex';
-import keys from './keys';
-import detailsPane from './detailsPane';
-import detailsPaneExpanded from './detailsPaneExpanded';
-import copiedToClipboard from './copiedToClipboard';
+import selectedIndex from './selected-index';
+import theme from './theme';
 
 export default combineReducers({
-  theme,
+  copiedToClipboard,
+  detailsPane,
+  detailsPaneExpanded,
+  keys,
   q,
   results,
   selectedIndex,
-  keys,
-  detailsPane,
-  detailsPaneExpanded,
-  copiedToClipboard,
+  theme,
 });

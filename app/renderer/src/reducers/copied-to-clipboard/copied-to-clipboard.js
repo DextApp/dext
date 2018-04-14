@@ -1,4 +1,8 @@
-import { COPY_ITEM, SET_ACTIVE_KEY, CLEAR_ACTIVE_KEY } from '../actions/types';
+import {
+  COPY_ITEM,
+  SET_ACTIVE_KEY,
+  CLEAR_ACTIVE_KEY,
+} from '../../actions/types';
 
 const initialState = false;
 

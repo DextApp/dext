@@ -1,7 +1,7 @@
-import detailsPane from '../../../../../app/renderer/src/reducers/detailsPane';
-import * as types from '../../../../../app/renderer/src/actions/types';
+import * as types from '../../actions/types';
+import detailsPane from './details-pane';
 
-describe('detailsPane reducer', () => {
+describe('details-pane', () => {
   it('should return the intial state', () => {
     const state = '';
     const action = {};

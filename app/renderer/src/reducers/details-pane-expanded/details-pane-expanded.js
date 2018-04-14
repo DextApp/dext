@@ -1,4 +1,4 @@
-import { CLOSE_DETAILS, OPEN_DETAILS } from '../actions/types';
+import { CLOSE_DETAILS, OPEN_DETAILS } from '../../actions/types';
 
 export default function(_, action) {
   switch (action.type) {
