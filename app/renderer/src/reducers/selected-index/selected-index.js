@@ -3,7 +3,7 @@ import {
   SELECT_NEXT_ITEM,
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
-} from '../actions/types';
+} from '../../actions/types';
 
 const initialState = 0;
 
