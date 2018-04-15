@@ -1,4 +1,4 @@
-import m from '../../../../resources/plugins/bookmarks';
+import m from './bookmarks';
 
 jest.mock('browser-bookmarks');
 
