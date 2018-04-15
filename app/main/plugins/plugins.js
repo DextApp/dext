@@ -303,6 +303,8 @@ exports.queryResults = (plugin, args) =>
           `);
           }
 
+          // @TODO
+          // consider whether we should support plugins to throw their own `Error`
           Promise.resolve(output).then(i => {
             const items = exports.connectItems(i.items, plugin);
             resolve(items);
