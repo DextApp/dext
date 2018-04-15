@@ -4,10 +4,10 @@
     "@babel/preset-stage-3",
     "@babel/preset-es2017"
   ],
-  "plugins": ["transform-class-properties"],
   "env": {
     "test": {
-      "presets": ["@babel/preset-env", "@babel/preset-react"]
+      "presets": ["@babel/preset-env", "@babel/preset-react"],
+      "plugins": ["transform-class-properties"]
     }
   }
 }
