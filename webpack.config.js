@@ -1,14 +1,15 @@
+const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
+const config = {
   entry: {
-    index: [
+    main: [
       'babel-polyfill',
-      path.resolve(__dirname, 'app', 'renderer', 'src', 'index'),
+      path.resolve(__dirname, 'app/renderer/src/index.js'),
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'app', 'renderer', 'lib'),
+    path: path.resolve(__dirname, 'app/renderer/lib'),
     filename: 'bundle.js',
   },
   module: {
@@ -21,9 +22,11 @@ module.exports = {
       {
         test: /\.json$/,
         exclude: /node_modules/,
-        loaders: ['json-loader'],
+        use: ['json-loader'],
       },
     ],
   },
-  target: 'electron',
+  target: 'electron-renderer',
 };
+
+module.exports = config;
