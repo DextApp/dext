@@ -68,7 +68,8 @@
     "redux-devtools-log-monitor": "^1.1.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-cli": "^2.0.14",
+    "webpack-merge": "^4.1.2"
   },
   "dependencies": {
     "browser-bookmarks": "^0.3.0",
