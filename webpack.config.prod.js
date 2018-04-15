@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const deepAssign = require('deep-assign');
+const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -11,7 +11,7 @@ const plugins = [
   `),
 ];
 
-const prodConfig = deepAssign({}, baseConfig, {
+const prodConfig = merge({}, baseConfig, {
   mode: 'production',
   optimization: {
     minimizer: [new UglifyJsPlugin()],
