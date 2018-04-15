@@ -5,4 +5,13 @@ pigments-report.json
 app/renderer/lib/
 dist/
 coverage/
+
+# intermediate step
+# at the moment, we have had trouble with `yarn install` with the following env
+# - yarn >=v1.6.0
+# - node >= v8.0.0
+# - electron v1.8.4
+# both locally and on `travis`. Until we see a resolution on this, we decided to skip yarn
+# as the tool for our builds for now
 yarn-error.log
+yarn.lock
