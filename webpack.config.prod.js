@@ -14,7 +14,13 @@ const plugins = [
 const prodConfig = merge({}, baseConfig, {
   mode: 'production',
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: { warnings: false },
+        },
+      }),
+    ],
     minimize: true,
   },
   plugins,
