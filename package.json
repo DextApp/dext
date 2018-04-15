@@ -93,5 +93,8 @@
     "redux-saga": "^0.14.3",
     "screen-saver": "^0.2.1",
     "string_score": "^0.1.22"
+  },
+  "engines": {
+    "node": ">= 8.0.0"
   }
 }
