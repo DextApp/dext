@@ -6,10 +6,20 @@ import { bindActionCreators } from 'redux';
 import App from '../components/App';
 import * as actionCreators from '../actions/creators';
 import { ThemeSchema } from '../schema';
-import { IPC_WINDOW_RESIZE, IPC_LOAD_THEME } from '../../../ipc';
+import {
+  IPC_WINDOW_RESIZE,
+  IPC_LOAD_THEME,
+  IPC_QUERY_COMMAND,
+} from '../../../ipc';
 
 const AppContainer = class extends Component {
   static displayName = 'AppContainer';
+
+  state = {
+    // the current query value
+    q: '',
+  };
+
   componentDidMount() {
     const { setTheme } = this.props;
     // focus the query input field when the window is shown
@@ -20,7 +30,7 @@ const AppContainer = class extends Component {
 
   componentDidUpdate() {
     const { theme } = this.props;
-    if (theme && theme.window.width) {
+    if (theme && theme.window && theme.window.width) {
       let width = theme.window.width;
       if (theme.window.width > 650) {
         width = 650;
@@ -29,20 +39,42 @@ const AppContainer = class extends Component {
     }
   }
 
+  updateQuery = q => {
+    this.setState({ q });
+    ipcRenderer.send(IPC_QUERY_COMMAND, { q });
+  };
+
+  resetQuery = () => {
+    // @todo - just clearn the results once results actions/reducers are removed
+    this.props.resetResults && this.props.resetResults();
+  };
+
   render() {
-    const { theme } = this.props;
-    return <App theme={theme} />;
+    return (
+      <App
+        q={this.state.q}
+        theme={this.props.theme}
+        onQueryChange={this.updateQuery}
+        onQueryReset={this.resetQuery}
+      />
+    );
   }
 };
 
 AppContainer.defaultProps = {
   theme: {},
+
+  // redux-actions
   setTheme: () => {},
+  resetResults: () => {},
 };
 
 AppContainer.propTypes = {
   theme: ThemeSchema,
+
+  // redux-actions
   setTheme: PropTypes.func,
+  resetResults: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

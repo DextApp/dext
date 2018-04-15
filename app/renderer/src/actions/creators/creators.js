@@ -1,6 +1,4 @@
 import {
-  UPDATE_QUERY,
-  RESET_QUERY,
   UPDATE_RESULTS,
   RESET_RESULTS,
   SELECT_ITEM,
@@ -17,25 +15,6 @@ import {
   RESET_KEYS,
   COPY_ITEM,
 } from '../types';
-
-/**
- * Updates the query value
- *
- * @param {String} q - The command query
- * @return {Object}
- */
-export function updateQuery(q) {
-  return { type: UPDATE_QUERY, q };
-}
-
-/**
- * Resets the query value
- *
- * @return {Object}
- */
-export function resetQuery() {
-  return { type: RESET_QUERY };
-}
 
 /**
  * Updates the results

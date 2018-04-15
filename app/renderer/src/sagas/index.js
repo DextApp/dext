@@ -2,8 +2,6 @@ import { ipcRenderer } from 'electron';
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import {
-  UPDATE_QUERY,
-  RESET_QUERY,
   UPDATE_RESULTS,
   RESET_RESULTS,
   SELECT_ITEM,
@@ -19,7 +17,6 @@ import {
   openDetails,
 } from '../actions/creators';
 import {
-  IPC_QUERY_COMMAND,
   IPC_WINDOW_EXPAND,
   IPC_WINDOW_COLLAPSE,
   IPC_ITEM_DETAILS_REQUEST,
@@ -47,20 +44,6 @@ export function* handleSelectPreviousItem() {
  */
 export function* handleSelectNextItem() {
   yield put(closeDetails());
-}
-
-/**
- * Handles the making a query
- */
-export function* handleQueryCommand(q) {
-  yield call(ipcRenderer.send, IPC_QUERY_COMMAND, q);
-}
-
-/**
- * Handles the reset results action
- */
-export function* handleResetQuery() {
-  yield put(resetResults());
 }
 
 /**
@@ -97,8 +80,6 @@ export default function*() {
     takeEvery(SELECT_ITEM, handleSelectItem),
     takeEvery(SELECT_PREVIOUS_ITEM, handleSelectPreviousItem),
     takeEvery(SELECT_NEXT_ITEM, handleSelectNextItem),
-    takeEvery(UPDATE_QUERY, handleQueryCommand),
-    takeEvery(RESET_QUERY, handleResetQuery),
     takeEvery(UPDATE_RESULTS, handleUpdateResults),
     takeEvery(RESET_RESULTS, handleCollapseWindow),
     takeEvery(SET_DETAILS, handleSetDetails),
