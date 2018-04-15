@@ -1,26 +1,23 @@
 const webpack = require('webpack');
 const deepAssign = require('deep-assign');
 const baseConfig = require('./webpack.config');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const prodConfig = deepAssign({}, baseConfig);
+const plugins = [
+  new webpack.BannerPlugin(`
+    (c) Copyright 2018. Vu Tran
+    Website: https://github.com/DextApp/dext/
+    Developer: Vu Tran <vu@vu-tran.com>
+  `),
+];
 
-// merge plugins
-prodConfig.plugins = baseConfig.plugins || [];
-prodConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-  minimize: true,
-  compress: {
-    warnings: false,
+const prodConfig = deepAssign({}, baseConfig, {
+  mode: 'production',
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+    minimize: true,
   },
-  output: {
-    comments: false,
-  },
-}));
-
-// add banner
-prodConfig.plugins.push(new webpack.BannerPlugin(`
-(c) Copyright 2016. Vu Tran
-Website: https://github.com/DextApp/dext/
-Developer: Vu Tran <vu@vu-tran.com>
-`));
+  plugins,
+});
 
 module.exports = prodConfig;
