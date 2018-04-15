@@ -10,6 +10,7 @@ import { ThemeSchema } from '../schema';
 
 const ResultDetailsContainer = class extends Component {
   static displayName = 'ResultDetailsContainer';
+
   componentDidMount() {
     const { setDetails } = this.props;
     ipcRenderer.on(IPC_ITEM_DETAILS_RESPONSE, (evt, html) => {
@@ -18,7 +19,6 @@ const ResultDetailsContainer = class extends Component {
       }
     });
   }
-
   render() {
     const { theme, detailsPane, detailsPaneExpanded } = this.props;
     return detailsPane ? (
