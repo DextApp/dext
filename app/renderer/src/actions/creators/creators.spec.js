@@ -2,21 +2,6 @@ import * as types from '../types';
 import * as actions from './creators';
 
 describe('action creators', () => {
-  it('should create an action to reset the query', () => {
-    const expectedAction = {
-      type: types.RESET_QUERY,
-    };
-    expect(actions.resetQuery()).toEqual(expectedAction);
-  });
-
-  it('should create an action to update the query', () => {
-    const expectedAction = {
-      type: types.UPDATE_QUERY,
-      q: 'foo',
-    };
-    expect(actions.updateQuery('foo')).toEqual(expectedAction);
-  });
-
   it('should create an action to update the results', () => {
     const results = [
       {

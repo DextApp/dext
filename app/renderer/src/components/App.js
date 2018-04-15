@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { compose, style } from 'glamor';
-import QueryFieldContainer from '../containers/QueryFieldContainer';
+import QueryFieldContainer from '../containers/query-field-container';
 import ResultListContainer from '../containers/ResultListContainer';
 import { ThemeSchema } from '../schema';
 
@@ -24,7 +25,7 @@ const base = style({
   overflow: 'hidden',
 });
 
-const App = ({ theme }) => {
+const App = ({ q, theme, onQueryChange, onQueryReset }) => {
   const outerStyles = theme.window
     ? compose(outerBase, { backgroundColor: theme.window.backgroundColor })
     : outerBase;
@@ -34,7 +35,12 @@ const App = ({ theme }) => {
   return (
     <div {...outerStyles}>
       <div {...innerStyles}>
-        <QueryFieldContainer theme={theme} />
+        <QueryFieldContainer
+          q={q}
+          theme={theme}
+          onChange={onQueryChange}
+          onReset={onQueryReset}
+        />
         <ResultListContainer theme={theme} />
       </div>
     </div>
@@ -47,6 +53,8 @@ App.defaultProps = {
 
 App.propTypes = {
   theme: ThemeSchema,
+  onQueryChange: PropTypes.func,
+  onQueryReset: PropTypes.func,
 };
 
 export default App;

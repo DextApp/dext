@@ -1,5 +1,3 @@
-export const UPDATE_QUERY = 'UPDATE_QUERY';
-export const RESET_QUERY = 'RESET_QUERY';
 export const UPDATE_RESULTS = 'UPDATE_RESULTS';
 export const RESET_RESULTS = 'RESET_RESULTS';
 export const SELECT_ITEM = 'SELECT_ITEM';

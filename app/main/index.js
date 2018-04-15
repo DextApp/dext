@@ -194,7 +194,7 @@ const handleDidFinishLoad = theme => {
  * plugins { path, name, isCore, schema, action, keyword }
  *
  * @param {Event} evt
- * @param {Object} message - The IPC message { q, type }
+ * @param {Object} message - The IPC message { q }
  * @param {Object[]} plugins - An array of plugin objects
  */
 const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
