@@ -1,4 +1,4 @@
-import m from '../../../../resources/plugins/browser';
+import m from './browser';
 
 describe('browser', () => {
   it('should return google.com', () => {
