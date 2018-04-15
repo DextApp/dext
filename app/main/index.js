@@ -37,7 +37,6 @@ const {
   IS_DEV,
 } = require('../constants');
 const Config = require('../../utils/conf');
-const CacheConf = require('../../utils/CacheConf');
 const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
 
 const { PLUGIN_PATH } = utils.paths;
@@ -277,29 +276,18 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
 
 /**
  * Retrieve item details and sends back the response.
- * Loads from cache if necessary.
  *
  * @param {Event} evt
  * @param {Object} item
  */
 const handleItemDetailsRequest = (evt, item) => {
-  // set empty content
-  let content = '';
-  // load from cache if available
-  const configName = `${path.basename(item.plugin.path)}-itemDetails`;
-  const cacheConf = new CacheConf({ configName });
-  const cacheKey = JSON.stringify(item);
-  if (cacheConf.has(cacheKey)) {
-    content = cacheConf.get(cacheKey);
-  } else {
-    // otherwise, load from plugin
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    const plugin = require(item.plugin.path);
-    content = retrieveItemDetails(item, plugin);
-  }
+  // otherwise, load from plugin
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  const plugin = require(item.plugin.path);
+  // @todo - cache content
+  const content = retrieveItemDetails(item, plugin);
   // resolve and update the state
   Promise.resolve(content).then(html => {
-    cacheConf.set(cacheKey, html);
     evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
   });
 };

@@ -1,11 +1,17 @@
+// This mocks node_modules/conf
+
 /* eslint-disable class-methods-use-this */
 
 /**
  * The mock store data object
  */
-let _store = '';
+let _store = {};
 
-const Conf = class {
+class Conf {
+  has(key) {
+    return key in _store;
+  }
+
   get(key) {
     return _store[key];
   }
@@ -17,7 +23,15 @@ const Conf = class {
   clear() {
     _store = {};
   }
-};
+
+  get size() {
+    return Object.keys(_store).length;
+  }
+
+  get store() {
+    return _store;
+  }
+}
 
 /**
  * Sets the mock data for the store
