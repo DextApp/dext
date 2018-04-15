@@ -10,14 +10,6 @@ import { IPC_EXECUTE_ITEM } from '../../../ipc';
 
 const ResultItemContainer = class extends Component {
   static displayName = 'ResultItemContainer';
-  constructor() {
-    super();
-    this.handleDoubleClick = this.handleDoubleClick.bind(this);
-  }
-
-  handleDoubleClick() {
-    this.execute();
-  }
 
   isAltMod() {
     return (
@@ -35,7 +27,7 @@ const ResultItemContainer = class extends Component {
     );
   }
 
-  execute() {
+  execute = () => {
     const { item } = this.props;
     const { action } = item;
     ipcRenderer.send(IPC_EXECUTE_ITEM, {
@@ -44,7 +36,7 @@ const ResultItemContainer = class extends Component {
       isAltMod: this.isAltMod(),
       isSuperMod: this.isSuperMod(),
     });
-  }
+  };
 
   render() {
     const { theme, item, selected, copiedToClipboard } = this.props;
@@ -53,7 +45,7 @@ const ResultItemContainer = class extends Component {
         theme={theme}
         item={item}
         selected={selected}
-        onDoubleClick={this.handleDoubleClick}
+        onDoubleClick={this.execute}
         isAltMod={this.isAltMod()}
         isSuperMod={this.isSuperMod()}
         copiedToClipboard={copiedToClipboard && selected}

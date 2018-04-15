@@ -22,12 +22,6 @@ import {
 
 const ResultListContainer = class extends Component {
   static displayName = 'ResultListContainer';
-  constructor() {
-    super();
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
-  }
-
   componentDidMount() {
     const self = this;
     const {
@@ -81,13 +75,13 @@ const ResultListContainer = class extends Component {
     window.removeEventListener('keyup', this.handleKeyUp);
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = e => {
     this.props.setActiveKey(e.key.toLowerCase());
-  }
+  };
 
-  handleKeyUp(e) {
+  handleKeyUp = e => {
     this.props.clearActiveKey(e.key.toLowerCase());
-  }
+  };
 
   /**
    * Retrieves the extended details for the given item
