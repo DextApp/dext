@@ -50,13 +50,10 @@ const AppContainer = class extends Component {
   };
 
   render() {
-    const { theme } = this.props;
-    const { q } = this.state;
-
     return (
       <App
-        q={q}
-        theme={theme}
+        q={this.state.q}
+        theme={this.props.theme}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
       />
@@ -69,6 +66,7 @@ AppContainer.defaultProps = {
 
   // redux-actions
   setTheme: () => {},
+  resetResults: () => {},
 };
 
 AppContainer.propTypes = {
@@ -76,6 +74,7 @@ AppContainer.propTypes = {
 
   // redux-actions
   setTheme: PropTypes.func,
+  resetResults: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

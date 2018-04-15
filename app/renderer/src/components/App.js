@@ -25,36 +25,42 @@ const base = style({
   overflow: 'hidden',
 });
 
-const App = ({ q, theme, onQueryChange, onQueryReset }) => {
-  const outerStyles = theme.window
-    ? compose(outerBase, { backgroundColor: theme.window.backgroundColor })
+const App = props => {
+  const outerStyles = props.theme.window
+    ? compose(outerBase, {
+        backgroundColor: props.theme.window.backgroundColor,
+      })
     : outerBase;
 
-  const innerStyles = theme.window ? compose(base, theme.window) : base;
+  const innerStyles = props.theme.window
+    ? compose(base, props.theme.window)
+    : base;
 
   return (
     <div {...outerStyles}>
       <div {...innerStyles}>
         <QueryFieldContainer
-          q={q}
-          theme={theme}
-          onChange={onQueryChange}
-          onReset={onQueryReset}
+          q={props.q}
+          theme={props.theme}
+          onChange={props.onQueryChange}
+          onReset={props.onQueryReset}
         />
-        <ResultListContainer theme={theme} />
+        <ResultListContainer theme={props.theme} />
       </div>
     </div>
   );
 };
 
 App.defaultProps = {
+  q: '',
   theme: {},
 };
 
 App.propTypes = {
-  theme: ThemeSchema,
   onQueryChange: PropTypes.func,
   onQueryReset: PropTypes.func,
+  q: PropTypes.string,
+  theme: ThemeSchema,
 };
 
 export default App;
