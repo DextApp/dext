@@ -1,4 +1,4 @@
-import m from '../../../../resources/plugins/calculator';
+import m from './calculator';
 
 jest.mock('mathjs');
 
