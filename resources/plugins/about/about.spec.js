@@ -1,4 +1,4 @@
-import m from '../../../../resources/plugins/about';
+import m from './about';
 
 describe('calculator', () => {
   it('should return something', () => {
