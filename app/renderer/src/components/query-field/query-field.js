@@ -28,10 +28,6 @@ const search = style({
 });
 
 const QueryField = class extends Component {
-  attach = c => {
-    this.input = c;
-  };
-
   render() {
     const { theme, onChange, value } = this.props;
 
@@ -44,7 +40,7 @@ const QueryField = class extends Component {
     return (
       <div {...baseStyle}>
         <input
-          ref={this.attach}
+          ref={this.props.attachInputRef}
           onChange={onChange}
           value={value}
           {...styles}
@@ -55,12 +51,14 @@ const QueryField = class extends Component {
 };
 
 QueryField.defaultProps = {
+  attachInputRef: () => {},
   onChange: () => {},
   theme: {},
   value: '',
 };
 
 QueryField.propTypes = {
+  attachInputRef: PropTypes.func,
   onChange: PropTypes.func,
   theme: ThemeSchema,
   value: PropTypes.string,
