@@ -41,13 +41,12 @@ const QueryFieldContainer = class extends Component {
   };
 
   render() {
-    const { q, theme } = this.props;
     return (
       <QueryField
         attachInputRef={this.attachQueryField}
-        value={q}
+        value={this.props.q}
         onChange={this.handleChange}
-        theme={theme}
+        theme={this.props.theme}
       />
     );
   }
