@@ -6,54 +6,47 @@ import { ThemeSchema } from '../../schema';
 import { IPC_WINDOW_SHOW, IPC_WINDOW_HIDE } from '../../../../ipc';
 
 const QueryFieldContainer = class extends Component {
+  queryField = null;
+
   static displayName = 'QueryFieldContainer';
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
 
   componentDidMount() {
-    const self = this;
-    // focus the query input field when the window is shown
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
-      self.focus();
+      this.focus();
     });
-    // resets the querty and blurs the input field when the window is hidden
     ipcRenderer.on(IPC_WINDOW_HIDE, () => {
-      this.props.onReset && this.props.onReset();
-      self.blur();
+      if (this.props.onReset) this.props.onReset();
+      this.blur();
     });
   }
 
-  focus() {
+  focus = () => {
     if (this.queryField) {
-      this.queryField.input.focus();
+      this.queryField.focus();
     }
-  }
+  };
 
-  blur() {
+  blur = () => {
     if (this.queryField) {
-      this.queryField.input.blur();
+      this.queryField.blur();
     }
-  }
+  };
 
-  handleChange(e) {
-    const { value } = e.target;
-    this.props.onChange && this.props.onChange(value);
-  }
+  handleChange = e => {
+    if (this.props.onChange) this.props.onChange(e.target.value);
+  };
 
-  attach = c => {
-    this.queryField = c;
+  attachQueryField = queryField => {
+    this.queryField = queryField;
   };
 
   render() {
-    const { q, theme } = this.props;
     return (
       <QueryField
-        ref={this.attach}
-        value={q}
+        attachInputRef={this.attachQueryField}
+        value={this.props.q}
         onChange={this.handleChange}
-        theme={theme}
+        theme={this.props.theme}
       />
     );
   }
