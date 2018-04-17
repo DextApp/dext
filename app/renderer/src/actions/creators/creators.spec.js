@@ -108,11 +108,4 @@ describe('action creators', () => {
     };
     expect(actions.resetKeys()).toEqual(expectedAction);
   });
-
-  it('should create an action to copy an item to the clipboard', () => {
-    const expectedAction = {
-      type: types.COPY_ITEM,
-    };
-    expect(actions.copyToClipboard()).toEqual(expectedAction);
-  });
 });
