@@ -4,9 +4,9 @@ import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/creators';
-import ResultList from '../components/ResultList';
-import { ResultItemSchema, ThemeSchema } from '../schema';
+import * as actionCreators from '../../actions/creators';
+import ResultList from '../../components/result-list';
+import { ResultItemSchema, ThemeSchema } from '../../schema';
 import {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_RESIZE,
@@ -18,7 +18,7 @@ import {
   IPC_EXECUTE_CURRENT_ITEM,
   IPC_ITEM_DETAILS_REQUEST,
   IPC_EXECUTE_ITEM,
-} from '../../../ipc';
+} from '../../../../ipc';
 
 const ResultListContainer = class extends Component {
   static displayName = 'ResultListContainer';
@@ -52,10 +52,12 @@ const ResultListContainer = class extends Component {
       } else {
         resetResults();
       }
+      this.setState({ copiedToClipboard: false });
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (self.props.selectedIndex > 0) {
         selectPreviousItem();
+        this.setState({ copiedToClipboard: false });
         self.scrollToItem(self.props.selectedIndex);
         self.retrieveDetails(self.props.selectedIndex);
       }
@@ -63,6 +65,7 @@ const ResultListContainer = class extends Component {
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (self.props.selectedIndex < self.props.results.length - 1) {
         selectNextItem();
+        this.setState({ copiedToClipboard: false });
         self.scrollToItem(self.props.selectedIndex);
         self.retrieveDetails(self.props.selectedIndex);
       }

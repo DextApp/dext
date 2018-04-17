@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/creators';
-import ResultItem from '../components/result-item';
-import { ThemeSchema, ResultItemSchema } from '../schema';
-import { IPC_EXECUTE_ITEM } from '../../../ipc';
+import * as actionCreators from '../../actions/creators';
+import ResultItem from '../../components/result-item';
+import { ThemeSchema, ResultItemSchema } from '../../schema';
+import { IPC_EXECUTE_ITEM } from '../../../../ipc';
 
 const ResultItemContainer = class extends Component {
   static displayName = 'ResultItemContainer';

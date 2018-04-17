@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, style } from 'glamor';
 import QueryFieldContainer from '../containers/query-field-container';
-import ResultListContainer from '../containers/ResultListContainer';
+import ResultListContainer from '../containers/result-list-container';
 import { ThemeSchema } from '../schema';
 
 const outerBase = style({
