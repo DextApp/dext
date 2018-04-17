@@ -5,7 +5,6 @@ import {
   SELECT_NEXT_ITEM,
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
-  SET_THEME,
   SET_DETAILS,
   RESET_DETAILS,
   CLOSE_DETAILS,
@@ -71,16 +70,6 @@ export function selectPreviousItem() {
  */
 export function selectNextItem() {
   return { type: SELECT_NEXT_ITEM };
-}
-
-/**
- * Sets the theme
- *
- * @param {Object} theme
- * @return {Object}
- */
-export function setTheme(theme) {
-  return { type: SET_THEME, theme };
 }
 
 /**
