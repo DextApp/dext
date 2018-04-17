@@ -20,6 +20,8 @@ const AppContainer = class extends Component {
     q: '',
     // the current theme
     theme: '',
+    // currently pressed keys
+    keys: [],
   };
 
   componentDidMount() {
@@ -53,13 +55,36 @@ const AppContainer = class extends Component {
     this.props.resetResults && this.props.resetResults();
   };
 
+  setActiveKey = key => {
+    this.setState(prev => ({
+      keys: [...prev.keys, key],
+    }));
+  };
+
+  clearActiveKey = key => {
+    this.setState(prev => ({
+      keys: [
+        ...prev.keys.slice(0, prev.keys.indexOf(key)),
+        ...prev.keys.slice(prev.keys.indexOf(key) + 1),
+      ],
+    }));
+  };
+
+  resetKeys = () => {
+    return [];
+  };
+
   render() {
     return (
       <App
         q={this.state.q}
         theme={this.state.theme}
+        keys={this.state.keys}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
+        onSetActiveKey={this.setActiveKey}
+        onClearActiveKey={this.clearActiveKey}
+        onResetKeys={this.resetKeys}
       />
     );
   }
