@@ -72,13 +72,7 @@ ResultItemContainer.propTypes = {
   copiedToClipboard: PropTypes.bool,
 };
 
-const mapStateToProps = ({ keys }) => ({
-  keys,
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ResultItemContainer
-);
+export default connect(mapDispatchToProps)(ResultItemContainer);

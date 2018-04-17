@@ -36,11 +36,18 @@ const shown = style({
 const ResultList = class extends Component {
   render() {
     // Retrieve an array of <ResultItemContainer /> containers
-    const getResultItems = (results, selectedIndex, theme, copiedToClipboard) =>
+    const getResultItems = (
+      results,
+      selectedIndex,
+      theme,
+      keys,
+      copiedToClipboard
+    ) =>
       results.map((item, key) => (
         <ResultItemContainer
           key={key}
           theme={theme}
+          keys={keys}
           item={item}
           copiedToClipboard={copiedToClipboard}
           selected={selectedIndex === key}
@@ -62,6 +69,7 @@ const ResultList = class extends Component {
             this.props.results,
             this.props.selectedIndex,
             this.props.theme,
+            this.props.keys,
             this.props.copiedToClipboard
           )}
         </ol>
@@ -75,6 +83,7 @@ const ResultList = class extends Component {
 
 ResultList.defaultProps = {
   theme: {},
+  keys: [],
   results: [],
   selectedIndex: 0,
   copiedToClipboard: false,
@@ -82,6 +91,7 @@ ResultList.defaultProps = {
 
 ResultList.propTypes = {
   theme: ThemeSchema,
+  keys: PropTypes.arrayOf(PropTypes.string),
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
   copiedToClipboard: PropTypes.bool,

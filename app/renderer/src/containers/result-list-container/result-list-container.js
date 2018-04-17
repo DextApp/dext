@@ -37,7 +37,7 @@ const ResultListContainer = class extends Component {
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
-      this.props.resetKeys();
+      this.props.onResetKeys && this.props.onResetKeys();
     });
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
@@ -83,11 +83,12 @@ const ResultListContainer = class extends Component {
   }
 
   handleKeyDown = e => {
-    this.props.setActiveKey(e.key.toLowerCase());
+    this.props.onSetActiveKey && this.props.onSetActiveKey(e.key.toLowerCase());
   };
 
   handleKeyUp = e => {
-    this.props.clearActiveKey(e.key.toLowerCase());
+    this.props.onClearActiveKey &&
+      this.props.onClearActiveKey(e.key.toLowerCase());
   };
 
   /**
@@ -146,17 +147,17 @@ const ResultListContainer = class extends Component {
   }
 
   render() {
-    const { theme, results, selectedIndex } = this.props;
-    if (results.length) {
+    if (this.props.results.length) {
       return (
         <ResultList
           ref={c => {
             this.c = c;
           }}
-          theme={theme}
-          results={results}
-          selectedIndex={selectedIndex}
-          copiedToClipboard={this.state.copiedToClipboard}
+          theme={this.props.theme}
+          keys={this.props.keys}
+          results={this.props.results}
+          selectedIndex={this.props.selectedIndex}
+          copiedToClipboard={this.props.copiedToClipboard}
         />
       );
     }
@@ -167,6 +168,8 @@ const ResultListContainer = class extends Component {
 ResultListContainer.defaultProps = {
   theme: {},
   keys: [],
+
+  // todo - still in redux
   results: [],
   selectedIndex: 0,
   selectItem: () => {},
@@ -174,29 +177,27 @@ ResultListContainer.defaultProps = {
   selectPreviousItem: () => {},
   updateResults: () => {},
   resetResults: () => {},
-  setActiveKey: () => {},
-  clearActiveKey: () => {},
-  resetKeys: () => {},
 };
 
 ResultListContainer.propTypes = {
   theme: ThemeSchema,
   keys: PropTypes.arrayOf(PropTypes.string),
+  onSetActiveKey: PropTypes.func,
+  onClearActiveKey: PropTypes.func,
+  onResetKeys: PropTypes.func,
+
+  // todo - still in redux
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
   selectNextItem: PropTypes.func,
   selectPreviousItem: PropTypes.func,
   updateResults: PropTypes.func,
   resetResults: PropTypes.func,
-  setActiveKey: PropTypes.func,
-  clearActiveKey: PropTypes.func,
-  resetKeys: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   results: state.results,
   selectedIndex: state.selectedIndex,
-  keys: state.keys,
 });
 
 const mapDispatchToProps = dispatch =>

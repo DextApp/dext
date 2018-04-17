@@ -85,27 +85,4 @@ describe('action creators', () => {
     };
     expect(actions.openDetails()).toEqual(expectedAction);
   });
-
-  it('should create an action to set the active key', () => {
-    const expectedAction = {
-      type: types.SET_ACTIVE_KEY,
-      key: 'alt',
-    };
-    expect(actions.setActiveKey('alt')).toEqual(expectedAction);
-  });
-
-  it('should create an action to clear the active key', () => {
-    const expectedAction = {
-      type: types.CLEAR_ACTIVE_KEY,
-      key: 'alt',
-    };
-    expect(actions.clearActiveKey('alt')).toEqual(expectedAction);
-  });
-
-  it('should create an action to reset all keys', () => {
-    const expectedAction = {
-      type: types.RESET_KEYS,
-    };
-    expect(actions.resetKeys()).toEqual(expectedAction);
-  });
 });
