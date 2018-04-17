@@ -72,9 +72,8 @@ ResultItemContainer.propTypes = {
   copiedToClipboard: PropTypes.bool,
 };
 
-const mapStateToProps = ({ keys, copiedToClipboard }) => ({
+const mapStateToProps = ({ keys }) => ({
   keys,
-  copiedToClipboard,
 });
 
 const mapDispatchToProps = dispatch =>

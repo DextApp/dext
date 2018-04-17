@@ -22,6 +22,11 @@ import {
 
 const ResultListContainer = class extends Component {
   static displayName = 'ResultListContainer';
+
+  state = {
+    copiedToClipboard: false,
+  };
+
   componentDidMount() {
     const self = this;
     const {
@@ -101,6 +106,7 @@ const ResultListContainer = class extends Component {
     const { results, selectedIndex } = this.props;
     const item = results[selectedIndex];
     ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
+    this.setState({ copiedToClipboard: true });
   }
 
   isAltMod() {
@@ -148,6 +154,7 @@ const ResultListContainer = class extends Component {
           theme={theme}
           results={results}
           selectedIndex={selectedIndex}
+          copiedToClipboard={this.state.copiedToClipboard}
         />
       );
     }
