@@ -18,13 +18,13 @@ const AppContainer = class extends Component {
   state = {
     // the current query value
     q: '',
+    // the current theme
+    theme: '',
   };
 
   componentDidMount() {
-    const { setTheme } = this.props;
-    // focus the query input field when the window is shown
-    ipcRenderer.on(IPC_LOAD_THEME, (evt, data) => {
-      setTheme(data);
+    ipcRenderer.on(IPC_LOAD_THEME, (evt, theme) => {
+      this.setTheme(theme);
     });
   }
 
@@ -38,6 +38,10 @@ const AppContainer = class extends Component {
       ipcRenderer.send(IPC_WINDOW_RESIZE, { width });
     }
   }
+
+  setTheme = theme => {
+    this.setState({ theme });
+  };
 
   updateQuery = q => {
     this.setState({ q });
@@ -53,7 +57,7 @@ const AppContainer = class extends Component {
     return (
       <App
         q={this.state.q}
-        theme={this.props.theme}
+        theme={this.state.theme}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
       />
@@ -62,26 +66,16 @@ const AppContainer = class extends Component {
 };
 
 AppContainer.defaultProps = {
-  theme: {},
-
   // redux-actions
-  setTheme: () => {},
   resetResults: () => {},
 };
 
 AppContainer.propTypes = {
-  theme: ThemeSchema,
-
   // redux-actions
-  setTheme: PropTypes.func,
   resetResults: PropTypes.func,
 };
-
-const mapStateToProps = state => ({
-  theme: state.theme,
-});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default connect(mapDispatchToProps)(AppContainer);

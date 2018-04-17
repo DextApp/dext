@@ -5,7 +5,6 @@ import detailsPaneExpanded from './details-pane-expanded';
 import keys from './keys';
 import results from './results';
 import selectedIndex from './selected-index';
-import theme from './theme';
 
 export default combineReducers({
   copiedToClipboard,
@@ -14,5 +13,4 @@ export default combineReducers({
   keys,
   results,
   selectedIndex,
-  theme,
 });

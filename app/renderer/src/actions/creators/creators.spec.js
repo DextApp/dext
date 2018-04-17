@@ -57,14 +57,6 @@ describe('action creators', () => {
     expect(actions.selectNextItem()).toEqual(expectedAction);
   });
 
-  it('should create an action to set the theme', () => {
-    const expectedAction = {
-      type: types.SET_THEME,
-      theme: 'foo-theme',
-    };
-    expect(actions.setTheme('foo-theme')).toEqual(expectedAction);
-  });
-
   it('should create an action to set the details', () => {
     const expectedAction = {
       type: types.SET_DETAILS,
