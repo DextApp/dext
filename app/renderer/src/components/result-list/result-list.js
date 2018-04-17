@@ -2,9 +2,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { compose, pseudo, style } from 'glamor';
-import ResultItemContainer from '../containers/ResultItemContainer';
-import ResultDetailsContainer from '../containers/ResultDetailsContainer';
-import { ResultItemSchema, ThemeSchema } from '../schema';
+import ResultItemContainer from '../../containers/result-item-container';
+import ResultDetailsContainer from '../../containers/ResultDetailsContainer';
+import { ResultItemSchema, ThemeSchema } from '../../schema';
 
 const base = compose(
   style({
