@@ -28,7 +28,6 @@ const ResultListContainer = class extends Component {
   };
 
   componentDidMount() {
-    const self = this;
     const {
       updateResults,
       resetResults,
@@ -55,26 +54,26 @@ const ResultListContainer = class extends Component {
       this.setState({ copiedToClipboard: false });
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
-      if (self.props.selectedIndex > 0) {
+      if (this.props.selectedIndex > 0) {
         selectPreviousItem();
         this.setState({ copiedToClipboard: false });
-        self.scrollToItem(self.props.selectedIndex);
-        self.retrieveDetails(self.props.selectedIndex);
+        this.scrollToItem(this.props.selectedIndex);
+        this.retrieveDetails(this.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
-      if (self.props.selectedIndex < self.props.results.length - 1) {
+      if (this.props.selectedIndex < this.props.results.length - 1) {
         selectNextItem();
         this.setState({ copiedToClipboard: false });
-        self.scrollToItem(self.props.selectedIndex);
-        self.retrieveDetails(self.props.selectedIndex);
+        this.scrollToItem(this.props.selectedIndex);
+        this.retrieveDetails(this.props.selectedIndex);
       }
     });
     ipcRenderer.on(IPC_COPY_CURRENT_ITEM_KEY, () => {
-      self.copyItem();
+      this.copyItem();
     });
     ipcRenderer.on(IPC_EXECUTE_CURRENT_ITEM, () => {
-      self.execute();
+      this.execute();
     });
   }
 
