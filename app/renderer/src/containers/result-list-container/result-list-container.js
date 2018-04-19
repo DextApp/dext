@@ -28,16 +28,10 @@ const ResultListContainer = class extends Component {
   };
 
   componentDidMount() {
-    const {
-      updateResults,
-      resetResults,
-      selectNextItem,
-      selectPreviousItem,
-    } = this.props;
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
     ipcRenderer.on(IPC_WINDOW_SHOW, () => {
-      this.props.onResetKeys && this.props.onResetKeys();
+      this.props.onResetKeys();
     });
     ipcRenderer.on(IPC_QUERY_RESULTS, (evt, newResults) => {
       // update the height
@@ -46,16 +40,13 @@ const ResultListContainer = class extends Component {
         const height = newResults.length * 60 + 30;
         ipcRenderer.send(IPC_WINDOW_RESIZE, { height });
       }
-      if (newResults.length) {
-        updateResults(newResults);
-      } else {
-        resetResults();
-      }
+      if (newResults.length) this.props.updateResults(newResults);
+      else this.props.resetResults();
       this.setState({ copiedToClipboard: false });
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (this.props.selectedIndex > 0) {
-        selectPreviousItem();
+        this.props.selectPreviousItem();
         this.setState({ copiedToClipboard: false });
         this.scrollToItem(this.props.selectedIndex);
         this.retrieveDetails(this.props.selectedIndex);
@@ -63,7 +54,7 @@ const ResultListContainer = class extends Component {
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (this.props.selectedIndex < this.props.results.length - 1) {
-        selectNextItem();
+        this.props.selectNextItem();
         this.setState({ copiedToClipboard: false });
         this.scrollToItem(this.props.selectedIndex);
         this.retrieveDetails(this.props.selectedIndex);
@@ -77,91 +68,70 @@ const ResultListContainer = class extends Component {
     });
   }
 
+  // @TODO: Move this into a separate component?
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
   }
 
   handleKeyDown = e => {
-    this.props.onSetActiveKey && this.props.onSetActiveKey(e.key.toLowerCase());
+    this.props.onSetActiveKey(e.key.toLowerCase());
   };
 
   handleKeyUp = e => {
-    this.props.onClearActiveKey &&
-      this.props.onClearActiveKey(e.key.toLowerCase());
+    this.props.onClearActiveKey(e.key.toLowerCase());
   };
 
-  /**
-   * Retrieves the extended details for the given item
-   *
-   * @param {Number} index - The index of the results
-   */
-  retrieveDetails(index) {
-    const item = this.props.results[index];
-    ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, item);
-  }
+  retrieveDetails = index => {
+    ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, this.props.results[index]);
+  };
 
-  /**
-   * Copies the selected item to the clipboard
-   * and update the state for other component to listen to.
-   */
-  copyItem() {
-    const { results, selectedIndex } = this.props;
-    const item = results[selectedIndex];
+  copyItem = () => {
+    const item = this.props.results[this.props.selectedIndex];
     ipcRenderer.send(IPC_COPY_CURRENT_ITEM, item);
     this.setState({ copiedToClipboard: true });
-  }
+  };
 
-  isAltMod() {
-    return this.props.keys && this.props.keys.indexOf('alt') > -1;
-  }
+  isAltMod = () => this.props.keys && this.props.keys.indexOf('alt') > -1;
 
-  isSuperMod() {
-    return this.props.keys && this.props.keys.indexOf('meta') > -1;
-  }
+  isSuperMod = () => this.props.keys && this.props.keys.indexOf('meta') > -1;
 
   /**
    * Executs the current item
    */
-  execute() {
-    const { results, selectedIndex } = this.props;
-    const item = results[selectedIndex];
-    const { action } = item;
+  execute = () => {
+    const item = this.props.results[this.props.selectedIndex];
     ipcRenderer.send(IPC_EXECUTE_ITEM, {
-      action,
+      action: item.action,
       item,
       isAltMod: this.isAltMod(),
       isSuperMod: this.isSuperMod(),
     });
-  }
+  };
 
   /**
-   * Scrolls the list to the given item
-   *
+   * Given an index, we scroll the list to the item with matching index
    * @param {Number} index
    */
-  scrollToItem(index) {
+  scrollToItem = index => {
     const scrollY = index >= 10 ? (index - 10) * 60 + 60 : 0;
-
+    // @TODO: figure out what this is.
     this.c.c.scrollTop = scrollY;
-  }
+  };
 
   render() {
-    if (this.props.results.length) {
-      return (
-        <ResultList
-          ref={c => {
-            this.c = c;
-          }}
-          theme={this.props.theme}
-          keys={this.props.keys}
-          results={this.props.results}
-          selectedIndex={this.props.selectedIndex}
-          copiedToClipboard={this.state.copiedToClipboard}
-        />
-      );
-    }
-    return null;
+    return this.props.results.length ? (
+      <ResultList
+        ref={c => {
+          this.c = c;
+        }}
+        theme={this.props.theme}
+        keys={this.props.keys}
+        results={this.props.results}
+        selectedIndex={this.props.selectedIndex}
+        copiedToClipboard={this.state.copiedToClipboard}
+      />
+    ) : null;
   }
 };
 
@@ -182,15 +152,15 @@ ResultListContainer.defaultProps = {
 ResultListContainer.propTypes = {
   theme: ThemeSchema,
   keys: PropTypes.arrayOf(PropTypes.string),
-  onSetActiveKey: PropTypes.func,
-  onClearActiveKey: PropTypes.func,
-  onResetKeys: PropTypes.func,
+  onSetActiveKey: PropTypes.func.isRequired,
+  onClearActiveKey: PropTypes.func.isRequired,
+  onResetKeys: PropTypes.func.isRequired,
 
   // todo - still in redux
   results: PropTypes.arrayOf(ResultItemSchema),
   selectedIndex: PropTypes.number,
-  selectNextItem: PropTypes.func,
-  selectPreviousItem: PropTypes.func,
+  selectNextItem: PropTypes.func.isRequired,
+  selectPreviousItem: PropTypes.func.isRequired,
   updateResults: PropTypes.func,
   resetResults: PropTypes.func,
 };
