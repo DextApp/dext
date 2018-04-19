@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import App from '../components/App';
 import * as actionCreators from '../actions/creators';
-import { ThemeSchema } from '../schema';
 import {
   IPC_WINDOW_RESIZE,
   IPC_LOAD_THEME,
@@ -17,24 +16,27 @@ const AppContainer = class extends Component {
 
   state = {
     // the current query value
-    q: '',
+    query: '',
     // the current theme
-    theme: '',
+    theme: {},
     // currently pressed keys
     keys: [],
   };
 
   componentDidMount() {
-    ipcRenderer.on(IPC_LOAD_THEME, (evt, theme) => {
-      this.setTheme(theme);
+    ipcRenderer.on(IPC_LOAD_THEME, (evt, nextTheme) => {
+      this.setTheme(nextTheme);
     });
   }
 
   componentDidUpdate() {
-    const { theme } = this.props;
-    if (theme && theme.window && theme.window.width) {
-      let width = theme.window.width;
-      if (theme.window.width > 650) {
+    if (
+      this.state.theme &&
+      this.state.theme.window &&
+      this.state.theme.window.width
+    ) {
+      let width = this.state.theme.window.width;
+      if (this.state.theme.window.width > 650) {
         width = 650;
       }
       ipcRenderer.send(IPC_WINDOW_RESIZE, { width });
@@ -45,14 +47,14 @@ const AppContainer = class extends Component {
     this.setState({ theme });
   };
 
-  updateQuery = q => {
-    this.setState({ q });
-    ipcRenderer.send(IPC_QUERY_COMMAND, { q });
+  updateQuery = nextQuery => {
+    this.setState({ query: nextQuery });
+    ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
   };
 
   resetQuery = () => {
-    // @todo - just clearn the results once results actions/reducers are removed
-    this.props.resetResults && this.props.resetResults();
+    // @todo - just clean the results once results actions/reducers are removed
+    if (this.props.resetResults) this.props.resetResults();
   };
 
   setActiveKey = key => {
@@ -62,10 +64,10 @@ const AppContainer = class extends Component {
   };
 
   clearActiveKey = key => {
-    this.setState(prev => ({
+    this.setState(previousState => ({
       keys: [
-        ...prev.keys.slice(0, prev.keys.indexOf(key)),
-        ...prev.keys.slice(prev.keys.indexOf(key) + 1),
+        ...previousState.keys.slice(0, previousState.keys.indexOf(key)),
+        ...previousState.keys.slice(previousState.keys.indexOf(key) + 1),
       ],
     }));
   };
@@ -77,7 +79,7 @@ const AppContainer = class extends Component {
   render() {
     return (
       <App
-        q={this.state.q}
+        q={this.state.query}
         theme={this.state.theme}
         keys={this.state.keys}
         onQueryChange={this.updateQuery}
@@ -103,4 +105,4 @@ AppContainer.propTypes = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(actionCreators, dispatch);
 
-export default connect(mapDispatchToProps)(AppContainer);
+export default connect(null, mapDispatchToProps)(AppContainer);
