@@ -71,7 +71,7 @@ const AppContainer = class extends Component {
   };
 
   resetKeys = () => {
-    return [];
+    this.setState({ keys: [] });
   };
 
   render() {
