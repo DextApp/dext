@@ -35,6 +35,10 @@ const {
   CORE_PLUGIN_PATH,
   DEBOUNCE_TIME,
   IS_DEV,
+  WINDOW_DEFAULT_HEIGHT,
+  WINDOW_DEFAULT_WIDTH,
+  WINDOW_MAX_HEIGHT,
+  WINDOW_MIN_HEIGHT,
 } = require('../constants');
 const Config = require('./utils/conf');
 const { debounce, hasOwnProp, getOwnProp } = require('./utils/helpers');
@@ -50,13 +54,6 @@ const {
   globalShortcut,
   ipcMain,
 } = electron;
-
-// set default window values
-// @TODO, move out
-const WINDOW_DEFAULT_WIDTH = 700;
-const WINDOW_DEFAULT_HEIGHT = 80;
-const WINDOW_MIN_HEIGHT = 80;
-const WINDOW_MAX_HEIGHT = 710; // results + query + padding
 
 let win = null;
 let tray = null;
