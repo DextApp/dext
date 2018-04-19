@@ -36,8 +36,8 @@ const {
   DEBOUNCE_TIME,
   IS_DEV,
 } = require('../constants');
-const Config = require('../../utils/conf');
-const { debounce, hasOwnProp, getOwnProp } = require('../../utils/helpers');
+const Config = require('./utils/conf');
+const { debounce, hasOwnProp, getOwnProp } = require('./utils/helpers');
 
 const { PLUGIN_PATH } = utils.paths;
 const {
