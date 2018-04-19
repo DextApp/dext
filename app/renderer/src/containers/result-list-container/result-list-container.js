@@ -157,7 +157,7 @@ const ResultListContainer = class extends Component {
           keys={this.props.keys}
           results={this.props.results}
           selectedIndex={this.props.selectedIndex}
-          copiedToClipboard={this.props.copiedToClipboard}
+          copiedToClipboard={this.state.copiedToClipboard}
         />
       );
     }
