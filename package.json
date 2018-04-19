@@ -13,7 +13,6 @@
   "main": "app/main/index.js",
   "scripts": {
     "archive": "node scripts/archive.js",
-    "build:deb": "cross-env NODE_ENV=production node scripts/installerDebian.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "webpack --config webpack.config.dev.js",
     "dev": "cross-env NODE_ENV=development electron . --debug",
@@ -22,6 +21,7 @@
     "format": "npm run format:js && npm run format:md",
     "lint": "eslint app scripts utils __mocks__ __tests__",
     "package": "cross-env NODE_ENV=production node scripts/package.js",
+    "package:debian": "cross-env NODE_ENV=production node scripts/installerDebian.js",
     "release": "npm run build:prod && npm run package && npm run archive",
     "start": "npm run build && npm run dev",
     "test:watch": "jest --watch",
