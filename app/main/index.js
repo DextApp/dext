@@ -52,6 +52,7 @@ const {
 } = electron;
 
 // set default window values
+// @TODO, move out
 const WINDOW_DEFAULT_WIDTH = 700;
 const WINDOW_DEFAULT_HEIGHT = 80;
 const WINDOW_MIN_HEIGHT = 80;
@@ -62,7 +63,6 @@ let tray = null;
 
 // create a user config
 const config = new Config();
-
 const hideWindow = () => win && win.hide();
 
 /**
@@ -90,11 +90,8 @@ const repositionWindow = () => {
  */
 const toggleMainWindow = () => {
   repositionWindow();
-  if (win.isVisible()) {
-    hideWindow();
-  } else {
-    win.show();
-  }
+  if (win.isVisible()) hideWindow();
+  else win.show();
 };
 
 /**
@@ -103,6 +100,7 @@ const toggleMainWindow = () => {
  * Priority: SuperKey, AltKey, None
  *
  * @param {Object} message
+ * @TODO: move out
  */
 const execute = message => {
   // apply modifiers if necessary
@@ -117,62 +115,11 @@ const execute = message => {
   }
 };
 
-const selectPreviousItem = () => {
-  win.webContents.send(IPC_SELECT_PREVIOUS_ITEM);
-};
-
-const selectNextItem = () => {
-  win.webContents.send(IPC_SELECT_NEXT_ITEM);
-};
-
-const executeCurrentItem = () => {
-  win.webContents.send(IPC_EXECUTE_CURRENT_ITEM);
-};
-
-const copyItem = () => {
-  win.webContents.send(IPC_COPY_CURRENT_ITEM_KEY);
-};
-
-// free the window object from memory
-const handleWindowClose = () => {
-  win = null;
-};
-
-const handleWindowShow = () => {
-  globalShortcut.register('up', selectPreviousItem);
-  globalShortcut.register('down', selectNextItem);
-  globalShortcut.register('enter', executeCurrentItem);
-  globalShortcut.register('alt+enter', executeCurrentItem);
-  globalShortcut.register('super+enter', executeCurrentItem);
-  globalShortcut.register('escape', hideWindow);
-  globalShortcut.register('cmd+c', copyItem);
-  win.webContents.send(IPC_WINDOW_SHOW);
-};
-
-const handleWindowHide = () => {
-  globalShortcut.unregister('up');
-  globalShortcut.unregister('down');
-  globalShortcut.unregister('enter');
-  globalShortcut.unregister('alt+enter');
-  globalShortcut.unregister('super+enter');
-  globalShortcut.unregister('escape');
-  globalShortcut.unregister('cmd+c');
-  win.webContents.send(IPC_WINDOW_HIDE);
-};
-
-const handleWindowBlur = hideWindow;
-
 const handleWindowResize = (evt, { width, height }) => {
-  // re-size
   const [windowWidth, windowHeight] = win.getContentSize();
   const nextWidth = width || windowWidth;
   const nextHeight = WINDOW_MIN_HEIGHT + height || windowHeight;
   win.setContentSize(nextWidth, nextHeight);
-};
-
-const handleWindowCollapse = () => {
-  const size = win.getContentSize();
-  win.setContentSize(size[0], WINDOW_MIN_HEIGHT);
 };
 
 /**
@@ -299,23 +246,7 @@ const handleItemDetailsRequest = (evt, item) => {
  * @param {Object} item
  */
 const handleCopyItemToClipboard = (evt, item) => {
-  let content = item.arg;
-  if (item.text && item.text.copy) {
-    content = item.text.copy;
-  }
-  clipboard.writeText(content);
-};
-
-/**
- * Fetches the file icon for the given item
- *
- * @param {Event} evt
- * @param {Object} item
- */
-const fetchFileIcon = (evt, item) => {
-  getFileIcon(item).then(fileIconPath => {
-    evt.sender.send(IPC_RETRIEVE_ICON, fileIconPath);
-  });
+  clipboard.writeText(item.text && item.text.copy ? item.text.copy : item.arg);
 };
 
 /**
@@ -407,19 +338,49 @@ const onAppReady = () => {
       const indexPath = `file://${rendererPath}/index.html`;
 
       win.loadURL(indexPath);
+      win.on('closed', () => {
+        win = null;
+      });
+      win.on('show', () => {
+        const executeCurrentItem = () => {
+          win.webContents.send(IPC_EXECUTE_CURRENT_ITEM);
+        };
+        globalShortcut.register('escape', hideWindow);
 
-      win.on('closed', handleWindowClose);
-      win.on('show', handleWindowShow);
-      win.on('hide', handleWindowHide);
-      win.on('blur', handleWindowBlur);
-      win.webContents.on(
-        'did-finish-load',
-        handleDidFinishLoad.bind(this, theme)
-      );
+        globalShortcut.register('up', () => {
+          win.webContents.send(IPC_SELECT_PREVIOUS_ITEM);
+        });
+        globalShortcut.register('down', () => {
+          win.webContents.send(IPC_SELECT_NEXT_ITEM);
+        });
+        globalShortcut.register('enter', executeCurrentItem);
+        globalShortcut.register('alt+enter', executeCurrentItem);
+        globalShortcut.register('super+enter', executeCurrentItem);
+        globalShortcut.register('cmd+c', () => {
+          win.webContents.send(IPC_COPY_CURRENT_ITEM_KEY);
+        });
+        win.webContents.send(IPC_WINDOW_SHOW);
+      });
+
+      win.on('hide', () => {
+        globalShortcut.unregister('up');
+        globalShortcut.unregister('down');
+        globalShortcut.unregister('enter');
+        globalShortcut.unregister('alt+enter');
+        globalShortcut.unregister('super+enter');
+        globalShortcut.unregister('escape');
+        globalShortcut.unregister('cmd+c');
+        win.webContents.send(IPC_WINDOW_HIDE);
+      });
+      win.on('blur', hideWindow);
+      win.webContents.on('did-finish-load', handleDidFinishLoad);
 
       // expand and collapse window based on the results
       ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
-      ipcMain.on(IPC_WINDOW_COLLAPSE, handleWindowCollapse);
+      ipcMain.on(IPC_WINDOW_COLLAPSE, () => {
+        const [nextWidth] = win.getContentSize();
+        win.setContentSize(nextWidth, WINDOW_MIN_HEIGHT);
+      });
 
       // register global shortcuts
       globalShortcut.register(config.get('hotKey'), toggleMainWindow);
@@ -454,7 +415,11 @@ const onAppReady = () => {
         );
 
         // fetches the file icon
-        ipcMain.on(IPC_FETCH_ICON, (evt, item) => fetchFileIcon(evt, item));
+        ipcMain.on(IPC_FETCH_ICON, (evt, item) => {
+          getFileIcon(item).then(fileIconPath => {
+            evt.sender.send(IPC_RETRIEVE_ICON, fileIconPath);
+          });
+        });
       };
 
       // load all plugins (core and user) and
@@ -466,15 +431,10 @@ const onAppReady = () => {
         .then(registerIpcListeners)
         .then(() => win);
     })
-    .then(win => {
-      if (IS_DEV)
-        win.webContents.openDevTools({
-          detach: true,
-        });
+    .then(registeredWindow => {
+      if (IS_DEV) registeredWindow.webContents.openDevTools({ detach: true });
     });
 };
 
-// hide the app from the dock and applications switcher
 app.dock.hide();
-
 app.on('ready', onAppReady);
