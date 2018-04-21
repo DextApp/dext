@@ -82,11 +82,11 @@ const AppContainer = class extends Component {
         q={this.state.query}
         theme={this.state.theme}
         keys={this.state.keys}
+        onClearActiveKey={this.clearActiveKey}
+        onSetActiveKey={this.setActiveKey}
+        onResetKeys={this.resetKeys}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
-        onSetActiveKey={this.setActiveKey}
-        onClearActiveKey={this.clearActiveKey}
-        onResetKeys={this.resetKeys}
       />
     );
   }

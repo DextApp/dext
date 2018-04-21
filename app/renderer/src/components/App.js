@@ -45,7 +45,13 @@ const App = props => {
           onChange={props.onQueryChange}
           onReset={props.onQueryReset}
         />
-        <ResultListContainer theme={props.theme} keys={props.keys} />
+        <ResultListContainer
+          theme={props.theme}
+          keys={props.keys}
+          onResetKeys={props.onResetKeys}
+          onSetActiveKey={props.onSetActiveKey}
+          onClearActiveKey={props.onClearActiveKey}
+        />
       </div>
     </div>
   );
@@ -58,8 +64,11 @@ App.defaultProps = {
 };
 
 App.propTypes = {
-  onQueryChange: PropTypes.func,
-  onQueryReset: PropTypes.func,
+  onQueryChange: PropTypes.func.isRequired,
+  onQueryReset: PropTypes.func.isRequired,
+  onSetActiveKey: PropTypes.func.isRequired,
+  onClearActiveKey: PropTypes.func.isRequired,
+  onResetKeys: PropTypes.func.isRequired,
   q: PropTypes.string,
   theme: ThemeSchema,
   keys: PropTypes.arrayOf(PropTypes.string),
