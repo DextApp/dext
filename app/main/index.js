@@ -11,6 +11,7 @@ const {
 const { loadTheme } = require('./themes');
 const actions = require('./actions');
 const requestItemDetails = require('./request-item-details');
+const copyItemToClipboard = require('./copy-item-to-clipboard');
 const {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_HIDE,
@@ -49,7 +50,6 @@ const {
   Tray,
   Menu,
   nativeImage,
-  clipboard,
   globalShortcut,
   ipcMain,
 } = electron;
@@ -218,16 +218,6 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
 };
 
 /**
- * Copies the item data to the clipboard
- *
- * @param {Event} evt
- * @param {Object} item
- */
-const handleCopyItemToClipboard = (evt, item) => {
-  clipboard.writeText(item.text && item.text.copy ? item.text.copy : item.arg);
-};
-
-/**
  * Create a debounced function for handling the query command
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
@@ -235,7 +225,7 @@ const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
 const debounceRequestItemDetails = debounce(requestItemDetails, DEBOUNCE_TIME);
 
 const debounceHandleCopyItemToClipboard = debounce(
-  handleCopyItemToClipboard,
+  copyItemToClipboard,
   DEBOUNCE_TIME
 );
 
