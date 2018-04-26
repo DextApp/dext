@@ -6,11 +6,11 @@ const {
   loadPlugins,
   queryResults,
   queryHelper,
-  retrieveItemDetails,
   getFileIcon,
 } = require('./plugins');
 const { loadTheme } = require('./themes');
 const actions = require('./actions');
+const requestItemDetails = require('./request-item-details');
 const {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_HIDE,
@@ -25,7 +25,6 @@ const {
   IPC_EXECUTE_CURRENT_ITEM,
   IPC_EXECUTE_ITEM,
   IPC_ITEM_DETAILS_REQUEST,
-  IPC_ITEM_DETAILS_RESPONSE,
   IPC_LOAD_THEME,
   IPC_FETCH_ICON,
   IPC_RETRIEVE_ICON,
@@ -219,24 +218,6 @@ const handleQueryCommand = (evt, { q: queryPhrase }, plugins) => {
 };
 
 /**
- * Retrieve item details and sends back the response.
- *
- * @param {Event} evt
- * @param {Object} item
- */
-const handleItemDetailsRequest = (evt, item) => {
-  // otherwise, load from plugin
-  // eslint-disable-next-line global-require, import/no-dynamic-require
-  const plugin = require(item.plugin.path);
-  // @todo - cache content
-  const content = retrieveItemDetails(item, plugin);
-  // resolve and update the state
-  Promise.resolve(content).then(html => {
-    evt.sender.send(IPC_ITEM_DETAILS_RESPONSE, html);
-  });
-};
-
-/**
  * Copies the item data to the clipboard
  *
  * @param {Event} evt
@@ -251,10 +232,7 @@ const handleCopyItemToClipboard = (evt, item) => {
  */
 const debounceHandleQueryCommand = debounce(handleQueryCommand, DEBOUNCE_TIME);
 
-const debounceHandleItemDetailsRequest = debounce(
-  handleItemDetailsRequest,
-  DEBOUNCE_TIME
-);
+const debounceRequestItemDetails = debounce(requestItemDetails, DEBOUNCE_TIME);
 
 const debounceHandleCopyItemToClipboard = debounce(
   handleCopyItemToClipboard,
@@ -403,7 +381,7 @@ const onAppReady = () => {
 
         // listen for item details requests
         ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
-          debounceHandleItemDetailsRequest(evt, item)
+          debounceRequestItemDetails(evt, item)
         );
 
         // copies to clipboard
