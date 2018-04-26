@@ -277,6 +277,43 @@ const contextMenu = Menu.buildFromTemplate([
   },
 ]);
 
+const registerIpcListeners = ({ plugins, registeredWindow }) => {
+  // expand and collapse window based on the results
+  ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
+  ipcMain.on(IPC_WINDOW_COLLAPSE, () => {
+    const [nextWidth] = registeredWindow.getContentSize();
+    registeredWindow.setContentSize(nextWidth, WINDOW_MIN_HEIGHT);
+  });
+
+  // listen to query commands and queries
+  // for results and sends it to the renderer
+  ipcMain.on(IPC_QUERY_COMMAND, (evt, message) =>
+    debounceHandleQueryCommand(evt, message, plugins)
+  );
+
+  // listen for execution commands
+  ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
+    execute(message);
+  });
+
+  // listen for item details requests
+  ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
+    debounceRequestItemDetails(evt, item)
+  );
+
+  // copies to clipboard
+  ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) =>
+    debounceHandleCopyItemToClipboard(evt, item)
+  );
+
+  // fetches the file icon
+  ipcMain.on(IPC_FETCH_ICON, (evt, item) => {
+    getFileIcon(item).then(fileIconPath => {
+      evt.sender.send(IPC_RETRIEVE_ICON, fileIconPath);
+    });
+  });
+};
+
 /**
  * When the app is ready, creates the window,
  * register hotkeys, and loading plugins
@@ -339,66 +376,22 @@ const onAppReady = () => {
       });
       win.on('blur', hideWindow);
       win.webContents.on('did-finish-load', handleDidFinishLoad);
-
-      // expand and collapse window based on the results
-      ipcMain.on(IPC_WINDOW_RESIZE, handleWindowResize);
-      ipcMain.on(IPC_WINDOW_COLLAPSE, () => {
-        const [nextWidth] = win.getContentSize();
-        win.setContentSize(nextWidth, WINDOW_MIN_HEIGHT);
-      });
-
       // register global shortcuts
       globalShortcut.register(config.get('hotKey'), toggleMainWindow);
-
-      /**
-       * Registers the query command listeners for all plugins
-       *
-       * { path, name, isCore, schema, action, keyword }
-       *
-       * @param {Object[]} plugins - An array of plugin objects
-       */
-      const registerIpcListeners = plugins => {
-        // listen to query commands and queries
-        // for results and sends it to the renderer
-        ipcMain.on(IPC_QUERY_COMMAND, (evt, message) =>
-          debounceHandleQueryCommand(evt, message, plugins)
-        );
-
-        // listen for execution commands
-        ipcMain.on(IPC_EXECUTE_ITEM, (evt, message) => {
-          execute(message);
-        });
-
-        // listen for item details requests
-        ipcMain.on(IPC_ITEM_DETAILS_REQUEST, (evt, item) =>
-          debounceRequestItemDetails(evt, item)
-        );
-
-        // copies to clipboard
-        ipcMain.on(IPC_COPY_CURRENT_ITEM, (evt, item) =>
-          debounceHandleCopyItemToClipboard(evt, item)
-        );
-
-        // fetches the file icon
-        ipcMain.on(IPC_FETCH_ICON, (evt, item) => {
-          getFileIcon(item).then(fileIconPath => {
-            evt.sender.send(IPC_RETRIEVE_ICON, fileIconPath);
-          });
-        });
-      };
-
-      // load all plugins (core and user) and
-      // then registers the ipc listeners
-      return loadPlugins([
-        { path: CORE_PLUGIN_PATH, isCore: true },
-        { path: PLUGIN_PATH, isCore: false },
-      ])
-        .then(registerIpcListeners)
-        .then(() => win);
+      return win;
     })
     .then(registeredWindow => {
-      if (IS_DEV) registeredWindow.webContents.openDevTools({ detach: true });
-    });
+      //   if (IS_DEV) registeredWindow.webContents.openDevTools({ detach: true });
+      const loadedPlugins = loadPlugins([
+        { path: CORE_PLUGIN_PATH, isCore: true },
+        { path: PLUGIN_PATH, isCore: false },
+      ]);
+      return loadedPlugins.then(plugins => ({
+        plugins,
+        registeredWindow,
+      }));
+    })
+    .then(registerIpcListeners);
 };
 
 app.dock.hide();
