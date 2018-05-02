@@ -21,6 +21,8 @@ const AppContainer = class extends Component {
     theme: {},
     // currently pressed keys
     keys: [],
+    // details pane content
+    details: '',
   };
 
   componentDidMount() {
@@ -47,8 +49,17 @@ const AppContainer = class extends Component {
     this.setState({ theme });
   };
 
+  setDetails = details => {
+    this.setState({ details });
+  };
+
+  resetDetails = () => {
+    this.setDetails('');
+  };
+
   updateQuery = nextQuery => {
     this.setState({ query: nextQuery });
+    this.resetDetails();
     ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
   };
 
@@ -79,14 +90,16 @@ const AppContainer = class extends Component {
   render() {
     return (
       <App
+        details={this.state.details}
+        keys={this.state.keys}
         q={this.state.query}
         theme={this.state.theme}
-        keys={this.state.keys}
         onClearActiveKey={this.clearActiveKey}
-        onSetActiveKey={this.setActiveKey}
-        onResetKeys={this.resetKeys}
+        onLoadDetails={this.setDetails}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
+        onResetKeys={this.resetKeys}
+        onSetActiveKey={this.setActiveKey}
       />
     );
   }

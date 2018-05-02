@@ -1,50 +1,9 @@
 import { ipcRenderer } from 'electron';
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import {
-  UPDATE_RESULTS,
-  RESET_RESULTS,
-  SELECT_ITEM,
-  SELECT_PREVIOUS_ITEM,
-  SELECT_NEXT_ITEM,
-  SET_DETAILS,
-} from '../actions/types';
-import {
-  resetResults,
-  selectItem,
-  resetDetails,
-  closeDetails,
-  openDetails,
-} from '../actions/creators';
-import {
-  IPC_WINDOW_EXPAND,
-  IPC_WINDOW_COLLAPSE,
-  IPC_ITEM_DETAILS_REQUEST,
-} from '../../../ipc';
-
-/**
- * Handles selecting an item
- *
- * @param {Object} action
- */
-export function* handleSelectItem(action) {
-  yield put(resetDetails());
-  yield call(ipcRenderer.send, IPC_ITEM_DETAILS_REQUEST, action.item);
-}
-
-/**
- * Handles selecting the previous item
- */
-export function* handleSelectPreviousItem() {
-  yield put(closeDetails());
-}
-
-/**
- * Handles selecting the next item
- */
-export function* handleSelectNextItem() {
-  yield put(closeDetails());
-}
+import { UPDATE_RESULTS, RESET_RESULTS } from '../actions/types';
+import { selectItem } from '../actions/creators';
+import { IPC_WINDOW_EXPAND, IPC_WINDOW_COLLAPSE } from '../../../ipc';
 
 /**
  * Handles the update results action
@@ -66,22 +25,11 @@ export function* handleCollapseWindow() {
 }
 
 /**
- * Handles setting the details
- */
-export function* handleSetDetails() {
-  yield put(openDetails());
-}
-
-/**
  * Makes a query for each action dispatched
  */
 export default function*() {
   yield [
-    takeEvery(SELECT_ITEM, handleSelectItem),
-    takeEvery(SELECT_PREVIOUS_ITEM, handleSelectPreviousItem),
-    takeEvery(SELECT_NEXT_ITEM, handleSelectNextItem),
     takeEvery(UPDATE_RESULTS, handleUpdateResults),
     takeEvery(RESET_RESULTS, handleCollapseWindow),
-    takeEvery(SET_DETAILS, handleSetDetails),
   ];
 }

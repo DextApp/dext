@@ -5,10 +5,6 @@ import {
   SELECT_NEXT_ITEM,
   SELECT_PREVIOUS_ITEM,
   RESET_SELECTED_ITEM,
-  SET_DETAILS,
-  RESET_DETAILS,
-  CLOSE_DETAILS,
-  OPEN_DETAILS,
 } from '../types';
 
 /**
@@ -66,41 +62,4 @@ export function selectPreviousItem() {
  */
 export function selectNextItem() {
   return { type: SELECT_NEXT_ITEM };
-}
-
-/**
- * Sets the details pane content
- *
- * @param {String} value
- * @return {Object}
- */
-export function setDetails(value) {
-  return { type: SET_DETAILS, value };
-}
-
-/**
- * Resets the details pane content
- *
- * @return {Object}
- */
-export function resetDetails() {
-  return { type: RESET_DETAILS };
-}
-
-/**
- * Closes the details pane
- *
- * @return {Object}
- */
-export function closeDetails() {
-  return { type: CLOSE_DETAILS };
-}
-
-/**
- * Opens the details pane
- *
- * @return {Object}
- */
-export function openDetails() {
-  return { type: OPEN_DETAILS };
 }

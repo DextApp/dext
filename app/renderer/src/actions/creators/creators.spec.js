@@ -56,33 +56,4 @@ describe('action creators', () => {
     };
     expect(actions.selectNextItem()).toEqual(expectedAction);
   });
-
-  it('should create an action to set the details', () => {
-    const expectedAction = {
-      type: types.SET_DETAILS,
-      value: 'foobar',
-    };
-    expect(actions.setDetails('foobar')).toEqual(expectedAction);
-  });
-
-  it('should create an action to reset the details', () => {
-    const expectedAction = {
-      type: types.RESET_DETAILS,
-    };
-    expect(actions.resetDetails()).toEqual(expectedAction);
-  });
-
-  it('should create an action to close the details', () => {
-    const expectedAction = {
-      type: types.CLOSE_DETAILS,
-    };
-    expect(actions.closeDetails()).toEqual(expectedAction);
-  });
-
-  it('should create an action to open the details', () => {
-    const expectedAction = {
-      type: types.OPEN_DETAILS,
-    };
-    expect(actions.openDetails()).toEqual(expectedAction);
-  });
 });

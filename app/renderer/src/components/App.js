@@ -45,11 +45,13 @@ const App = props => {
           onReset={props.onQueryReset}
         />
         <ResultListContainer
-          theme={props.theme}
+          details={props.details}
           keys={props.keys}
+          theme={props.theme}
+          onClearActiveKey={props.onClearActiveKey}
+          onLoadDetails={props.onLoadDetails}
           onResetKeys={props.onResetKeys}
           onSetActiveKey={props.onSetActiveKey}
-          onClearActiveKey={props.onClearActiveKey}
         />
       </div>
     </div>
@@ -57,20 +59,23 @@ const App = props => {
 };
 
 App.defaultProps = {
+  details: '',
+  keys: [],
   q: '',
   theme: {},
-  keys: [],
 };
 
 App.propTypes = {
-  onQueryChange: PropTypes.func.isRequired,
-  onQueryReset: PropTypes.func.isRequired,
-  onSetActiveKey: PropTypes.func.isRequired,
-  onClearActiveKey: PropTypes.func.isRequired,
-  onResetKeys: PropTypes.func.isRequired,
+  details: PropTypes.string,
+  keys: PropTypes.arrayOf(PropTypes.string),
   q: PropTypes.string,
   theme: PropTypes.object,
-  keys: PropTypes.arrayOf(PropTypes.string),
+  onClearActiveKey: PropTypes.func.isRequired,
+  onLoadDetails: PropTypes.func.isRequired,
+  onQueryChange: PropTypes.func.isRequired,
+  onQueryReset: PropTypes.func.isRequired,
+  onResetKeys: PropTypes.func.isRequired,
+  onSetActiveKey: PropTypes.func.isRequired,
 };
 
 export default App;

@@ -42,21 +42,24 @@ const ResultListContainer = class extends Component {
       if (newResults.length) this.props.updateResults(newResults);
       else this.props.resetResults();
       this.setState({ copiedToClipboard: false });
+      this.retrieveDetails(this.props.selectedIndex);
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (this.props.selectedIndex > 0) {
         this.props.selectPreviousItem();
-        this.setState({ copiedToClipboard: false });
-        this.scrollToItem(this.props.selectedIndex);
-        this.retrieveDetails(this.props.selectedIndex);
+        this.setState({ copiedToClipboard: false }, () => {
+          this.scrollToItem(this.props.selectedIndex);
+          this.retrieveDetails(this.props.selectedIndex);
+        });
       }
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (this.props.selectedIndex < this.props.results.length - 1) {
         this.props.selectNextItem();
-        this.setState({ copiedToClipboard: false });
-        this.scrollToItem(this.props.selectedIndex);
-        this.retrieveDetails(this.props.selectedIndex);
+        this.setState({ copiedToClipboard: false }, () => {
+          this.scrollToItem(this.props.selectedIndex);
+          this.retrieveDetails(this.props.selectedIndex);
+        });
       }
     });
     ipcRenderer.on(IPC_COPY_CURRENT_ITEM_KEY, () => {
@@ -82,7 +85,9 @@ const ResultListContainer = class extends Component {
   };
 
   retrieveDetails = index => {
-    ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, this.props.results[index]);
+    if (this.props.results[index]) {
+      ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, this.props.results[index]);
+    }
   };
 
   copyItem = () => {
@@ -100,12 +105,14 @@ const ResultListContainer = class extends Component {
    */
   execute = () => {
     const item = this.props.results[this.props.selectedIndex];
-    ipcRenderer.send(IPC_EXECUTE_ITEM, {
-      action: item.action,
-      item,
-      isAltMod: this.isAltMod(),
-      isSuperMod: this.isSuperMod(),
-    });
+    if (item) {
+      ipcRenderer.send(IPC_EXECUTE_ITEM, {
+        action: item.action,
+        item,
+        isAltMod: this.isAltMod(),
+        isSuperMod: this.isSuperMod(),
+      });
+    }
   };
 
   /**
@@ -124,19 +131,22 @@ const ResultListContainer = class extends Component {
         ref={c => {
           this.c = c;
         }}
+        details={this.props.details}
         theme={this.props.theme}
         keys={this.props.keys}
         results={this.props.results}
         selectedIndex={this.props.selectedIndex}
         copiedToClipboard={this.state.copiedToClipboard}
+        onLoadDetails={this.props.onLoadDetails}
       />
     ) : null;
   }
 };
 
 ResultListContainer.defaultProps = {
-  theme: {},
+  details: '',
   keys: [],
+  theme: {},
 
   // todo - still in redux
   results: [],
@@ -150,10 +160,12 @@ ResultListContainer.defaultProps = {
 
 ResultListContainer.propTypes = {
   theme: PropTypes.object,
+  details: PropTypes.string,
   keys: PropTypes.arrayOf(PropTypes.string),
-  onSetActiveKey: PropTypes.func.isRequired,
   onClearActiveKey: PropTypes.func.isRequired,
+  onLoadDetails: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
+  onSetActiveKey: PropTypes.func.isRequired,
 
   // todo - still in redux
   results: PropTypes.arrayOf(PropTypes.object),
