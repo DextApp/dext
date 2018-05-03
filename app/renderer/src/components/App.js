@@ -47,10 +47,12 @@ const App = props => {
         <ResultListContainer
           details={props.details}
           keys={props.keys}
+          selectedIndex={props.selectedIndex}
           theme={props.theme}
           onClearActiveKey={props.onClearActiveKey}
           onLoadDetails={props.onLoadDetails}
           onResetKeys={props.onResetKeys}
+          onSelectItem={props.onSelectItem}
           onSetActiveKey={props.onSetActiveKey}
         />
       </div>
@@ -62,6 +64,7 @@ App.defaultProps = {
   details: '',
   keys: [],
   q: '',
+  selectedIndex: 0,
   theme: {},
 };
 
@@ -70,11 +73,13 @@ App.propTypes = {
   keys: PropTypes.arrayOf(PropTypes.string),
   q: PropTypes.string,
   theme: PropTypes.object,
+  selectedIndex: PropTypes.number,
   onClearActiveKey: PropTypes.func.isRequired,
   onLoadDetails: PropTypes.func.isRequired,
   onQueryChange: PropTypes.func.isRequired,
   onQueryReset: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
   onSetActiveKey: PropTypes.func.isRequired,
 };
 

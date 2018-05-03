@@ -26,34 +26,4 @@ describe('action creators', () => {
     };
     expect(actions.resetResults()).toEqual(expectedAction);
   });
-
-  it('should create an action to reset the selected item', () => {
-    const expectedAction = {
-      type: types.RESET_SELECTED_ITEM,
-    };
-    expect(actions.resetSelectedItem()).toEqual(expectedAction);
-  });
-
-  it('should create an action to select an item', () => {
-    const expectedAction = {
-      type: types.SELECT_ITEM,
-      index: 1,
-      item: { foo: 'bar' },
-    };
-    expect(actions.selectItem(1, { foo: 'bar' })).toEqual(expectedAction);
-  });
-
-  it('should create an action to select the previous item', () => {
-    const expectedAction = {
-      type: types.SELECT_PREVIOUS_ITEM,
-    };
-    expect(actions.selectPreviousItem()).toEqual(expectedAction);
-  });
-
-  it('should create an action to select the next item', () => {
-    const expectedAction = {
-      type: types.SELECT_NEXT_ITEM,
-    };
-    expect(actions.selectNextItem()).toEqual(expectedAction);
-  });
 });

@@ -23,6 +23,8 @@ const AppContainer = class extends Component {
     keys: [],
     // details pane content
     details: '',
+    // currently selected index
+    selectedIndex: 0,
   };
 
   componentDidMount() {
@@ -59,6 +61,7 @@ const AppContainer = class extends Component {
 
   updateQuery = nextQuery => {
     this.setState({ query: nextQuery });
+    this.resetSelectedItem();
     this.resetDetails();
     ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
   };
@@ -87,18 +90,28 @@ const AppContainer = class extends Component {
     this.setState({ keys: [] });
   };
 
+  setSelectedItem = selectedIndex => {
+    this.setState({ selectedIndex });
+  };
+
+  resetSelectedItem = () => {
+    this.setState({ selectedIndex: 0 });
+  };
+
   render() {
     return (
       <App
         details={this.state.details}
         keys={this.state.keys}
         q={this.state.query}
+        selectedIndex={this.state.selectedIndex}
         theme={this.state.theme}
         onClearActiveKey={this.clearActiveKey}
         onLoadDetails={this.setDetails}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
         onResetKeys={this.resetKeys}
+        onSelectItem={this.setSelectedItem}
         onSetActiveKey={this.setActiveKey}
       />
     );

@@ -46,7 +46,7 @@ const ResultListContainer = class extends Component {
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (this.props.selectedIndex > 0) {
-        this.props.selectPreviousItem();
+        this.props.onSelectItem(this.props.selectedIndex - 1);
         this.setState({ copiedToClipboard: false }, () => {
           this.scrollToItem(this.props.selectedIndex);
           this.retrieveDetails(this.props.selectedIndex);
@@ -55,7 +55,7 @@ const ResultListContainer = class extends Component {
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (this.props.selectedIndex < this.props.results.length - 1) {
-        this.props.selectNextItem();
+        this.props.onSelectItem(this.props.selectedIndex + 1);
         this.setState({ copiedToClipboard: false }, () => {
           this.scrollToItem(this.props.selectedIndex);
           this.retrieveDetails(this.props.selectedIndex);
@@ -146,14 +146,11 @@ const ResultListContainer = class extends Component {
 ResultListContainer.defaultProps = {
   details: '',
   keys: [],
+  selectedIndex: 0,
   theme: {},
 
   // todo - still in redux
   results: [],
-  selectedIndex: 0,
-  selectItem: () => {},
-  selectNextItem: () => {},
-  selectPreviousItem: () => {},
   updateResults: () => {},
   resetResults: () => {},
 };
@@ -162,14 +159,15 @@ ResultListContainer.propTypes = {
   theme: PropTypes.object,
   details: PropTypes.string,
   keys: PropTypes.arrayOf(PropTypes.string),
+  selectedIndex: PropTypes.number,
   onClearActiveKey: PropTypes.func.isRequired,
   onLoadDetails: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
   onSetActiveKey: PropTypes.func.isRequired,
 
   // todo - still in redux
   results: PropTypes.arrayOf(PropTypes.object),
-  selectedIndex: PropTypes.number,
   selectNextItem: PropTypes.func.isRequired,
   selectPreviousItem: PropTypes.func.isRequired,
   updateResults: PropTypes.func,
@@ -178,7 +176,6 @@ ResultListContainer.propTypes = {
 
 const mapStateToProps = state => ({
   results: state.results,
-  selectedIndex: state.selectedIndex,
 });
 
 const mapDispatchToProps = dispatch =>
