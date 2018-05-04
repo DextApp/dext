@@ -1,13 +1,10 @@
 import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/creators';
 import ResultItem from '../../components/result-item';
 import { IPC_EXECUTE_ITEM } from '../../../../ipc';
 
-const ResultItemContainer = class extends Component {
+export default class ResultItemContainer extends Component {
   static displayName = 'ResultItemContainer';
 
   isAltMod() {
@@ -51,7 +48,7 @@ const ResultItemContainer = class extends Component {
       />
     );
   }
-};
+}
 
 ResultItemContainer.defaultProps = {
   theme: {},
@@ -70,8 +67,3 @@ ResultItemContainer.propTypes = {
   keys: PropTypes.arrayOf(PropTypes.string),
   copiedToClipboard: PropTypes.bool,
 };
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch);
-
-export default connect(mapDispatchToProps)(ResultItemContainer);

@@ -1,2 +1,0 @@
-export const UPDATE_RESULTS = 'UPDATE_RESULTS';
-export const RESET_RESULTS = 'RESET_RESULTS';

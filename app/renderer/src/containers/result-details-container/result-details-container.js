@@ -9,10 +9,9 @@ export default class ResultDetailsContainer extends Component {
   static displayName = 'ResultDetailsContainer';
 
   componentDidMount() {
-    const { setDetails } = this.props;
     ipcRenderer.on(IPC_ITEM_DETAILS_RESPONSE, (evt, details) => {
       if (details) {
-        this.props.onLoad && this.props.onLoad(details);
+        this.props.onLoad(details);
       }
     });
   }
@@ -31,13 +30,12 @@ export default class ResultDetailsContainer extends Component {
 }
 
 ResultDetailsContainer.defaultProps = {
-  setDetails: () => {},
+  details: '',
   theme: {},
-  onLoad: () => false,
 };
 
 ResultDetailsContainer.propTypes = {
-  setDetails: PropTypes.func,
+  details: PropTypes.string,
   theme: ThemeSchema,
-  onLoad: PropTypes.func,
+  onLoad: PropTypes.func.isRequired,
 };

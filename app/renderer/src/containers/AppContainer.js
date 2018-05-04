@@ -1,22 +1,22 @@
 import { ipcRenderer } from 'electron';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import App from '../components/App';
-import * as actionCreators from '../actions/creators';
 import {
   IPC_WINDOW_RESIZE,
+  IPC_WINDOW_COLLAPSE,
+  IPC_WINDOW_EXPAND,
   IPC_LOAD_THEME,
   IPC_QUERY_COMMAND,
 } from '../../../ipc';
 
-const AppContainer = class extends Component {
+export default class AppContainer extends Component {
   static displayName = 'AppContainer';
 
   state = {
     // the current query value
     query: '',
+    // the current set of results
+    results: [],
     // the current theme
     theme: {},
     // currently pressed keys
@@ -59,16 +59,25 @@ const AppContainer = class extends Component {
     this.setDetails('');
   };
 
+  updateResults = results => {
+    this.setState({ results });
+  };
+
+  resetResults = () => {
+    this.setState({ results: [] });
+  };
+
   updateQuery = nextQuery => {
     this.setState({ query: nextQuery });
     this.resetSelectedItem();
     this.resetDetails();
     ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
+    ipcRenderer.send(IPC_WINDOW_EXPAND);
   };
 
   resetQuery = () => {
-    // @todo - just clean the results once results actions/reducers are removed
-    if (this.props.resetResults) this.props.resetResults();
+    this.setState({ results: [] });
+    ipcRenderer.send(IPC_WINDOW_COLLAPSE);
   };
 
   setActiveKey = key => {
@@ -104,6 +113,7 @@ const AppContainer = class extends Component {
         details={this.state.details}
         keys={this.state.keys}
         q={this.state.query}
+        results={this.state.results}
         selectedIndex={this.state.selectedIndex}
         theme={this.state.theme}
         onClearActiveKey={this.clearActiveKey}
@@ -111,24 +121,11 @@ const AppContainer = class extends Component {
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
         onResetKeys={this.resetKeys}
+        onResetResults={this.resetResults}
         onSelectItem={this.setSelectedItem}
         onSetActiveKey={this.setActiveKey}
+        onUpdateResults={this.updateResults}
       />
     );
   }
-};
-
-AppContainer.defaultProps = {
-  // redux-actions
-  resetResults: () => {},
-};
-
-AppContainer.propTypes = {
-  // redux-actions
-  resetResults: PropTypes.func,
-};
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch);
-
-export default connect(null, mapDispatchToProps)(AppContainer);
+}

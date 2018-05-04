@@ -2,9 +2,6 @@
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/creators';
 import ResultList from '../../components/result-list';
 import {
   IPC_WINDOW_SHOW,
@@ -19,7 +16,7 @@ import {
   IPC_EXECUTE_ITEM,
 } from '../../../../ipc';
 
-const ResultListContainer = class extends Component {
+export default class ResultListContainer extends Component {
   static displayName = 'ResultListContainer';
 
   state = {
@@ -39,8 +36,8 @@ const ResultListContainer = class extends Component {
         const height = newResults.length * 60 + 30;
         ipcRenderer.send(IPC_WINDOW_RESIZE, { height });
       }
-      if (newResults.length) this.props.updateResults(newResults);
-      else this.props.resetResults();
+      if (newResults.length) this.props.onUpdateResults(newResults);
+      else this.props.onResetResults();
       this.setState({ copiedToClipboard: false });
       this.retrieveDetails(this.props.selectedIndex);
     });
@@ -141,46 +138,27 @@ const ResultListContainer = class extends Component {
       />
     ) : null;
   }
-};
+}
 
 ResultListContainer.defaultProps = {
   details: '',
   keys: [],
+  results: [],
   selectedIndex: 0,
   theme: {},
-
-  // todo - still in redux
-  results: [],
-  updateResults: () => {},
-  resetResults: () => {},
 };
 
 ResultListContainer.propTypes = {
   theme: PropTypes.object,
   details: PropTypes.string,
   keys: PropTypes.arrayOf(PropTypes.string),
+  results: PropTypes.arrayOf(PropTypes.object),
   selectedIndex: PropTypes.number,
   onClearActiveKey: PropTypes.func.isRequired,
   onLoadDetails: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
+  onResetResults: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
   onSetActiveKey: PropTypes.func.isRequired,
-
-  // todo - still in redux
-  results: PropTypes.arrayOf(PropTypes.object),
-  selectNextItem: PropTypes.func.isRequired,
-  selectPreviousItem: PropTypes.func.isRequired,
-  updateResults: PropTypes.func,
-  resetResults: PropTypes.func,
+  onUpdateResults: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = state => ({
-  results: state.results,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ResultListContainer
-);
