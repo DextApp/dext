@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { compose, style } from 'glamor';
-import { ThemeSchema } from '../../schema';
 
 const base = style({
   paddingTop: 15,
@@ -60,7 +59,7 @@ QueryField.defaultProps = {
 QueryField.propTypes = {
   attachInputRef: PropTypes.func,
   onChange: PropTypes.func,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   value: PropTypes.string,
 };
 

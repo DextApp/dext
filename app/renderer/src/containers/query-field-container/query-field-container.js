@@ -2,7 +2,6 @@ import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import QueryField from '../../components/query-field';
-import { ThemeSchema } from '../../schema';
 import { IPC_WINDOW_SHOW, IPC_WINDOW_HIDE } from '../../../../ipc';
 
 const QueryFieldContainer = class extends Component {
@@ -61,7 +60,7 @@ QueryFieldContainer.propTypes = {
   onChange: PropTypes.func,
   onReset: PropTypes.func,
   q: PropTypes.string,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
 };
 
 export default QueryFieldContainer;

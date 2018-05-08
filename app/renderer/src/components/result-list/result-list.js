@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { compose, pseudo, style } from 'glamor';
 import ResultItemContainer from '../../containers/result-item-container';
 import ResultDetailsContainer from '../../containers/ResultDetailsContainer';
-import { ResultItemSchema, ThemeSchema } from '../../schema';
 
 const base = compose(
   style({
@@ -90,9 +89,9 @@ ResultList.defaultProps = {
 };
 
 ResultList.propTypes = {
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   keys: PropTypes.arrayOf(PropTypes.string),
-  results: PropTypes.arrayOf(ResultItemSchema),
+  results: PropTypes.arrayOf(PropTypes.object),
   selectedIndex: PropTypes.number,
   copiedToClipboard: PropTypes.bool,
 };

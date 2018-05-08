@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { compose, style } from 'glamor';
 import QueryFieldContainer from '../containers/query-field-container';
 import ResultListContainer from '../containers/result-list-container';
-import { ThemeSchema } from '../schema';
 
 const outerBase = style({
   backgroundColor: '#f2f2f2',
@@ -70,7 +69,7 @@ App.propTypes = {
   onClearActiveKey: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
   q: PropTypes.string,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   keys: PropTypes.arrayOf(PropTypes.string),
 };
 

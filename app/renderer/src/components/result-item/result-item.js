@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { style, compose, hover } from 'glamor';
 import IconContainer from '../../containers/IconContainer';
-import { ResultItemSchema, ThemeSchema } from '../../schema';
 
 const activeStyle = {
   backgroundColor: '#3f93fe',
@@ -150,10 +149,10 @@ ResultItem.defaultProps = {
 };
 
 ResultItem.propTypes = {
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   // item prop should follow the Alfred workflow script filter JSON format
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
-  item: ResultItemSchema,
+  item: PropTypes.object,
   selected: PropTypes.bool,
   isAltMod: PropTypes.bool,
   isSuperMod: PropTypes.bool,

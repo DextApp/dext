@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/creators';
 import ResultDetails from '../components/ResultDetails';
 import { IPC_ITEM_DETAILS_RESPONSE } from '../../../ipc';
-import { ThemeSchema } from '../schema';
 
 const ResultDetailsContainer = class extends Component {
   static displayName = 'ResultDetailsContainer';
@@ -45,7 +44,7 @@ ResultDetailsContainer.propTypes = {
   detailsPane: PropTypes.string,
   detailsPaneExpanded: PropTypes.bool,
   setDetails: PropTypes.func,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
