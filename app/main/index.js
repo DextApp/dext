@@ -381,7 +381,6 @@ const onAppReady = () => {
       return win;
     })
     .then(registeredWindow => {
-      //   if (IS_DEV) registeredWindow.webContents.openDevTools({ detach: true });
       const loadedPlugins = loadPlugins([
         { path: CORE_PLUGIN_PATH, isCore: true },
         { path: PLUGIN_PATH, isCore: false },
@@ -391,7 +390,11 @@ const onAppReady = () => {
         registeredWindow,
       }));
     })
-    .then(registerIpcListeners);
+    .then(ipcConfig => {
+      registerIpcListeners(ipcConfig);
+      if (IS_DEV)
+        ipcConfig.registeredWindow.webContents.openDevTools({ detach: true });
+    });
 };
 
 app.dock.hide();
