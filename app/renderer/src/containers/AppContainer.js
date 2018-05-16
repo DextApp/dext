@@ -71,7 +71,7 @@ export default class AppContainer extends Component {
 
   updateQuery = nextQuery => {
     this.setState({ query: nextQuery });
-    this.resetSelectedItem();
+    this.resetSelectedIndex();
     this.resetDetails();
     ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
     ipcRenderer.send(IPC_WINDOW_EXPAND);
@@ -101,11 +101,11 @@ export default class AppContainer extends Component {
     this.setState({ keys: [] });
   };
 
-  setSelectedItem = selectedIndex => {
+  setSelectedIndex = selectedIndex => {
     this.setState({ selectedIndex });
   };
 
-  resetSelectedItem = () => {
+  resetSelectedIndex = () => {
     this.setState({ selectedIndex: 0 });
   };
 
@@ -124,7 +124,7 @@ export default class AppContainer extends Component {
         onQueryReset={this.resetQuery}
         onResetKeys={this.resetKeys}
         onResetResults={this.resetResults}
-        onSelectItem={this.setSelectedItem}
+        onSelectItem={this.setSelectedIndex}
         onSetActiveKey={this.setActiveKey}
         onUpdateResults={this.updateResults}
       />
