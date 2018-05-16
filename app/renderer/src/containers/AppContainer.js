@@ -23,7 +23,6 @@ export default class AppContainer extends Component {
     keys: [],
     // details pane content
     details: '',
-    // currently selected index
     selectedIndex: 0,
   };
 
