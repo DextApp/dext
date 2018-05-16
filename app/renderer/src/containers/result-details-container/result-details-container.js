@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ResultDetails from '../../components/result-details';
 import { IPC_ITEM_DETAILS_RESPONSE } from '../../../../ipc';
-import { ThemeSchema } from '../../schema';
 
 export default class ResultDetailsContainer extends Component {
   static displayName = 'ResultDetailsContainer';
@@ -36,6 +35,6 @@ ResultDetailsContainer.defaultProps = {
 
 ResultDetailsContainer.propTypes = {
   details: PropTypes.string,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   onLoad: PropTypes.func.isRequired,
 };

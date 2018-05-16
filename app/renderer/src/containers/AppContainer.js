@@ -48,7 +48,9 @@ export default class AppContainer extends Component {
   }
 
   setTheme = theme => {
-    this.setState({ theme });
+    this.setState({ theme }, () => {
+      console.log(this.state.theme);
+    });
   };
 
   setDetails = details => {
