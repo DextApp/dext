@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/creators';
 import ResultItem from '../../components/result-item';
-import { ThemeSchema, ResultItemSchema } from '../../schema';
 import { IPC_EXECUTE_ITEM } from '../../../../ipc';
 
 const ResultItemContainer = class extends Component {
@@ -63,10 +62,10 @@ ResultItemContainer.defaultProps = {
 };
 
 ResultItemContainer.propTypes = {
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   // item prop should follow the Alfred workflow script filter JSON format
   // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
-  item: ResultItemSchema,
+  item: PropTypes.object,
   selected: PropTypes.bool,
   keys: PropTypes.arrayOf(PropTypes.string),
   copiedToClipboard: PropTypes.bool,

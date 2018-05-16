@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/creators';
 import ResultList from '../../components/result-list';
-import { ResultItemSchema, ThemeSchema } from '../../schema';
 import {
   IPC_WINDOW_SHOW,
   IPC_WINDOW_RESIZE,
@@ -150,14 +149,14 @@ ResultListContainer.defaultProps = {
 };
 
 ResultListContainer.propTypes = {
-  theme: ThemeSchema,
+  theme: PropTypes.object,
   keys: PropTypes.arrayOf(PropTypes.string),
   onSetActiveKey: PropTypes.func.isRequired,
   onClearActiveKey: PropTypes.func.isRequired,
   onResetKeys: PropTypes.func.isRequired,
 
   // todo - still in redux
-  results: PropTypes.arrayOf(ResultItemSchema),
+  results: PropTypes.arrayOf(PropTypes.object),
   selectedIndex: PropTypes.number,
   selectNextItem: PropTypes.func.isRequired,
   selectPreviousItem: PropTypes.func.isRequired,

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { compose, pseudo, style } from 'glamor';
-import { ThemeSchema } from '../schema';
 
 const ResultDetails = ({ theme, content, expanded }) => {
   const base = compose(
@@ -56,7 +55,7 @@ ResultDetails.defaultProps = {
 ResultDetails.propTypes = {
   content: PropTypes.string,
   expanded: PropTypes.bool,
-  theme: ThemeSchema,
+  theme: PropTypes.object,
 };
 
 export default ResultDetails;
