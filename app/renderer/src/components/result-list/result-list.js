@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { compose, pseudo, style } from 'glamor';
 import ResultItemContainer from '../../containers/result-item-container';
-import ResultDetailsContainer from '../../containers/ResultDetailsContainer';
+import ResultDetailsContainer from '../../containers/result-details-container';
 
 const base = compose(
   style({
@@ -52,6 +52,7 @@ const ResultList = class extends Component {
           selected={selectedIndex === key}
         />
       ));
+
     const currItem = this.props.results[this.props.selectedIndex];
 
     return (
@@ -73,7 +74,11 @@ const ResultList = class extends Component {
           )}
         </ol>
         {currItem && (
-          <ResultDetailsContainer theme={this.props.theme} item={currItem} />
+          <ResultDetailsContainer
+            details={this.props.details}
+            theme={this.props.theme}
+            onLoad={this.props.onLoadDetails}
+          />
         )}
       </div>
     );
@@ -81,19 +86,23 @@ const ResultList = class extends Component {
 };
 
 ResultList.defaultProps = {
-  theme: {},
+  copiedToClipboard: false,
+  details: '',
   keys: [],
   results: [],
   selectedIndex: 0,
-  copiedToClipboard: false,
+  theme: {},
+  onLoadDetails: () => false,
 };
 
 ResultList.propTypes = {
-  theme: PropTypes.object,
+  copiedToClipboard: PropTypes.bool,
+  details: PropTypes.string,
   keys: PropTypes.arrayOf(PropTypes.string),
   results: PropTypes.arrayOf(PropTypes.object),
   selectedIndex: PropTypes.number,
-  copiedToClipboard: PropTypes.bool,
+  theme: PropTypes.object,
+  onLoadDetails: PropTypes.func,
 };
 
 export default ResultList;

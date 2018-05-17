@@ -375,7 +375,10 @@ const onAppReady = () => {
         win.webContents.send(IPC_WINDOW_HIDE);
       });
       win.on('blur', hideWindow);
-      win.webContents.on('did-finish-load', handleDidFinishLoad);
+      win.webContents.on(
+        'did-finish-load',
+        handleDidFinishLoad.bind(this, theme)
+      );
       // register global shortcuts
       globalShortcut.register(config.get('hotKey'), toggleMainWindow);
       return win;

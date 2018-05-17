@@ -24,7 +24,7 @@ const base = style({
   overflow: 'hidden',
 });
 
-const App = props => {
+export default function App(props) {
   const outerStyles = props.theme.window
     ? compose(outerBase, {
         backgroundColor: props.theme.window.backgroundColor,
@@ -45,32 +45,47 @@ const App = props => {
           onReset={props.onQueryReset}
         />
         <ResultListContainer
-          theme={props.theme}
+          details={props.details}
           keys={props.keys}
-          onResetKeys={props.onResetKeys}
-          onSetActiveKey={props.onSetActiveKey}
+          results={props.results}
+          selectedIndex={props.selectedIndex}
+          theme={props.theme}
           onClearActiveKey={props.onClearActiveKey}
+          onLoadDetails={props.onLoadDetails}
+          onResetKeys={props.onResetKeys}
+          onResetResults={props.onResetResults}
+          onSelectItem={props.onSelectItem}
+          onSetActiveKey={props.onSetActiveKey}
+          onUpdateResults={props.onUpdateResults}
         />
       </div>
     </div>
   );
-};
+}
 
 App.defaultProps = {
-  q: '',
-  theme: {},
+  details: '',
   keys: [],
+  q: '',
+  results: [],
+  selectedIndex: 0,
+  theme: {},
 };
 
 App.propTypes = {
-  onQueryChange: PropTypes.func.isRequired,
-  onQueryReset: PropTypes.func.isRequired,
-  onSetActiveKey: PropTypes.func.isRequired,
-  onClearActiveKey: PropTypes.func.isRequired,
-  onResetKeys: PropTypes.func.isRequired,
+  details: PropTypes.string,
+  keys: PropTypes.arrayOf(PropTypes.string),
   q: PropTypes.string,
   theme: PropTypes.object,
-  keys: PropTypes.arrayOf(PropTypes.string),
+  results: PropTypes.arrayOf(PropTypes.object),
+  selectedIndex: PropTypes.number,
+  onClearActiveKey: PropTypes.func.isRequired,
+  onLoadDetails: PropTypes.func.isRequired,
+  onQueryChange: PropTypes.func.isRequired,
+  onQueryReset: PropTypes.func.isRequired,
+  onResetKeys: PropTypes.func.isRequired,
+  onResetResults: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
+  onSetActiveKey: PropTypes.func.isRequired,
+  onUpdateResults: PropTypes.func.isRequired,
 };
-
-export default App;

@@ -1,26 +1,29 @@
 import { ipcRenderer } from 'electron';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import App from '../components/App';
-import * as actionCreators from '../actions/creators';
 import {
   IPC_WINDOW_RESIZE,
+  IPC_WINDOW_COLLAPSE,
+  IPC_WINDOW_EXPAND,
   IPC_LOAD_THEME,
   IPC_QUERY_COMMAND,
 } from '../../../ipc';
 
-const AppContainer = class extends Component {
+export default class AppContainer extends Component {
   static displayName = 'AppContainer';
 
   state = {
     // the current query value
     query: '',
+    // the current set of results
+    results: [],
     // the current theme
     theme: {},
     // currently pressed keys
     keys: [],
+    // details pane content
+    details: '',
+    selectedIndex: 0,
   };
 
   componentDidMount() {
@@ -44,17 +47,38 @@ const AppContainer = class extends Component {
   }
 
   setTheme = theme => {
-    this.setState({ theme });
+    this.setState({ theme }, () => {
+      console.log(this.state.theme);
+    });
+  };
+
+  setDetails = details => {
+    this.setState({ details });
+  };
+
+  resetDetails = () => {
+    this.setDetails('');
+  };
+
+  updateResults = results => {
+    this.setState({ results });
+  };
+
+  resetResults = () => {
+    this.setState({ results: [] });
   };
 
   updateQuery = nextQuery => {
     this.setState({ query: nextQuery });
+    this.resetSelectedIndex();
+    this.resetDetails();
     ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
+    ipcRenderer.send(IPC_WINDOW_EXPAND);
   };
 
   resetQuery = () => {
-    // @todo - just clean the results once results actions/reducers are removed
-    if (this.props.resetResults) this.props.resetResults();
+    this.setState({ results: [] });
+    ipcRenderer.send(IPC_WINDOW_COLLAPSE);
   };
 
   setActiveKey = key => {
@@ -76,33 +100,33 @@ const AppContainer = class extends Component {
     this.setState({ keys: [] });
   };
 
+  setSelectedIndex = selectedIndex => {
+    this.setState({ selectedIndex });
+  };
+
+  resetSelectedIndex = () => {
+    this.setState({ selectedIndex: 0 });
+  };
+
   render() {
     return (
       <App
-        q={this.state.query}
-        theme={this.state.theme}
+        details={this.state.details}
         keys={this.state.keys}
+        q={this.state.query}
+        results={this.state.results}
+        selectedIndex={this.state.selectedIndex}
+        theme={this.state.theme}
         onClearActiveKey={this.clearActiveKey}
-        onSetActiveKey={this.setActiveKey}
-        onResetKeys={this.resetKeys}
+        onLoadDetails={this.setDetails}
         onQueryChange={this.updateQuery}
         onQueryReset={this.resetQuery}
+        onResetKeys={this.resetKeys}
+        onResetResults={this.resetResults}
+        onSelectItem={this.setSelectedIndex}
+        onSetActiveKey={this.setActiveKey}
+        onUpdateResults={this.updateResults}
       />
     );
   }
-};
-
-AppContainer.defaultProps = {
-  // redux-actions
-  resetResults: () => {},
-};
-
-AppContainer.propTypes = {
-  // redux-actions
-  resetResults: PropTypes.func,
-};
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch);
-
-export default connect(null, mapDispatchToProps)(AppContainer);
+}

@@ -2,9 +2,6 @@
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/creators';
 import ResultList from '../../components/result-list';
 import {
   IPC_WINDOW_SHOW,
@@ -19,7 +16,7 @@ import {
   IPC_EXECUTE_ITEM,
 } from '../../../../ipc';
 
-const ResultListContainer = class extends Component {
+export default class ResultListContainer extends Component {
   static displayName = 'ResultListContainer';
 
   state = {
@@ -39,24 +36,27 @@ const ResultListContainer = class extends Component {
         const height = newResults.length * 60 + 30;
         ipcRenderer.send(IPC_WINDOW_RESIZE, { height });
       }
-      if (newResults.length) this.props.updateResults(newResults);
-      else this.props.resetResults();
+      if (newResults.length) this.props.onUpdateResults(newResults);
+      else this.props.onResetResults();
       this.setState({ copiedToClipboard: false });
+      this.retrieveDetails(this.props.selectedIndex);
     });
     ipcRenderer.on(IPC_SELECT_PREVIOUS_ITEM, () => {
       if (this.props.selectedIndex > 0) {
-        this.props.selectPreviousItem();
-        this.setState({ copiedToClipboard: false });
-        this.scrollToItem(this.props.selectedIndex);
-        this.retrieveDetails(this.props.selectedIndex);
+        this.props.onSelectItem(this.props.selectedIndex - 1);
+        this.setState({ copiedToClipboard: false }, () => {
+          this.scrollToItem(this.props.selectedIndex);
+          this.retrieveDetails(this.props.selectedIndex);
+        });
       }
     });
     ipcRenderer.on(IPC_SELECT_NEXT_ITEM, () => {
       if (this.props.selectedIndex < this.props.results.length - 1) {
-        this.props.selectNextItem();
-        this.setState({ copiedToClipboard: false });
-        this.scrollToItem(this.props.selectedIndex);
-        this.retrieveDetails(this.props.selectedIndex);
+        this.props.onSelectItem(this.props.selectedIndex + 1);
+        this.setState({ copiedToClipboard: false }, () => {
+          this.scrollToItem(this.props.selectedIndex);
+          this.retrieveDetails(this.props.selectedIndex);
+        });
       }
     });
     ipcRenderer.on(IPC_COPY_CURRENT_ITEM_KEY, () => {
@@ -82,7 +82,9 @@ const ResultListContainer = class extends Component {
   };
 
   retrieveDetails = index => {
-    ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, this.props.results[index]);
+    if (this.props.results[index]) {
+      ipcRenderer.send(IPC_ITEM_DETAILS_REQUEST, this.props.results[index]);
+    }
   };
 
   copyItem = () => {
@@ -100,12 +102,14 @@ const ResultListContainer = class extends Component {
    */
   execute = () => {
     const item = this.props.results[this.props.selectedIndex];
-    ipcRenderer.send(IPC_EXECUTE_ITEM, {
-      action: item.action,
-      item,
-      isAltMod: this.isAltMod(),
-      isSuperMod: this.isSuperMod(),
-    });
+    if (item) {
+      ipcRenderer.send(IPC_EXECUTE_ITEM, {
+        action: item.action,
+        item,
+        isAltMod: this.isAltMod(),
+        isSuperMod: this.isSuperMod(),
+      });
+    }
   };
 
   /**
@@ -124,54 +128,37 @@ const ResultListContainer = class extends Component {
         ref={c => {
           this.c = c;
         }}
+        details={this.props.details}
         theme={this.props.theme}
         keys={this.props.keys}
         results={this.props.results}
         selectedIndex={this.props.selectedIndex}
         copiedToClipboard={this.state.copiedToClipboard}
+        onLoadDetails={this.props.onLoadDetails}
       />
     ) : null;
   }
-};
+}
 
 ResultListContainer.defaultProps = {
-  theme: {},
+  details: '',
   keys: [],
-
-  // todo - still in redux
   results: [],
   selectedIndex: 0,
-  selectItem: () => {},
-  selectNextItem: () => {},
-  selectPreviousItem: () => {},
-  updateResults: () => {},
-  resetResults: () => {},
+  theme: {},
 };
 
 ResultListContainer.propTypes = {
   theme: PropTypes.object,
+  details: PropTypes.string,
   keys: PropTypes.arrayOf(PropTypes.string),
-  onSetActiveKey: PropTypes.func.isRequired,
-  onClearActiveKey: PropTypes.func.isRequired,
-  onResetKeys: PropTypes.func.isRequired,
-
-  // todo - still in redux
   results: PropTypes.arrayOf(PropTypes.object),
   selectedIndex: PropTypes.number,
-  selectNextItem: PropTypes.func.isRequired,
-  selectPreviousItem: PropTypes.func.isRequired,
-  updateResults: PropTypes.func,
-  resetResults: PropTypes.func,
+  onClearActiveKey: PropTypes.func.isRequired,
+  onLoadDetails: PropTypes.func.isRequired,
+  onResetKeys: PropTypes.func.isRequired,
+  onResetResults: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
+  onSetActiveKey: PropTypes.func.isRequired,
+  onUpdateResults: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = state => ({
-  results: state.results,
-  selectedIndex: state.selectedIndex,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreators, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ResultListContainer
-);
