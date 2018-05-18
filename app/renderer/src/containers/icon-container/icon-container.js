@@ -1,8 +1,8 @@
 import { ipcRenderer } from 'electron';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Icon from '../components/icon';
-import { IPC_FETCH_ICON, IPC_RETRIEVE_ICON } from '../../../ipc';
+import Icon from '../../components/icon';
+import { IPC_FETCH_ICON, IPC_RETRIEVE_ICON } from '../../../../ipc';
 
 export default class IconContainer extends Component {
   state = {

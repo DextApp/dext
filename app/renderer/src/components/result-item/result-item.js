@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { style, compose, hover } from 'glamor';
-import IconContainer from '../../containers/IconContainer';
+import IconContainer from '../../containers/icon-container';
 
 const activeStyle = {
   backgroundColor: '#3f93fe',

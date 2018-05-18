@@ -1,13 +1,13 @@
 import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
-import App from '../components/App';
+import App from '../../components/app';
 import {
   IPC_WINDOW_RESIZE,
   IPC_WINDOW_COLLAPSE,
   IPC_WINDOW_EXPAND,
   IPC_LOAD_THEME,
   IPC_QUERY_COMMAND,
-} from '../../../ipc';
+} from '../../../../ipc';
 
 export default class AppContainer extends Component {
   static displayName = 'AppContainer';
