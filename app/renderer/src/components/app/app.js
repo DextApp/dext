@@ -8,7 +8,7 @@ import {
   IPC_LOAD_THEME,
   IPC_QUERY_COMMAND,
 } from '../../../../ipc';
-import QueryFieldContainer from '../../containers/query-field-container';
+import QueryField from '../query-field';
 import ResultListContainer from '../../containers/result-list-container';
 
 const outerBase = style({
@@ -136,8 +136,8 @@ export default class App extends React.PureComponent {
     return (
       <div {...outerStyles}>
         <div {...innerStyles}>
-          <QueryFieldContainer
-            q={this.state.query}
+          <QueryField
+            query={this.state.query}
             theme={this.state.theme}
             onChange={this.updateQuery}
             onReset={this.resetQuery}
