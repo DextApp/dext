@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
+import { ipcRenderer } from 'electron';
 import { compose, style } from 'glamor';
+import { IPC_WINDOW_SHOW, IPC_WINDOW_HIDE } from '../../../../ipc';
 
 const base = style({
   paddingTop: 15,
@@ -26,41 +28,70 @@ const search = style({
   height: 50,
 });
 
-const QueryField = class extends Component {
-  render() {
-    const { theme, onChange, value } = this.props;
+class QueryField extends React.Component {
+  static displayName = 'QueryField';
+  static propTypes = {
+    query: PropTypes.string,
+    theme: PropTypes.object,
+    onReset: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+  static defaultProps = {
+    query: '',
+    theme: {},
+  };
+  queryField = null;
+  componentDidMount() {
+    ipcRenderer.on(IPC_WINDOW_SHOW, () => {
+      this.focus();
+    });
+    ipcRenderer.on(IPC_WINDOW_HIDE, () => {
+      if (this.props.onReset) this.props.onReset();
+      this.blur();
+    });
+  }
 
+  focus = () => {
+    if (this.queryField) {
+      this.queryField.focus();
+    }
+  };
+
+  blur = () => {
+    if (this.queryField) {
+      this.queryField.blur();
+    }
+  };
+
+  handleChange = e => {
+    if (this.props.onChange) this.props.onChange(e.target.value);
+  };
+
+  attachQueryField = queryField => {
+    this.queryField = queryField;
+  };
+  render() {
     const baseStyle =
-      theme && theme.searchBase ? compose(base, theme.searchBase) : base;
+      this.props.theme && this.props.theme.searchBase
+        ? compose(base, this.props.theme.searchBase)
+        : base;
 
     const styles =
-      theme && theme.search ? compose(search, theme.search) : search;
+      this.props.theme && this.props.theme.search
+        ? compose(search, this.props.theme.search)
+        : search;
 
     return (
       <div {...baseStyle}>
         <input
-          ref={this.props.attachInputRef}
-          onChange={onChange}
-          value={value}
+          ref={this.attachQueryField}
+          onChange={this.handleChange}
+          value={this.props.query}
           {...styles}
         />
       </div>
     );
   }
-};
-
-QueryField.defaultProps = {
-  attachInputRef: () => {},
-  onChange: () => {},
-  theme: {},
-  value: '',
-};
-
-QueryField.propTypes = {
-  attachInputRef: PropTypes.func,
-  onChange: PropTypes.func,
-  theme: PropTypes.object,
-  value: PropTypes.string,
-};
+}
 
 export default QueryField;
