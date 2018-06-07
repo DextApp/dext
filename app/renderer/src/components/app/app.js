@@ -64,11 +64,12 @@ export default class App extends React.PureComponent {
       this.state.theme.window &&
       this.state.theme.window.width
     ) {
-      let width = this.state.theme.window.width;
-      if (this.state.theme.window.width > 650) {
-        width = 650;
-      }
-      ipcRenderer.send(IPC_WINDOW_RESIZE, { width });
+      ipcRenderer.send(IPC_WINDOW_RESIZE, {
+        width:
+          this.state.theme.window.width > 650
+            ? 650
+            : this.state.theme.window.width,
+      });
     }
   }
 
