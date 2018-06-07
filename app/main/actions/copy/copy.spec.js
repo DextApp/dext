@@ -1,5 +1,5 @@
-import copy from './copy';
 import { clipboard } from 'electron';
+import copy from './copy';
 
 jest.mock('electron', () => ({
   clipboard: {

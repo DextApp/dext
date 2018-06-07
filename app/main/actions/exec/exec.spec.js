@@ -1,6 +1,6 @@
+import childProcess from 'child_process';
 import path from 'path';
 import exec from './exec';
-import childProcess from 'child_process';
 
 jest.mock('child_process', () => ({
   fork: jest.fn(),

@@ -1,5 +1,5 @@
-import open from './open';
 import { shell } from 'electron';
+import open from './open';
 
 jest.mock('electron', () => ({
   shell: {
