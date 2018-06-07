@@ -1,6 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { compose, style } from 'glamor';
+import { ipcRenderer } from 'electron';
+import {
+  IPC_WINDOW_RESIZE,
+  IPC_WINDOW_COLLAPSE,
+  IPC_WINDOW_EXPAND,
+  IPC_LOAD_THEME,
+  IPC_QUERY_COMMAND,
+} from '../../../../ipc';
 import QueryFieldContainer from '../../containers/query-field-container';
 import ResultListContainer from '../../containers/result-list-container';
 
@@ -24,68 +31,132 @@ const base = style({
   overflow: 'hidden',
 });
 
-export default function App(props) {
-  const outerStyles = props.theme.window
+const getOuterStyles = theme =>
+  theme && theme.window
     ? compose(outerBase, {
-        backgroundColor: props.theme.window.backgroundColor,
+        backgroundColor: window.backgroundColor,
       })
     : outerBase;
 
-  const innerStyles = props.theme.window
-    ? compose(base, props.theme.window)
-    : base;
+const getInnerStyles = theme =>
+  theme && theme.window ? compose(base, theme.window) : base;
 
-  return (
-    <div {...outerStyles}>
-      <div {...innerStyles}>
-        <QueryFieldContainer
-          q={props.q}
-          theme={props.theme}
-          onChange={props.onQueryChange}
-          onReset={props.onQueryReset}
-        />
-        <ResultListContainer
-          details={props.details}
-          keys={props.keys}
-          results={props.results}
-          selectedIndex={props.selectedIndex}
-          theme={props.theme}
-          onClearActiveKey={props.onClearActiveKey}
-          onLoadDetails={props.onLoadDetails}
-          onResetKeys={props.onResetKeys}
-          onResetResults={props.onResetResults}
-          onSelectItem={props.onSelectItem}
-          onSetActiveKey={props.onSetActiveKey}
-          onUpdateResults={props.onUpdateResults}
-        />
+export default class App extends React.PureComponent {
+  static displayName = 'App';
+  state = {
+    query: '',
+    results: [],
+    theme: {},
+    keys: [],
+    details: '',
+    selectedIndex: 0,
+  };
+
+  componentDidMount() {
+    ipcRenderer.on(IPC_LOAD_THEME, (evt, nextTheme) => {
+      this.setTheme(nextTheme);
+    });
+  }
+
+  componentDidUpdate() {
+    if (
+      this.state.theme &&
+      this.state.theme.window &&
+      this.state.theme.window.width
+    ) {
+      let width = this.state.theme.window.width;
+      if (this.state.theme.window.width > 650) {
+        width = 650;
+      }
+      ipcRenderer.send(IPC_WINDOW_RESIZE, { width });
+    }
+  }
+
+  setTheme = theme => {
+    this.setState({ theme });
+  };
+
+  setDetails = details => {
+    this.setState({ details });
+  };
+
+  resetDetails = () => {
+    this.setDetails('');
+  };
+
+  updateResults = results => {
+    this.setState({ results });
+  };
+
+  resetResults = () => {
+    this.setState({ results: [] });
+  };
+
+  updateQuery = nextQuery => {
+    this.setState({ query: nextQuery });
+    this.resetSelectedIndex();
+    this.resetDetails();
+    ipcRenderer.send(IPC_QUERY_COMMAND, { q: nextQuery });
+    ipcRenderer.send(IPC_WINDOW_EXPAND);
+  };
+
+  resetQuery = () => {
+    this.setState({ results: [] });
+    ipcRenderer.send(IPC_WINDOW_COLLAPSE);
+  };
+
+  setActiveKey = key => {
+    this.setState(prevState => ({
+      keys: [...prevState.keys, key],
+    }));
+  };
+
+  clearActiveKey = key => {
+    this.setState(prevState => ({
+      keys: prevState.keys.filter(keyToOmit => keyToOmit === key),
+    }));
+  };
+
+  resetKeys = () => {
+    this.setState({ keys: [] });
+  };
+
+  setSelectedIndex = selectedIndex => {
+    this.setState({ selectedIndex });
+  };
+
+  resetSelectedIndex = () => {
+    this.setState({ selectedIndex: 0 });
+  };
+
+  render() {
+    const outerStyles = getOuterStyles(this.state.theme);
+    const innerStyles = getInnerStyles(this.state.theme);
+    return (
+      <div {...outerStyles}>
+        <div {...innerStyles}>
+          <QueryFieldContainer
+            q={this.state.query}
+            theme={this.state.theme}
+            onChange={this.updateQuery}
+            onReset={this.resetQuery}
+          />
+          <ResultListContainer
+            details={this.state.details}
+            keys={this.state.keys}
+            onClearActiveKey={this.clearActiveKey}
+            onLoadDetails={this.setDetails}
+            onResetKeys={this.resetKeys}
+            onResetResults={this.resetResults}
+            onSelectItem={this.setSelectedIndex}
+            onSetActiveKey={this.setActiveKey}
+            onUpdateResults={this.updateResults}
+            results={this.state.results}
+            selectedIndex={this.state.selectedIndex}
+            theme={this.state.theme}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-App.defaultProps = {
-  details: '',
-  keys: [],
-  q: '',
-  results: [],
-  selectedIndex: 0,
-  theme: {},
-};
-
-App.propTypes = {
-  details: PropTypes.string,
-  keys: PropTypes.arrayOf(PropTypes.string),
-  q: PropTypes.string,
-  theme: PropTypes.object,
-  results: PropTypes.arrayOf(PropTypes.object),
-  selectedIndex: PropTypes.number,
-  onClearActiveKey: PropTypes.func.isRequired,
-  onLoadDetails: PropTypes.func.isRequired,
-  onQueryChange: PropTypes.func.isRequired,
-  onQueryReset: PropTypes.func.isRequired,
-  onResetKeys: PropTypes.func.isRequired,
-  onResetResults: PropTypes.func.isRequired,
-  onSelectItem: PropTypes.func.isRequired,
-  onSetActiveKey: PropTypes.func.isRequired,
-  onUpdateResults: PropTypes.func.isRequired,
-};
