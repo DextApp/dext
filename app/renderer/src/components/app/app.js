@@ -34,7 +34,7 @@ const base = style({
 const getOuterStyles = theme =>
   theme && theme.window
     ? compose(outerBase, {
-        backgroundColor: window.backgroundColor,
+        backgroundColor: theme.window.backgroundColor,
       })
     : outerBase;
 
