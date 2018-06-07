@@ -1,7 +1,7 @@
 /* global document */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppContainer from './containers/app-container';
+import App from './components/app';
 
 const rootNode = document.getElementById('app');
-ReactDOM.render(<AppContainer />, rootNode);
+ReactDOM.render(<App />, rootNode);
