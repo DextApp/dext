@@ -38,7 +38,12 @@ const ResultDetails = ({ theme, content, expanded }) => {
 
   // apply theme styles
   const styles =
-    theme && theme.resultDetails ? compose(base, theme.resultDetails) : base;
+    theme && theme.resultDetails
+      ? compose(
+          base,
+          theme.resultDetails
+        )
+      : base;
 
   return (
     // eslint-disable-next-line react/no-danger
