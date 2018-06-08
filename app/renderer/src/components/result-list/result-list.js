@@ -16,7 +16,7 @@ import {
 } from '../../../../ipc';
 /* eslint-disable react/no-array-index-key */
 import ResultItemContainer from '../../containers/result-item-container';
-import ResultDetailsContainer from '../../containers/result-details-container';
+import ResultDetails from '../result-details';
 
 const base = compose(
   style({
@@ -195,7 +195,7 @@ class ResultList extends Component {
           )}
         </ol>
         {currItem && (
-          <ResultDetailsContainer
+          <ResultDetails
             details={this.props.details}
             theme={this.props.theme}
             onLoad={this.props.onLoadDetails}
