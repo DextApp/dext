@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { style, compose, hover } from 'glamor';
-import IconContainer from '../../containers/icon-container';
+import IconWrapper from '../icon-wrapper';
 
 const activeStyle = {
   backgroundColor: '#3f93fe',
@@ -128,7 +128,7 @@ const ResultItem = ({
       onDoubleClick={onDoubleClick}
     >
       <div {...icon}>
-        <IconContainer icon={item.icon} />
+        <IconWrapper wrapper />
       </div>
       <div {...details}>
         <h2

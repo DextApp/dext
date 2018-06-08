@@ -8,12 +8,12 @@ exports[`<ResultItem /> component should render a result item component in a sel
   <div
     data-css-1ch5118=""
   >
-    <img
-      alt=""
-      data-css-1vehqxh=""
+    <span
+      data-css-1ezhq81=""
       role="presentation"
-      src="./icon.png"
-    />
+    >
+      
+    </span>
   </div>
   <div
     data-css-15y2pmq=""
@@ -40,12 +40,12 @@ exports[`<ResultItem /> component should render a result item component with a f
   <div
     data-css-1ch5118=""
   >
-    <img
-      alt=""
-      data-css-1vehqxh=""
+    <span
+      data-css-1ezhq81=""
       role="presentation"
-      src="./icon.png"
-    />
+    >
+      
+    </span>
   </div>
   <div
     data-css-15y2pmq=""
@@ -76,7 +76,7 @@ exports[`<ResultItem /> component should render a result item component with a t
       data-css-1ezhq81=""
       role="presentation"
     >
-      T
+      
     </span>
   </div>
   <div
