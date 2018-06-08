@@ -73,12 +73,18 @@ class QueryField extends React.Component {
   render() {
     const baseStyle =
       this.props.theme && this.props.theme.searchBase
-        ? compose(base, this.props.theme.searchBase)
+        ? compose(
+            base,
+            this.props.theme.searchBase
+          )
         : base;
 
     const styles =
       this.props.theme && this.props.theme.search
-        ? compose(search, this.props.theme.search)
+        ? compose(
+            search,
+            this.props.theme.search
+          )
         : search;
 
     return (
