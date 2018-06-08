@@ -19,7 +19,7 @@ exports[`<QueryField /> component should render a query field component with som
   <input
     data-css-bj9j4d=""
     onChange={[Function]}
-    value="TEST"
+    value=""
   />
 </div>
 `;
