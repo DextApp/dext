@@ -105,7 +105,10 @@ const ResultItem = ({
   const themeHover = hover(theme.resultActive || {});
 
   const themeSelected = selected
-    ? compose(style(activeStyle), style(theme.resultActive || {}))
+    ? compose(
+        style(activeStyle),
+        style(theme.resultActive || {})
+      )
     : {};
 
   // apply modifiers if necessary
@@ -116,15 +119,32 @@ const ResultItem = ({
 
   return (
     <li
-      {...compose(base, themeBase, themeHover, themeSelected)}
+      {...compose(
+        base,
+        themeBase,
+        themeHover,
+        themeSelected
+      )}
       onDoubleClick={onDoubleClick}
     >
       <div {...icon}>
         <IconContainer icon={item.icon} />
       </div>
       <div {...details}>
-        <h2 {...compose(title, theme.resultTitle || {})}>{item.title}</h2>
-        <h3 {...compose(subtitle, theme.resultSubtitle || {})}>
+        <h2
+          {...compose(
+            title,
+            theme.resultTitle || {}
+          )}
+        >
+          {item.title}
+        </h2>
+        <h3
+          {...compose(
+            subtitle,
+            theme.resultSubtitle || {}
+          )}
+        >
           {itemSubtitle}
         </h3>
       </div>

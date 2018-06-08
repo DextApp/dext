@@ -9,7 +9,7 @@ import {
   IPC_QUERY_COMMAND,
 } from '../../../../ipc';
 import QueryField from '../query-field';
-import ResultListContainer from '../../containers/result-list-container';
+import ResultList from '../result-list';
 
 const outerBase = style({
   backgroundColor: '#f2f2f2',
@@ -33,13 +33,21 @@ const base = style({
 
 const getOuterStyles = theme =>
   theme && theme.window
-    ? compose(outerBase, {
-        backgroundColor: theme.window.backgroundColor,
-      })
+    ? compose(
+        outerBase,
+        {
+          backgroundColor: theme.window.backgroundColor,
+        }
+      )
     : outerBase;
 
 const getInnerStyles = theme =>
-  theme && theme.window ? compose(base, theme.window) : base;
+  theme && theme.window
+    ? compose(
+        base,
+        theme.window
+      )
+    : base;
 
 export default class App extends React.PureComponent {
   static displayName = 'App';
@@ -142,7 +150,7 @@ export default class App extends React.PureComponent {
             onChange={this.updateQuery}
             onReset={this.resetQuery}
           />
-          <ResultListContainer
+          <ResultList
             details={this.state.details}
             keys={this.state.keys}
             onClearActiveKey={this.clearActiveKey}
