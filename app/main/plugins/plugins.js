@@ -315,8 +315,7 @@ exports.queryResults = (plugin, args) =>
 
 /**
  * Retrieve helper items
- *
- * plugin { path, name, isCore, schema, keyword, action, helper }
+ * plugin { helper }
  *
  * @param {Object} plugin - The plugin object
  * @param {String[]} keyword - The query keyword
@@ -324,32 +323,19 @@ exports.queryResults = (plugin, args) =>
  */
 exports.queryHelper = (plugin, keyword) =>
   new Promise(resolve => {
-    let items = [];
-    if (!plugin.helper) {
-      resolve(items);
-      return;
-    }
-    let helperItem = plugin.helper;
-    // retrieve the helper item call if it's
-    // a function and resolve as necessary
-    if (typeof plugin.helper === 'function') {
-      helperItem = plugin.helper(keyword);
-    }
-
-    Promise.resolve(helperItem).then(item => {
-      // allows multiple helper items, keeping backwards compatibility.
-      if (Array.isArray(item)) {
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < item.length; i++) {
-          items.push(item[i]);
-        }
-      } else {
-        items.push(item);
+    resolveByCondition(
+      Boolean(plugin.helper),
+      () => {
+        const helperItem =
+          typeof plugin.helper === 'function'
+            ? plugin.helper(keyword)
+            : plugin.helper;
+        resolve(Array.isArray(helperItem) ? helperItem : [helperItem]);
+      },
+      () => {
+        resolve([]);
       }
-
-      items = exports.connectItems(items, plugin);
-      resolve(items);
-    });
+    );
   });
 
 /**
