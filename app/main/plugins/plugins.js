@@ -207,12 +207,12 @@ exports.connectItems = (items, plugin) =>
       icon.path = i.icon.path;
       const isBase64 = /data:image\/.*;base64/.test(i.icon.path);
       if (!is.url(i.icon.path) && !isBase64) {
-        icon.path = path.resolve(plugin.path, i.icon.path);
+        icon.path = resolvePath(plugin.path, i.icon.path);
       }
     }
     // if an icon isn't set, fallback to the icon.png file in the plugin's directory
     if (!icon.path) {
-      icon.path = path.resolve(plugin.path, 'icon.png');
+      icon.path = resolvePath(plugin.path, 'icon.png');
     }
     const newObject = deepAssign({}, i);
     newObject.plugin = {
@@ -274,10 +274,7 @@ exports.queryResults = (plugin, args) =>
         break;
       }
       default: {
-        // eslint-disable-line no-fallthrough
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        const pluginObj = require(plugin.path);
-
+        const pluginObj = requireBy(plugin.path);
         // The new API:
         // - `query`: querying the plugin with arguments
         // - `execute`: executing the specific item
