@@ -12,6 +12,14 @@ const { MAX_RESULTS, IS_DEV } = require('../../constants');
 const { app } = electron;
 const { PLUGIN_PATH } = utils.paths;
 
+const resolveByCondition = (condition, Right, Left) =>
+  condition ? Right() : Left();
+const resolvePath = (directoryPath, file) => path.resolve(directoryPath, file);
+
+// This is added to pave way for mocking and testability
+// eslint-disable-next-line global-require, import/no-dynamic-require
+const requireBy = pkg => require(pkg);
+
 /**
  * Loads plugins in the given path
  *
@@ -21,31 +29,26 @@ const { PLUGIN_PATH } = utils.paths;
  */
 exports.loadPluginsInPath = directory =>
   new Promise(resolve => {
-    const loaded = [];
-    if (directory.isCore) {
-      fs.readdir(directory.path, (err, plugins) => {
-        if (plugins && plugins.length) {
-          plugins.forEach(plugin => {
-            if (plugin !== '.DS_Store') {
-              const pluginPath = path.resolve(directory.path, plugin);
-              loaded.push(pluginPath);
-            }
-          });
-        }
-        resolve(loaded);
-      });
-    } else {
-      const enabledPlugins = api.plugins.getAll();
-      if (enabledPlugins.length) {
-        enabledPlugins.forEach(plugin => {
-          if (plugin) {
-            const pluginPath = path.resolve(directory.path, plugin);
-            loaded.push(pluginPath);
+    const extractPluginPaths = plugins =>
+      plugins
+        .filter(plugin => plugin && plugin !== '.DS_Store')
+        .map(plugin => resolvePath(directory.path, plugin));
+
+    resolveByCondition(
+      directory.isCore,
+      () => {
+        fs.readdir(directory.path, (err, plugins) => {
+          if (err || [null, undefined, ''].includes(plugins)) {
+            reject(err);
+            return;
           }
+          resolve(extractPluginPaths(plugins));
         });
+      },
+      () => {
+        resolve(extractPluginPaths(api.plugins.getAll()));
       }
-      resolve(loaded);
-    }
+    );
   });
 
 /**
@@ -56,10 +59,7 @@ exports.loadPluginsInPath = directory =>
  */
 exports.isCorePlugin = directory => {
   const dirname = path.dirname(directory);
-  if (dirname === PLUGIN_PATH) {
-    return false;
-  }
-  return true;
+  return dirname !== PLUGIN_PATH;
 };
 
 /**
@@ -70,14 +70,10 @@ exports.isCorePlugin = directory => {
  */
 exports.isPluginATheme = directory => {
   try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    const pkg = require(path.resolve(directory, 'package.json'));
+    const pkg = requireBy(resolvePath(directory, 'package.json'));
     // TODO: change the mechanism?
     // don't load themes by checking if dext-theme is non-existent in keywords
-    if (!pkg.keywords || pkg.keywords.indexOf('dext-theme') > -1) {
-      return true;
-    }
-    return false;
+    return !pkg.keywords || pkg.keywords.indexOf('dext-theme') > -1;
   } catch (err) {
     return false;
   }
@@ -95,20 +91,20 @@ exports.isPluginATheme = directory => {
  */
 exports.applyModuleProperties = plugin =>
   new Promise(resolve => {
-    const plistPath = path.resolve(plugin.path, 'info.plist');
+    const plistPath = resolvePath(plugin.path, 'info.plist');
     fs.access(plistPath, fs.constants.R_OK, err1 => {
       if (err1) {
         // retrieve the keyword and action from the plugin
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        const { keyword, action, helper } = require(plugin.path);
+        const { keyword, action, helper } = requireBy(plugin.path);
         // set the plugin object overrides
-        const newOpts = {
-          schema: 'dext',
-          action,
-          keyword,
-          helper,
-        };
-        resolve(deepAssign({}, plugin, newOpts));
+        resolve(
+          deepAssign({}, plugin, {
+            schema: 'dext',
+            action,
+            keyword,
+            helper,
+          })
+        );
       } else {
         // read, parses, and map the plist file options to
         // the dext plugin object schema
@@ -148,10 +144,10 @@ exports.applyModuleProperties = plugin =>
  */
 exports.loadPlugins = directories =>
   new Promise((resolve, reject) => {
-    const prom = directories.map(exports.loadPluginsInPath);
-    Promise.all(prom).then(pluginSets => {
+    const loadedPlugins = directories.map(exports.loadPluginsInPath);
+    Promise.all(loadedPlugins).then(pluginSets => {
       const allPlugins = pluginSets
-        .reduce((a, b) => a.concat(b))
+        .reduce((a, b) => a.concat(b), [])
         .map(plugin => ({
           path: plugin,
           name: path.basename(plugin),
@@ -367,28 +363,33 @@ exports.queryHelper = (plugin, keyword) =>
  * @return {Promise} - Resolves to the rendered html string
  */
 exports.retrieveItemDetails = (item, plugin) =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     // retrieve the rendered content
-    let type = 'html';
-    let content = '';
-    if (plugin && plugin.details) {
-      if (plugin.details.type) {
-        type = plugin.details.type;
-      }
-      if (plugin.details.render) {
-        if (typeof plugin.details.render === 'function') {
-          content = plugin.details.render(item);
-        } else {
-          content = plugin.details.render;
-        }
-      }
+    if (!plugin || !plugin.details) {
+      reject(new Error(`Missing details for ${plugin.name}`));
+      return;
     }
-    Promise.resolve(content).then(res => {
-      let html = res;
-      if (type === 'md') {
-        const md = new MarkdownIt();
-        html = md.render(res);
+    const type = plugin.details.type || 'html';
+    const content = resolveByCondition(
+      Boolean(plugin.details.render),
+      () =>
+        typeof plugin.details.render === 'function'
+          ? plugin.details.render(item)
+          : plugin.details.render,
+      () => ''
+    );
+    switch (type) {
+      case 'md': {
+        const mdRenderer = new MarkdownIt();
+        resolve(mdRenderer.render(content));
+        break;
       }
-      resolve(html);
-    });
+      case 'html':
+        resolve(content);
+        break;
+      default:
+        reject(
+          new Error(`Invalid \`type\` given on plugin renderer ${plugin.name}`)
+        );
+    }
   });
