@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import ResultItem from './result-item';
+import { ResultItem } from './result-item';
 
 describe('<ResultItem /> component', () => {
   let theme = {};

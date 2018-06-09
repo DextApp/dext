@@ -92,92 +92,114 @@ const checkmark = style({
   marginLeft: '7px',
 });
 
-const ResultItem = ({
-  theme,
-  selected,
-  item,
-  isAltMod,
-  isSuperMod,
-  onDoubleClick,
-  copiedToClipboard,
-}) => {
-  const themeBase = style(theme.result || {});
-  const themeHover = hover(theme.resultActive || {});
+export class ResultItem extends React.PureComponent {
+  static displayName = 'ResultItem';
+  static defaultProps = {
+    copiedToClipboard: false,
+    item: {},
+    keys: [],
+    selected: false,
+    theme: {},
+  };
+  static propTypes = {
+    theme: PropTypes.object,
+    // item prop should follow the Alfred workflow script filter JSON format
+    // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
+    item: PropTypes.object,
+    selected: PropTypes.bool,
+    keys: PropTypes.arrayOf(PropTypes.string),
+    copiedToClipboard: PropTypes.bool,
+  };
+  isAltMod() {
+    return (
+      this.props.selected &&
+      this.props.keys &&
+      this.props.keys.indexOf('alt') > -1
+    );
+  }
 
-  const themeSelected = selected
-    ? compose(
-        style(activeStyle),
-        style(theme.resultActive || {})
-      )
-    : {};
+  isSuperMod() {
+    return (
+      this.props.selected &&
+      this.props.keys &&
+      this.props.keys.indexOf('meta') > -1
+    );
+  }
 
-  // apply modifiers if necessary
-  const itemSubtitle =
-    (isSuperMod && item.mods && item.mods.cmd && item.mods.cmd.subtitle) ||
-    (isAltMod && item.mods && item.mods.alt && item.mods.alt.subtitle) ||
-    item.subtitle;
+  execute = () => {
+    const { item } = this.props;
+    const { action } = item;
+    ipcRenderer.send(IPC_EXECUTE_ITEM, {
+      action,
+      item,
+      isAltMod: this.isAltMod(),
+      isSuperMod: this.isSuperMod(),
+    });
+  };
+  render() {
+    const { theme, item, selected, copiedToClipboard } = this.props;
+    const themeBase = style(theme.result || {});
+    const themeHover = hover(theme.resultActive || {});
 
-  return (
-    <li
-      {...compose(
-        base,
-        themeBase,
-        themeHover,
-        themeSelected
-      )}
-      onDoubleClick={onDoubleClick}
-    >
-      <div {...icon}>
-        <IconWrapper wrapper />
-      </div>
-      <div {...details}>
-        <h2
-          {...compose(
-            title,
-            theme.resultTitle || {}
-          )}
-        >
-          {item.title}
-        </h2>
-        <h3
-          {...compose(
-            subtitle,
-            theme.resultSubtitle || {}
-          )}
-        >
-          {itemSubtitle}
-        </h3>
-      </div>
-      {copiedToClipboard && (
-        <div {...checkmarkWrapper}>
-          <span>Copied</span>
-          <div {...checkmark} />
+    const themeSelected = selected
+      ? compose(
+          style(activeStyle),
+          style(theme.resultActive || {})
+        )
+      : {};
+
+    // apply modifiers if necessary
+    const itemSubtitle =
+      (this.isSuperMod() &&
+        item.mods &&
+        item.mods.cmd &&
+        item.mods.cmd.subtitle) ||
+      (this.isAltMod() &&
+        item.mods &&
+        item.mods.alt &&
+        item.mods.alt.subtitle) ||
+      item.subtitle;
+
+    return (
+      <li
+        {...compose(
+          base,
+          themeBase,
+          themeHover,
+          themeSelected
+        )}
+        onDoubleClick={this.execute}
+      >
+        <div {...icon}>
+          <IconWrapper wrapper />
         </div>
-      )}
-    </li>
-  );
-};
-
-ResultItem.defaultProps = {
-  theme: {},
-  item: {},
-  selected: false,
-  isAltMod: false,
-  isSuperMod: false,
-  onDoubleClick: () => {},
-  copiedToClipboard: false,
-};
-
-ResultItem.propTypes = {
-  theme: PropTypes.object,
-  // item prop should follow the Alfred workflow script filter JSON format
-  // https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
-  item: PropTypes.object,
-  selected: PropTypes.bool,
-  isAltMod: PropTypes.bool,
-  isSuperMod: PropTypes.bool,
-  onDoubleClick: PropTypes.func,
-  copiedToClipboard: PropTypes.bool,
-};
+        <div {...details}>
+          <h2
+            {...compose(
+              title,
+              theme.resultTitle || {}
+            )}
+          >
+            {item.title}
+          </h2>
+          <h3
+            {...compose(
+              subtitle,
+              theme.resultSubtitle || {}
+            )}
+          >
+            {itemSubtitle}
+          </h3>
+        </div>
+        {copiedToClipboard && selected ? (
+          <div {...checkmarkWrapper}>
+            <span>Copied</span>
+            <div {...checkmark} />
+          </div>
+        ) : null}
+      </li>
+    );
+  }
+}
 
 export default ResultItem;
