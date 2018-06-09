@@ -15,7 +15,7 @@ import {
   IPC_EXECUTE_ITEM,
 } from '../../../../ipc';
 /* eslint-disable react/no-array-index-key */
-import ResultItemContainer from '../../containers/result-item-container';
+import ResultItem from '../result-item';
 import ResultDetails from '../result-details';
 
 const base = compose(
@@ -158,11 +158,11 @@ class ResultList extends Component {
   scrollToItem = index => {
     const scrollY = index >= 10 ? (index - 10) * 60 + 60 : 0;
     // @TODO: figure out what this is.
-    this.c.c.scrollTop = scrollY;
+    this.c.scrollTop = scrollY;
   };
   getResultItems = (results, selectedIndex, theme, keys, copiedToClipboard) =>
     results.map((item, key) => (
-      <ResultItemContainer
+      <ResultItem
         key={key}
         theme={theme}
         keys={keys}
