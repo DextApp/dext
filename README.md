@@ -1,6 +1,6 @@
 ## 🚧 Notice 🚧
 
-`dext` is, at the moment, subject to heavy development. From [`v0.9.0`](https://github.com/DextApp/dext/releases/tag/v0.9.0), we won't add any feature unless small with backwards compability in mind.
+`dext` is, at the moment, subject to heavy development. From [`v0.9.0`](https://github.com/DextApp/dext/releases/tag/v0.9.0), we won't add any feature unless small with backwards compatibility in mind.
 
 Currently, the roadmap for [`dext` 2.0](https://github.com/DextApp/dext/projects/5) is to move to the direction of having the following accomplished:
 
@@ -44,7 +44,7 @@ Simply toggle and start typing with:
 
 ### Actions
 
-Each item may have it's own action. You can execute an item by double-clicking on the item or selecting it and pressing:
+Each item may have its own action. You can execute an item by double-clicking on the item or selecting it and pressing:
 
 <kbd>enter</kbd>
 
